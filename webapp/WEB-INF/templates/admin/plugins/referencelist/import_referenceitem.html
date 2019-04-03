@@ -1,0 +1,16 @@
+<!-- <#include "referencelistmanage_tabs.html" />
+<@tabs2 tab="reference" /> -->
+<@box>
+	<@boxHeader title='#i18n{referencelist.import_referenceitems.title}' />
+	<@boxBody>
+    <@tform name='import_referenceitem' params='enctype="multipart/form-data"' action='jsp/admin/plugins/referencelist/ManageReferenceItems.jsp'>
+
+        <@messages errors=errors />
+        <input type="hidden" id="id" name="id"/>
+				<@formGroup labelKey='#i18n{referencelist.import_referenceitems.labelFile}' helpKey='#i18n{referencelist.import_referenceitems.labelFile.help}' mandatory=true>
+				<input type='file' name='file' accept=".csv" required/>
+				</@formGroup>
+				<@actionButtons button1Name="action_importReferenceItem" button2Name="view_importReferenceItem"/>
+    </@tform>
+	</@boxBody>
+</@box>

@@ -1,0 +1,49 @@
+<!-- <#include "referencelistmanage_tabs.html" />
+<@tabs2 tab="referenceitem" /> -->
+
+<@box>
+	<@boxHeader title='#i18n{referencelist.manage_referenceitem.title}' boxTools=true>
+        <@tform class='form-inline pull-right' name='manage_referenceitem' action='jsp/admin/plugins/referencelist/ManageReferenceItems.jsp'>
+        <@button type='submit' name='view_importReferenceItem' buttonIcon='plus' title='#i18n{referencelist.manage_referenceitems.importAdd}' />
+			<@button type='submit' name='view_createReferenceItem' buttonIcon='plus' title='#i18n{referencelist.manage_referenceitems.buttonAdd}' />
+		</@tform>
+	</@boxHeader>
+	<@boxBody>    
+    <@messages infos=infos />
+    <@paginationAdmin paginator=paginator combo=1 />
+    <div class="clearfix"></div>
+    <@table>
+        <tr>
+            <input type="hidden" id="id" name="id"/>
+            <th>#i18n{referencelist.manage_referenceitems.columnItemName}</th>
+            <th>#i18n{referencelist.manage_referenceitems.columnItemValue}</th>
+            <th>#i18n{referencelist.manage_referenceitems.columnIdreference}</th>
+            <th>#i18n{portal.util.labelActions}</th>
+        </tr>
+        <@tableHeadBodySeparator />
+            <#list referenceitem_list as referenceitem >
+        <tr>
+            <input type="hidden" id="id" name="id"/>
+            <td>
+                ${referenceitem.itemName}
+            </td>
+            <td>
+                ${referenceitem.itemValue}
+            </td>
+            <td>
+                ${referenceitem.idreference}
+            </td>
+        <td>
+			<@aButton href='jsp/admin/plugins/referencelist/ManageReferenceItems.jsp?view=modifyReferenceItem&id=${referenceitem.id}' title='#i18n{portal.util.labelModify}' buttonIcon='pencil' showTitle=false />
+						
+			<@aButton href='jsp/admin/plugins/referencelist/ManageReferenceItems.jsp?action=confirmRemoveReferenceItem&id=${referenceitem.id}' title='#i18n{portal.util.labelDelete}' buttonIcon='trash' color='btn-danger' showTitle=false />
+
+        </td>
+        </tr>
+        </#list>
+    </@table>
+
+    <@paginationAdmin paginator=paginator />
+
+  </@boxBody>
+</@box>
