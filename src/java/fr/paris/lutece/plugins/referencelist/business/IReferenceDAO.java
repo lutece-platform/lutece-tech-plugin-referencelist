@@ -41,66 +41,76 @@ import java.util.List;
 /**
  * IReferenceDAO Interface
  */
-public interface IReferenceDAO {
+public interface IReferenceDAO
+{
     /**
      * Insert a new record in the table.
      * 
-     * @param reference instance of the Reference object to insert
-     * @param plugin    the Plugin
+     * @param reference
+     *            instance of the Reference object to insert
+     * @param plugin
+     *            the Plugin
      */
-    void insert(Reference reference, Plugin plugin);
+    void insert( Reference reference, Plugin plugin );
 
     /**
      * Update the record in the table
      * 
-     * @param reference the reference of the Reference
-     * @param plugin    the Plugin
+     * @param reference
+     *            the reference of the Reference
+     * @param plugin
+     *            the Plugin
      */
-    void store(Reference reference, Plugin plugin);
+    void store( Reference reference, Plugin plugin );
 
     /**
      * Delete a record from the table
      * 
-     * @param nKey   The identifier of the Reference to delete
-     * @param plugin the Plugin
+     * @param nKey
+     *            The identifier of the Reference to delete
+     * @param plugin
+     *            the Plugin
      */
-    void delete(int nKey, Plugin plugin);
+    void delete( int nKey, Plugin plugin );
 
-    ///////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////
     // Finders
 
     /**
      * Load the data from the table
      * 
-     * @param nKey   The identifier of the reference
-     * @param plugin the Plugin
+     * @param nKey
+     *            The identifier of the reference
+     * @param plugin
+     *            the Plugin
      * @return The instance of the reference
      */
-    Reference load(int nKey, Plugin plugin);
+    Reference load( int nKey, Plugin plugin );
 
     /**
      * Load the data of all the reference objects and returns them as a list
      * 
-     * @param plugin the Plugin
+     * @param plugin
+     *            the Plugin
      * @return The list which contains the data of all the reference objects
      */
-    List<Reference> selectReferencesList(Plugin plugin);
+    List<Reference> selectReferencesList( Plugin plugin );
 
     /**
      * Load the id of all the reference objects and returns them as a list
      * 
-     * @param plugin the Plugin
+     * @param plugin
+     *            the Plugin
      * @return The list which contains the id of all the reference objects
      */
-    List<Integer> selectIdReferencesList(Plugin plugin);
+    List<Integer> selectIdReferencesList( Plugin plugin );
 
     /**
-     * Load the data of all the reference objects and returns them as a
-     * referenceList
+     * Load the data of all the reference objects and returns them as a referenceList
      * 
-     * @param plugin the Plugin
-     * @return The referenceList which contains the data of all the reference
-     *         objects
+     * @param plugin
+     *            the Plugin
+     * @return The referenceList which contains the data of all the reference objects
      */
-    ReferenceList selectReferencesReferenceList(Plugin plugin);
+    ReferenceList selectReferencesReferenceList( Plugin plugin );
 }

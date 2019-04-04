@@ -42,30 +42,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class provides instances management methods (create, find, ...) for
- * ReferenceItem objects
+ * This class provides instances management methods (create, find, ...) for ReferenceItem objects
  */
-public final class ReferenceItemHome {
+public final class ReferenceItemHome
+{
     // Static variable pointed at the DAO instance
-    private static IReferenceItemDAO _dao = SpringContextService.getBean("referencelist.referenceItemDAO");
-    private static Plugin _plugin = PluginService.getPlugin("referencelist");
+    private static IReferenceItemDAO _dao = SpringContextService.getBean( "referencelist.referenceItemDAO" );
+    private static Plugin _plugin = PluginService.getPlugin( "referencelist" );
 
     /**
      * Private constructor - this class need not be instantiated
      */
-    private ReferenceItemHome() {
+    private ReferenceItemHome( )
+    {
     }
 
     /**
      * Create an instance of the referenceItem class
      * 
-     * @param referenceItem The instance of the ReferenceItem which contains the
-     *                      informations to store
-     * @return The instance of referenceItem which has been created with its primary
-     *         key.
+     * @param referenceItem
+     *            The instance of the ReferenceItem which contains the informations to store
+     * @return The instance of referenceItem which has been created with its primary key.
      */
-    public static ReferenceItem create(ReferenceItem referenceItem) {
-        _dao.insert(referenceItem, _plugin);
+    public static ReferenceItem create( ReferenceItem referenceItem )
+    {
+        _dao.insert( referenceItem, _plugin );
 
         return referenceItem;
     }
@@ -73,12 +74,13 @@ public final class ReferenceItemHome {
     /**
      * Update of the referenceItem which is specified in parameter
      * 
-     * @param referenceItem The instance of the ReferenceItem which contains the
-     *                      data to store
+     * @param referenceItem
+     *            The instance of the ReferenceItem which contains the data to store
      * @return The instance of the referenceItem which has been updated
      */
-    public static ReferenceItem update(ReferenceItem referenceItem) {
-        _dao.store(referenceItem, _plugin);
+    public static ReferenceItem update( ReferenceItem referenceItem )
+    {
+        _dao.store( referenceItem, _plugin );
 
         return referenceItem;
     }
@@ -86,21 +88,24 @@ public final class ReferenceItemHome {
     /**
      * Remove the referenceItem whose identifier is specified in parameter
      * 
-     * @param nKey The referenceItem Id
+     * @param nKey
+     *            The referenceItem Id
      */
-    public static void remove(int nKey) {
-        _dao.delete(nKey, _plugin);
+    public static void remove( int nKey )
+    {
+        _dao.delete( nKey, _plugin );
     }
 
     /**
-     * Returns an instance of a referenceItem whose identifier is specified in
-     * parameter
+     * Returns an instance of a referenceItem whose identifier is specified in parameter
      * 
-     * @param nKey The referenceItem primary key
+     * @param nKey
+     *            The referenceItem primary key
      * @return an instance of ReferenceItem
      */
-    public static ReferenceItem findByPrimaryKey(int nKey) {
-        return _dao.load(nKey, _plugin);
+    public static ReferenceItem findByPrimaryKey( int nKey )
+    {
+        return _dao.load( nKey, _plugin );
     }
 
     /**
@@ -108,8 +113,9 @@ public final class ReferenceItemHome {
      * 
      * @return the list which contains the data of all the referenceItem objects
      */
-    public static List<ReferenceItem> getReferenceItemsList(int nIdReference) {
-        return _dao.selectReferenceItemsList(nIdReference, _plugin);
+    public static List<ReferenceItem> getReferenceItemsList( int nIdReference )
+    {
+        return _dao.selectReferenceItemsList( nIdReference, _plugin );
     }
 
     /**
@@ -117,69 +123,80 @@ public final class ReferenceItemHome {
      * 
      * @return the list which contains the id of all the referenceItem objects
      */
-    public static List<Integer> getIdReferenceItemsList() {
-        return _dao.selectIdReferenceItemsList(_plugin);
+    public static List<Integer> getIdReferenceItemsList( )
+    {
+        return _dao.selectIdReferenceItemsList( _plugin );
     }
 
     /**
-     * Load the data of all the referenceItem objects and returns them as a
-     * referenceList
+     * Load the data of all the referenceItem objects and returns them as a referenceList
      * 
-     * @return the referenceList which contains the data of all the referenceItem
-     *         objects
+     * @return the referenceList which contains the data of all the referenceItem objects
      */
-    public static ReferenceList getReferenceItemsReferenceList() {
-        return _dao.selectReferenceItemsReferenceList(_plugin);
+    public static ReferenceList getReferenceItemsReferenceList( )
+    {
+        return _dao.selectReferenceItemsReferenceList( _plugin );
     }
 
     /**
      * Check if ReferenceItemName exist in Reference.
      * 
-     * @param nKey The referenceItem primary key
+     * @param nIdReference
+     *            The reference id
+     * @param Itemname
+     *            The Itemname of candidateItem
      * @return an instance of ReferenceItem
      */
-    public static ReferenceItem findByReferenceName(int nIdReference, String Itemname) {
-        return _dao.loadReferenceItemByName(nIdReference, Itemname, _plugin);
+    public static ReferenceItem findByReferenceName( int nIdReference, String Itemname )
+    {
+        return _dao.loadReferenceItemByName( nIdReference, Itemname, _plugin );
 
     }
 
-    public static CompareResult compareReferenceItems(List<ReferenceItem> candidateItems, int refId) {
+    public static CompareResult compareReferenceItems( List<ReferenceItem> candidateItems, int refId )
+    {
 
         // lists to compare
         List<ReferenceItem> currentListCandidateItems = candidateItems;
-        List<ReferenceItem> currentListReferenceItems = ReferenceItemHome.getReferenceItemsList(refId);
+        List<ReferenceItem> currentListReferenceItems = ReferenceItemHome.getReferenceItemsList( refId );
 
         // lists to return;
-        List<ReferenceItem> updateListCandidateReferenceItems = new ArrayList<>();
-        List<ReferenceItem> duplicateListCandidateReferenceItems = new ArrayList<>();
-        List<ReferenceItem> insertListCandidateReferenceItems = new ArrayList<>();
+        List<ReferenceItem> updateListCandidateReferenceItems = new ArrayList<>( );
+        List<ReferenceItem> duplicateListCandidateReferenceItems = new ArrayList<>( );
+        List<ReferenceItem> insertListCandidateReferenceItems = new ArrayList<>( );
 
         // Compare
-        for (ReferenceItem candidateItem : currentListCandidateItems) {
+        for ( ReferenceItem candidateItem : currentListCandidateItems )
+        {
             boolean founded = false;
-            if (!currentListReferenceItems.isEmpty()) {
-                for (ReferenceItem referenceItem : currentListReferenceItems) {
+            if ( !currentListReferenceItems.isEmpty( ) )
+            {
+                for ( ReferenceItem referenceItem : currentListReferenceItems )
+                {
                     // compare names;
-                    if (candidateItem.getItemName().equals(referenceItem.getItemName())) {
+                    if ( candidateItem.getItemName( ).equals( referenceItem.getItemName( ) ) )
+                    {
                         founded = true;
                         // compare values;
-                        if (candidateItem.getItemValue().equals(referenceItem.getItemValue())) {
+                        if ( candidateItem.getItemValue( ).equals( referenceItem.getItemValue( ) ) )
+                        {
                             // duplicate candidateItem.
-                            duplicateListCandidateReferenceItems.add(candidateItem);
-                        } else {
+                            duplicateListCandidateReferenceItems.add( candidateItem );
+                        }
+                        else
+                        {
                             // candidateItem to update.
-                            candidateItem.setId(referenceItem.getId());
-                            updateListCandidateReferenceItems.add(candidateItem);
+                            candidateItem.setId( referenceItem.getId( ) );
+                            updateListCandidateReferenceItems.add( candidateItem );
                         }
                     }
                 }
             }
             // candidateItem to insert.
-            if (!founded)
-                insertListCandidateReferenceItems.add(candidateItem);
+            if ( !founded )
+                insertListCandidateReferenceItems.add( candidateItem );
         }
-        return new CompareResult(insertListCandidateReferenceItems, updateListCandidateReferenceItems,
-                duplicateListCandidateReferenceItems);
+        return new CompareResult( insertListCandidateReferenceItems, updateListCandidateReferenceItems, duplicateListCandidateReferenceItems );
     }
 
 }

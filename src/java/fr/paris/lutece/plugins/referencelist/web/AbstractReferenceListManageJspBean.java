@@ -47,7 +47,8 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * ReferenceListManage JSP Bean abstract class for JSP Bean
  */
-public abstract class AbstractReferenceListManageJspBean extends MVCAdminJspBean {
+public abstract class AbstractReferenceListManageJspBean extends MVCAdminJspBean
+{
     private static final long serialVersionUID = 1812664626111796000L;
 
     // Rights
@@ -71,31 +72,33 @@ public abstract class AbstractReferenceListManageJspBean extends MVCAdminJspBean
     /**
      * Return a model that contains the list and paginator infos
      * 
-     * @param request      The HTTP request
-     * @param strBookmark  The bookmark
-     * @param list         The list of item
-     * @param strManageJsp The JSP
+     * @param request
+     *            The HTTP request
+     * @param strBookmark
+     *            The bookmark
+     * @param list
+     *            The list of item
+     * @param strManageJsp
+     *            The JSP
      * @return The model
      */
-    protected <T> Map<String, Object> getPaginatedListModel(HttpServletRequest request, String strBookmark,
-            List<T> list, String strManageJsp) {
-        _strCurrentPageIndex = Paginator.getPageIndex(request, Paginator.PARAMETER_PAGE_INDEX, _strCurrentPageIndex);
-        _nDefaultItemsPerPage = AppPropertiesService.getPropertyInt(PROPERTY_DEFAULT_LIST_ITEM_PER_PAGE, 50);
-        _nItemsPerPage = Paginator.getItemsPerPage(request, Paginator.PARAMETER_ITEMS_PER_PAGE, _nItemsPerPage,
-                _nDefaultItemsPerPage);
+    protected <T> Map<String, Object> getPaginatedListModel( HttpServletRequest request, String strBookmark, List<T> list, String strManageJsp )
+    {
+        _strCurrentPageIndex = Paginator.getPageIndex( request, Paginator.PARAMETER_PAGE_INDEX, _strCurrentPageIndex );
+        _nDefaultItemsPerPage = AppPropertiesService.getPropertyInt( PROPERTY_DEFAULT_LIST_ITEM_PER_PAGE, 50 );
+        _nItemsPerPage = Paginator.getItemsPerPage( request, Paginator.PARAMETER_ITEMS_PER_PAGE, _nItemsPerPage, _nDefaultItemsPerPage );
 
-        UrlItem url = new UrlItem(strManageJsp);
-        String strUrl = url.getUrl();
+        UrlItem url = new UrlItem( strManageJsp );
+        String strUrl = url.getUrl( );
 
         // PAGINATOR
-        LocalizedPaginator<T> paginator = new LocalizedPaginator<T>(list, _nItemsPerPage, strUrl, PARAMETER_PAGE_INDEX,
-                _strCurrentPageIndex, getLocale());
+        LocalizedPaginator<T> paginator = new LocalizedPaginator<T>( list, _nItemsPerPage, strUrl, PARAMETER_PAGE_INDEX, _strCurrentPageIndex, getLocale( ) );
 
-        Map<String, Object> model = getModel();
+        Map<String, Object> model = getModel( );
 
-        model.put(MARK_NB_ITEMS_PER_PAGE, String.valueOf(_nItemsPerPage));
-        model.put(MARK_PAGINATOR, paginator);
-        model.put(strBookmark, paginator.getPageItems());
+        model.put( MARK_NB_ITEMS_PER_PAGE, String.valueOf( _nItemsPerPage ) );
+        model.put( MARK_PAGINATOR, paginator );
+        model.put( strBookmark, paginator.getPageItems( ) );
 
         return model;
     }

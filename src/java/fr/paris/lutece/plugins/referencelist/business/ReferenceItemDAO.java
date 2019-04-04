@@ -45,7 +45,8 @@ import java.util.List;
 /**
  * This class provides Data Access methods for ReferenceItem objects
  */
-public final class ReferenceItemDAO implements IReferenceItemDAO {
+public final class ReferenceItemDAO implements IReferenceItemDAO
+{
     // Constants
     private static final String SQL_QUERY_SELECT = "SELECT id_reference_item, item_name, item_value, idreference FROM referencelist_item WHERE id_reference_item = ?";
     private static final String SQL_QUERY_SELECT_ID = "SELECT id_reference_item, item_name, item_value, idreference FROM referencelist_item WHERE idreference = ?";
@@ -60,19 +61,24 @@ public final class ReferenceItemDAO implements IReferenceItemDAO {
      * {@inheritDoc }
      */
     @Override
-    public void insert(ReferenceItem referenceItem, Plugin plugin) {
-        DAOUtil daoUtil = new DAOUtil(SQL_QUERY_INSERT, Statement.RETURN_GENERATED_KEYS, plugin);
-        try {
+    public void insert( ReferenceItem referenceItem, Plugin plugin )
+    {
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, Statement.RETURN_GENERATED_KEYS, plugin );
+        try
+        {
             int nIndex = 1;
-            daoUtil.setString(nIndex++, referenceItem.getItemName());
-            daoUtil.setString(nIndex++, referenceItem.getItemValue());
-            daoUtil.setInt(nIndex++, referenceItem.getIdreference());
-            daoUtil.executeUpdate();
-            if (daoUtil.nextGeneratedKey()) {
-                referenceItem.setId(daoUtil.getGeneratedKeyInt(1));
+            daoUtil.setString( nIndex++, referenceItem.getItemName( ) );
+            daoUtil.setString( nIndex++, referenceItem.getItemValue( ) );
+            daoUtil.setInt( nIndex++, referenceItem.getIdreference( ) );
+            daoUtil.executeUpdate( );
+            if ( daoUtil.nextGeneratedKey( ) )
+            {
+                referenceItem.setId( daoUtil.getGeneratedKeyInt( 1 ) );
             }
-        } finally {
-            daoUtil.free();
+        }
+        finally
+        {
+            daoUtil.free( );
         }
     }
 
@@ -80,23 +86,25 @@ public final class ReferenceItemDAO implements IReferenceItemDAO {
      * {@inheritDoc }
      */
     @Override
-    public ReferenceItem load(int nKey, Plugin plugin) {
-        DAOUtil daoUtil = new DAOUtil(SQL_QUERY_SELECT, plugin);
-        daoUtil.setInt(1, nKey);
-        daoUtil.executeQuery();
+    public ReferenceItem load( int nKey, Plugin plugin )
+    {
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT, plugin );
+        daoUtil.setInt( 1, nKey );
+        daoUtil.executeQuery( );
         ReferenceItem referenceItem = null;
 
-        if (daoUtil.next()) {
-            referenceItem = new ReferenceItem();
+        if ( daoUtil.next( ) )
+        {
+            referenceItem = new ReferenceItem( );
             int nIndex = 1;
 
-            referenceItem.setId(daoUtil.getInt(nIndex++));
-            referenceItem.setItemName(daoUtil.getString(nIndex++));
-            referenceItem.setItemValue(daoUtil.getString(nIndex++));
-            referenceItem.setIdreference(daoUtil.getInt(nIndex++));
+            referenceItem.setId( daoUtil.getInt( nIndex++ ) );
+            referenceItem.setItemName( daoUtil.getString( nIndex++ ) );
+            referenceItem.setItemValue( daoUtil.getString( nIndex++ ) );
+            referenceItem.setIdreference( daoUtil.getInt( nIndex++ ) );
         }
 
-        daoUtil.free();
+        daoUtil.free( );
         return referenceItem;
     }
 
@@ -104,54 +112,58 @@ public final class ReferenceItemDAO implements IReferenceItemDAO {
      * {@inheritDoc }
      */
     @Override
-    public void delete(int nKey, Plugin plugin) {
-        DAOUtil daoUtil = new DAOUtil(SQL_QUERY_DELETE, plugin);
-        daoUtil.setInt(1, nKey);
-        daoUtil.executeUpdate();
-        daoUtil.free();
+    public void delete( int nKey, Plugin plugin )
+    {
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, plugin );
+        daoUtil.setInt( 1, nKey );
+        daoUtil.executeUpdate( );
+        daoUtil.free( );
     }
 
     /**
      * {@inheritDoc }
      */
     @Override
-    public void store(ReferenceItem referenceItem, Plugin plugin) {
-        DAOUtil daoUtil = new DAOUtil(SQL_QUERY_UPDATE, plugin);
+    public void store( ReferenceItem referenceItem, Plugin plugin )
+    {
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, plugin );
         int nIndex = 1;
 
-        daoUtil.setString(nIndex++, referenceItem.getItemName());
-        daoUtil.setString(nIndex++, referenceItem.getItemValue());
-        daoUtil.setInt(nIndex, referenceItem.getId());
+        daoUtil.setString( nIndex++, referenceItem.getItemName( ) );
+        daoUtil.setString( nIndex++, referenceItem.getItemValue( ) );
+        daoUtil.setInt( nIndex, referenceItem.getId( ) );
 
-        daoUtil.executeUpdate();
-        daoUtil.free();
+        daoUtil.executeUpdate( );
+        daoUtil.free( );
     }
 
     /**
      * {@inheritDoc }
      */
     @Override
-    public List<ReferenceItem> selectReferenceItemsList(int IdReference, Plugin plugin) {
-        List<ReferenceItem> referenceItemList = new ArrayList<ReferenceItem>();
+    public List<ReferenceItem> selectReferenceItemsList( int IdReference, Plugin plugin )
+    {
+        List<ReferenceItem> referenceItemList = new ArrayList<ReferenceItem>( );
 
-        DAOUtil daoUtil = new DAOUtil(SQL_QUERY_SELECT_ID, plugin);
-        daoUtil.setInt(1, IdReference);
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_ID, plugin );
+        daoUtil.setInt( 1, IdReference );
 
-        daoUtil.executeQuery();
+        daoUtil.executeQuery( );
 
-        while (daoUtil.next()) {
-            ReferenceItem referenceItem = new ReferenceItem();
+        while ( daoUtil.next( ) )
+        {
+            ReferenceItem referenceItem = new ReferenceItem( );
             int nIndex = 1;
 
-            referenceItem.setId(daoUtil.getInt(nIndex++));
-            referenceItem.setItemName(daoUtil.getString(nIndex++));
-            referenceItem.setItemValue(daoUtil.getString(nIndex++));
-            referenceItem.setIdreference(daoUtil.getInt(nIndex++));
+            referenceItem.setId( daoUtil.getInt( nIndex++ ) );
+            referenceItem.setItemName( daoUtil.getString( nIndex++ ) );
+            referenceItem.setItemValue( daoUtil.getString( nIndex++ ) );
+            referenceItem.setIdreference( daoUtil.getInt( nIndex++ ) );
 
-            referenceItemList.add(referenceItem);
+            referenceItemList.add( referenceItem );
         }
 
-        daoUtil.free();
+        daoUtil.free( );
         return referenceItemList;
     }
 
@@ -159,16 +171,18 @@ public final class ReferenceItemDAO implements IReferenceItemDAO {
      * {@inheritDoc }
      */
     @Override
-    public List<Integer> selectIdReferenceItemsList(Plugin plugin) {
-        List<Integer> referenceItemList = new ArrayList<Integer>();
-        DAOUtil daoUtil = new DAOUtil(SQL_QUERY_SELECTALL_ID, plugin);
-        daoUtil.executeQuery();
+    public List<Integer> selectIdReferenceItemsList( Plugin plugin )
+    {
+        List<Integer> referenceItemList = new ArrayList<Integer>( );
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL_ID, plugin );
+        daoUtil.executeQuery( );
 
-        while (daoUtil.next()) {
-            referenceItemList.add(daoUtil.getInt(1));
+        while ( daoUtil.next( ) )
+        {
+            referenceItemList.add( daoUtil.getInt( 1 ) );
         }
 
-        daoUtil.free();
+        daoUtil.free( );
         return referenceItemList;
     }
 
@@ -176,14 +190,16 @@ public final class ReferenceItemDAO implements IReferenceItemDAO {
      * {@inheritDoc }
      */
     @Override
-    public ReferenceList selectReferenceItemsReferenceList(Plugin plugin) {
-        ReferenceList referenceItemList = new ReferenceList();
-        DAOUtil daoUtil = new DAOUtil(SQL_QUERY_SELECTALL, plugin);
-        daoUtil.executeQuery();
-        while (daoUtil.next()) {
-            referenceItemList.addItem(daoUtil.getInt(1), daoUtil.getString(2));
+    public ReferenceList selectReferenceItemsReferenceList( Plugin plugin )
+    {
+        ReferenceList referenceItemList = new ReferenceList( );
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL, plugin );
+        daoUtil.executeQuery( );
+        while ( daoUtil.next( ) )
+        {
+            referenceItemList.addItem( daoUtil.getInt( 1 ), daoUtil.getString( 2 ) );
         }
-        daoUtil.free();
+        daoUtil.free( );
         return referenceItemList;
     }
 
@@ -191,22 +207,24 @@ public final class ReferenceItemDAO implements IReferenceItemDAO {
      * {@inheritDoc }
      */
     @Override
-    public ReferenceItem loadReferenceItemByName(int nIdReference, String sItemName, Plugin plugin) {
-        DAOUtil daoUtil = new DAOUtil(SQL_QUERY_SELECT_NAME, plugin);
-        daoUtil.setInt(1, nIdReference);
-        daoUtil.setString(2, sItemName);
+    public ReferenceItem loadReferenceItemByName( int nIdReference, String sItemName, Plugin plugin )
+    {
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_NAME, plugin );
+        daoUtil.setInt( 1, nIdReference );
+        daoUtil.setString( 2, sItemName );
 
-        daoUtil.executeQuery();
+        daoUtil.executeQuery( );
         ReferenceItem referenceItem = null;
-        if (daoUtil.next()) {
-            referenceItem = new ReferenceItem();
+        if ( daoUtil.next( ) )
+        {
+            referenceItem = new ReferenceItem( );
             int nIndex = 1;
-            referenceItem.setId(daoUtil.getInt(nIndex++));
-            referenceItem.setItemName(daoUtil.getString(nIndex++));
-            referenceItem.setItemValue(daoUtil.getString(nIndex++));
-            referenceItem.setIdreference(daoUtil.getInt(nIndex++));
+            referenceItem.setId( daoUtil.getInt( nIndex++ ) );
+            referenceItem.setItemName( daoUtil.getString( nIndex++ ) );
+            referenceItem.setItemValue( daoUtil.getString( nIndex++ ) );
+            referenceItem.setIdreference( daoUtil.getInt( nIndex++ ) );
         }
-        daoUtil.free();
+        daoUtil.free( );
         return referenceItem;
     }
 }

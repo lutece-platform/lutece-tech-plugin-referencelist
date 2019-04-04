@@ -41,76 +41,89 @@ import java.util.List;
 /**
  * IReferenceItemDAO Interface
  */
-public interface IReferenceItemDAO {
+public interface IReferenceItemDAO
+{
     /**
      * Insert a new record in the table.
      * 
-     * @param referenceItem instance of the ReferenceItem object to insert
-     * @param plugin        the Plugin
+     * @param referenceItem
+     *            instance of the ReferenceItem object to insert
+     * @param plugin
+     *            the Plugin
      */
-    void insert(ReferenceItem referenceItem, Plugin plugin);
+    void insert( ReferenceItem referenceItem, Plugin plugin );
 
     /**
      * Update the record in the table
      * 
-     * @param referenceItem the reference of the ReferenceItem
-     * @param plugin        the Plugin
+     * @param referenceItem
+     *            the reference of the ReferenceItem
+     * @param plugin
+     *            the Plugin
      */
-    void store(ReferenceItem referenceItem, Plugin plugin);
+    void store( ReferenceItem referenceItem, Plugin plugin );
 
     /**
      * Delete a record from the table
      * 
-     * @param nKey   The identifier of the ReferenceItem to delete
-     * @param plugin the Plugin
+     * @param nKey
+     *            The identifier of the ReferenceItem to delete
+     * @param plugin
+     *            the Plugin
      */
-    void delete(int nKey, Plugin plugin);
+    void delete( int nKey, Plugin plugin );
 
-    ///////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////
     // Finders
 
     /**
      * Load the data from the table
      * 
-     * @param nIdReference The identifier of the reference of referenceitems
-     * @param sItemName    The name of referenceitem
-     * @param plugin       the Plugin
+     * @param nIdReference
+     *            The identifier of the reference of referenceitems
+     * @param sItemName
+     *            The name of referenceitem
+     * @param plugin
+     *            the Plugin
      * @return The instance of the referenceItem
      */
-    ReferenceItem loadReferenceItemByName(int nIdReference, String sItemName, Plugin plugin);
+    ReferenceItem loadReferenceItemByName( int nIdReference, String sItemName, Plugin plugin );
 
     /**
      * Load the data from the table
      * 
-     * @param nKey   The identifier of the referenceItem
-     * @param plugin the Plugin
+     * @param nKey
+     *            The identifier of the referenceItem
+     * @param plugin
+     *            the Plugin
      * @return The instance of the referenceItem
      */
-    ReferenceItem load(int nKey, Plugin plugin);
+    ReferenceItem load( int nKey, Plugin plugin );
 
     /**
      * Load the data of all the referenceItem objects and returns them as a list
      * 
-     * @param plugin the Plugin
+     * @param plugin
+     *            the Plugin
      * @return The list which contains the data of all the referenceItem objects
      */
-    List<ReferenceItem> selectReferenceItemsList(int IdReference, Plugin plugin);
+    List<ReferenceItem> selectReferenceItemsList( int IdReference, Plugin plugin );
 
     /**
      * Load the id of all the referenceItem objects and returns them as a list
      * 
-     * @param plugin the Plugin
+     * @param plugin
+     *            the Plugin
      * @return The list which contains the id of all the referenceItem objects
      */
-    List<Integer> selectIdReferenceItemsList(Plugin plugin);
+    List<Integer> selectIdReferenceItemsList( Plugin plugin );
 
     /**
-     * Load the data of all the referenceItem objects and returns them as a
-     * referenceList
+     * Load the data of all the referenceItem objects and returns them as a referenceList
      * 
-     * @param plugin the Plugin
-     * @return The referenceList which contains the data of all the referenceItem
-     *         objects
+     * @param plugin
+     *            the Plugin
+     * @return The referenceList which contains the data of all the referenceItem objects
      */
-    ReferenceList selectReferenceItemsReferenceList(Plugin plugin);
+    ReferenceList selectReferenceItemsReferenceList( Plugin plugin );
 }

@@ -41,30 +41,31 @@ import fr.paris.lutece.util.ReferenceList;
 import java.util.List;
 
 /**
- * This class provides instances management methods (create, find, ...) for
- * Reference objects
+ * This class provides instances management methods (create, find, ...) for Reference objects
  */
-public final class ReferenceHome {
+public final class ReferenceHome
+{
     // Static variable pointed at the DAO instance
-    private static IReferenceDAO _dao = SpringContextService.getBean("referencelist.referenceDAO");
-    private static Plugin _plugin = PluginService.getPlugin("referencelist");
+    private static IReferenceDAO _dao = SpringContextService.getBean( "referencelist.referenceDAO" );
+    private static Plugin _plugin = PluginService.getPlugin( "referencelist" );
 
     /**
      * Private constructor - this class need not be instantiated
      */
-    private ReferenceHome() {
+    private ReferenceHome( )
+    {
     }
 
     /**
      * Create an instance of the reference class
      * 
-     * @param reference The instance of the Reference which contains the
-     *                  informations to store
-     * @return The instance of reference which has been created with its primary
-     *         key.
+     * @param reference
+     *            The instance of the Reference which contains the informations to store
+     * @return The instance of reference which has been created with its primary key.
      */
-    public static Reference create(Reference reference) {
-        _dao.insert(reference, _plugin);
+    public static Reference create( Reference reference )
+    {
+        _dao.insert( reference, _plugin );
 
         return reference;
     }
@@ -72,12 +73,13 @@ public final class ReferenceHome {
     /**
      * Update of the reference which is specified in parameter
      * 
-     * @param reference The instance of the Reference which contains the data to
-     *                  store
+     * @param reference
+     *            The instance of the Reference which contains the data to store
      * @return The instance of the reference which has been updated
      */
-    public static Reference update(Reference reference) {
-        _dao.store(reference, _plugin);
+    public static Reference update( Reference reference )
+    {
+        _dao.store( reference, _plugin );
 
         return reference;
     }
@@ -85,20 +87,24 @@ public final class ReferenceHome {
     /**
      * Remove the reference whose identifier is specified in parameter
      * 
-     * @param nKey The reference Id
+     * @param nKey
+     *            The reference Id
      */
-    public static void remove(int nKey) {
-        _dao.delete(nKey, _plugin);
+    public static void remove( int nKey )
+    {
+        _dao.delete( nKey, _plugin );
     }
 
     /**
      * Returns an instance of a reference whose identifier is specified in parameter
      * 
-     * @param nKey The reference primary key
+     * @param nKey
+     *            The reference primary key
      * @return an instance of Reference
      */
-    public static Reference findByPrimaryKey(int nKey) {
-        return _dao.load(nKey, _plugin);
+    public static Reference findByPrimaryKey( int nKey )
+    {
+        return _dao.load( nKey, _plugin );
     }
 
     /**
@@ -106,8 +112,9 @@ public final class ReferenceHome {
      * 
      * @return the list which contains the data of all the reference objects
      */
-    public static List<Reference> getReferencesList() {
-        return _dao.selectReferencesList(_plugin);
+    public static List<Reference> getReferencesList( )
+    {
+        return _dao.selectReferencesList( _plugin );
     }
 
     /**
@@ -115,18 +122,18 @@ public final class ReferenceHome {
      * 
      * @return the list which contains the id of all the reference objects
      */
-    public static List<Integer> getIdReferencesList() {
-        return _dao.selectIdReferencesList(_plugin);
+    public static List<Integer> getIdReferencesList( )
+    {
+        return _dao.selectIdReferencesList( _plugin );
     }
 
     /**
-     * Load the data of all the reference objects and returns them as a
-     * referenceList
+     * Load the data of all the reference objects and returns them as a referenceList
      * 
-     * @return the referenceList which contains the data of all the reference
-     *         objects
+     * @return the referenceList which contains the data of all the reference objects
      */
-    public static ReferenceList getReferencesReferenceList() {
-        return _dao.selectReferencesReferenceList(_plugin);
+    public static ReferenceList getReferencesReferenceList( )
+    {
+        return _dao.selectReferencesReferenceList( _plugin );
     }
 }

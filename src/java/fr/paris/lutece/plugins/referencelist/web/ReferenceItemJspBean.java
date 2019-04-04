@@ -58,11 +58,11 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * This class provides the user interface to manage ReferenceItem features (
- * manage, create, modify, remove )
+ * This class provides the user interface to manage ReferenceItem features ( manage, create, modify, remove )
  */
-@Controller(controllerJsp = "ManageReferenceItems.jsp", controllerPath = "jsp/admin/plugins/referencelist/", right = "REFERENCELIST_MANAGEMENT")
-public class ReferenceItemJspBean extends AbstractReferenceListManageJspBean {
+@Controller( controllerJsp = "ManageReferenceItems.jsp", controllerPath = "jsp/admin/plugins/referencelist/", right = "REFERENCELIST_MANAGEMENT" )
+public class ReferenceItemJspBean extends AbstractReferenceListManageJspBean
+{
     private static final long serialVersionUID = -1372012949835763462L;
     // Templates
     private static final String TEMPLATE_MANAGE_REFERENCEITEMS = "/admin/plugins/referencelist/manage_referenceitems.html";
@@ -128,85 +128,97 @@ public class ReferenceItemJspBean extends AbstractReferenceListManageJspBean {
     /**
      * Build the Manage View
      * 
-     * @param request The HTTP request
+     * @param request
+     *            The HTTP request
      * @return The page
      */
-    @View(value = VIEW_MANAGE_REFERENCEITEMS, defaultView = true)
-    public String getManageReferenceItems(HttpServletRequest request) {
+    @View( value = VIEW_MANAGE_REFERENCEITEMS, defaultView = true )
+    public String getManageReferenceItems( HttpServletRequest request )
+    {
         _referenceitem = null;
-        IdReference = Integer.parseInt(request.getParameter(PARAMETER_ID_REFERENCE));
+        IdReference = Integer.parseInt( request.getParameter( PARAMETER_ID_REFERENCE ) );
 
-        List<ReferenceItem> listReferenceItems = ReferenceItemHome.getReferenceItemsList(IdReference);
-        Map<String, Object> model = getPaginatedListModel(request, MARK_REFERENCEITEM_LIST, listReferenceItems,
-                JSP_MANAGE_REFERENCEITEMS + "?id=" + IdReference);
+        List<ReferenceItem> listReferenceItems = ReferenceItemHome.getReferenceItemsList( IdReference );
+        Map<String, Object> model = getPaginatedListModel( request, MARK_REFERENCEITEM_LIST, listReferenceItems, JSP_MANAGE_REFERENCEITEMS + "?id="
+                + IdReference );
 
-        return getPage(PROPERTY_PAGE_TITLE_MANAGE_REFERENCEITEMS, TEMPLATE_MANAGE_REFERENCEITEMS, model);
+        return getPage( PROPERTY_PAGE_TITLE_MANAGE_REFERENCEITEMS, TEMPLATE_MANAGE_REFERENCEITEMS, model );
     }
 
     /**
      * Returns the form to import csv
      *
-     * @param request The Http request
+     * @param request
+     *            The Http request
      * @return the html code of the referenceitem form
      */
-    @View(VIEW_IMPORT_REFERENCEITEM)
-    public String getImportReferenceItem(HttpServletRequest request) {
+    @View( VIEW_IMPORT_REFERENCEITEM )
+    public String getImportReferenceItem( HttpServletRequest request )
+    {
         // makeitbetter dada = new makeitbetter();
         // dada.testBusiness();
-        return getPage("PROPERTY_PAGE_TITLE_IMPORT_REFERENCEITEM", TEMPLATE_IMPORT_REFERENCEITEM);
+        return getPage( "PROPERTY_PAGE_TITLE_IMPORT_REFERENCEITEM", TEMPLATE_IMPORT_REFERENCEITEM );
     }
 
     /**
      * Process the data capture form a csv file
      *
-     * @param request The Http Request
+     * @param request
+     *            The Http Request
      * @return The Jsp URL of the process result
      * @throws IOException
      */
-    @Action(ACTION_CHECK_IMPORT_REFERENCEITEM)
-    public String checkImportReferenceItem(HttpServletRequest request) throws IOException {
+    @Action( ACTION_CHECK_IMPORT_REFERENCEITEM )
+    public String checkImportReferenceItem( HttpServletRequest request ) throws IOException
+    {
 
-        List<ReferenceItem> candidateItems = new ArrayList<>();
+        List<ReferenceItem> candidateItems = new ArrayList<>( );
 
         int refId = IdReference;
-        if (request instanceof MultipartHttpServletRequest) {
+        if ( request instanceof MultipartHttpServletRequest )
+        {
             // Check File
-            FileItem csvFile = ((MultipartHttpServletRequest) request).getFile("file");
-            if (!ReferenceItemPrepareImport.isImportableCSVFile(csvFile.getName(), csvFile.getSize())) {
-                addError(INFO_REFERENCEITEM_FILE_ERROR, getLocale());
-                return redirectView(request, VIEW_IMPORT_REFERENCEITEM);
+            FileItem csvFile = ( (MultipartHttpServletRequest) request ).getFile( "file" );
+            if ( !ReferenceItemPrepareImport.isImportableCSVFile( csvFile.getName( ), csvFile.getSize( ) ) )
+            {
+                addError( INFO_REFERENCEITEM_FILE_ERROR, getLocale( ) );
+                return redirectView( request, VIEW_IMPORT_REFERENCEITEM );
             }
             // Check File errors
-            String errorsMessage = ReferenceItemPrepareImport.isErrorInCSVFile(csvFile.getInputStream());
-            if (errorsMessage != null) {
-                Map<String, Object> model = getModel();
-                model.put(MARK_IMPORT_ERROR_BASE64, errorsMessage);
-                return getPage("PROPERTY_PAGE_TITLE_IMPORT_REFERENCEITEM", TEMPLATE_IMPORT_REFERENCEITEM, model);
+            String errorsMessage = ReferenceItemPrepareImport.isErrorInCSVFile( csvFile.getInputStream( ) );
+            if ( errorsMessage != null )
+            {
+                Map<String, Object> model = getModel( );
+                model.put( MARK_IMPORT_ERROR_BASE64, errorsMessage );
+                return getPage( "PROPERTY_PAGE_TITLE_IMPORT_REFERENCEITEM", TEMPLATE_IMPORT_REFERENCEITEM, model );
             }
 
             // CandidateItems to Import
-            candidateItems = ReferenceItemPrepareImport.findCandidateItems(csvFile.getInputStream(), refId);
+            candidateItems = ReferenceItemPrepareImport.findCandidateItems( csvFile.getInputStream( ), refId );
 
         }
 
         // Check if there is candidateitems to import
-        if (candidateItems.size() == 0) {
-            addError(INFO_REFERENCEITEM_IMPORT_EMPTY, getLocale());
-            return redirectView(request, VIEW_IMPORT_REFERENCEITEM);
+        if ( candidateItems.size( ) == 0 )
+        {
+            addError( INFO_REFERENCEITEM_IMPORT_EMPTY, getLocale( ) );
+            return redirectView( request, VIEW_IMPORT_REFERENCEITEM );
 
-        } else {
+        }
+        else
+        {
 
             // call confirmation
-            compareResult = ReferenceItemHome.compareReferenceItems(candidateItems, refId);
-            String tmpmsg = CompareResult.createMessage(compareResult);
+            compareResult = ReferenceItemHome.compareReferenceItems( candidateItems, refId );
+            String tmpmsg = CompareResult.createMessage( compareResult );
 
-            if (compareResult.get_insertListCandidateReferenceItems().size() == 0
-                    && compareResult.get_updateListCandidateReferenceItems().size() == 0) {
-                addError(I18nService.getLocalizedString(INFO_REFERENCEITEM_NOTIMPORTED, getLocale()) + tmpmsg);
-                return redirectView(request, VIEW_IMPORT_REFERENCEITEM);
+            if ( compareResult.get_insertListCandidateReferenceItems( ).size( ) == 0 && compareResult.get_updateListCandidateReferenceItems( ).size( ) == 0 )
+            {
+                addError( I18nService.getLocalizedString( INFO_REFERENCEITEM_NOTIMPORTED, getLocale( ) ) + tmpmsg );
+                return redirectView( request, VIEW_IMPORT_REFERENCEITEM );
             }
 
-            return getConfirmImportReferenceItem(request);
+            return getConfirmImportReferenceItem( request );
         }
 
     }
@@ -214,45 +226,54 @@ public class ReferenceItemJspBean extends AbstractReferenceListManageJspBean {
     /**
      * Manages the import file of a referenceitems
      *
-     * @param request The Http request
+     * @param request
+     *            The Http request
      * @return the html code to confirm
      */
-    @Action(ACTION_CONFIRM_IMPORT_REFERENCEITEM)
-    public String getConfirmImportReferenceItem(HttpServletRequest request) {
+    @Action( ACTION_CONFIRM_IMPORT_REFERENCEITEM )
+    public String getConfirmImportReferenceItem( HttpServletRequest request )
+    {
 
-        String tmpmsg = CompareResult.createMessage(compareResult);
-        Object[] messageArgs = { tmpmsg };
+        String tmpmsg = CompareResult.createMessage( compareResult );
+        Object [ ] messageArgs = {
+            tmpmsg
+        };
 
-        UrlItem url = new UrlItem(getActionUrl(ACTION_DO_IMPORT_REFERENCEITEM));
-        url.addParameter(PARAMETER_ID_REFERENCEITEM, IdReference);
+        UrlItem url = new UrlItem( getActionUrl( ACTION_DO_IMPORT_REFERENCEITEM ) );
+        url.addParameter( PARAMETER_ID_REFERENCEITEM, IdReference );
 
-        String strMessageUrl = AdminMessageService.getMessageUrl(request, MESSAGE_CONFIRM_IMPORT_REFERENCEITEM,
-                messageArgs, url.getUrl(), AdminMessage.TYPE_CONFIRMATION);
+        String strMessageUrl = AdminMessageService.getMessageUrl( request, MESSAGE_CONFIRM_IMPORT_REFERENCEITEM, messageArgs, url.getUrl( ),
+                AdminMessage.TYPE_CONFIRMATION );
 
-        return redirect(request, strMessageUrl);
+        return redirect( request, strMessageUrl );
 
     }
 
     /**
      * Returns the corresponding view after import
      *
-     * @param request The Http request
+     * @param request
+     *            The Http request
      * @return the html code of the referenceitem form
      */
-    @Action(ACTION_DO_IMPORT_REFERENCEITEM)
-    public String doImportReferenceItem(HttpServletRequest request) {
+    @Action( ACTION_DO_IMPORT_REFERENCEITEM )
+    public String doImportReferenceItem( HttpServletRequest request )
+    {
 
-        boolean doImportCSV = ReferenceImport.doImportCSV(compareResult, IdReference, getUser());
+        boolean doImportCSV = ReferenceImport.doImportCSV( compareResult, IdReference, getUser( ) );
 
-        if (!doImportCSV) {
+        if ( !doImportCSV )
+        {
             // User don't have sufficient rights.
-            addError(I18nService.getLocalizedString(INFO_REFERENCEITEM_IMPORT_REFUSED, getLocale()));
-            return redirectView(request, VIEW_IMPORT_REFERENCEITEM);
+            addError( I18nService.getLocalizedString( INFO_REFERENCEITEM_IMPORT_REFUSED, getLocale( ) ) );
+            return redirectView( request, VIEW_IMPORT_REFERENCEITEM );
 
-        } else {
+        }
+        else
+        {
             // import success
-            addInfo(INFO_REFERENCEITEM_IMPORTED, getLocale());
-            return redirect(request, VIEW_MANAGE_REFERENCEITEMS, PARAMETER_ID_REFERENCE, IdReference);
+            addInfo( INFO_REFERENCEITEM_IMPORTED, getLocale( ) );
+            return redirect( request, VIEW_MANAGE_REFERENCEITEMS, PARAMETER_ID_REFERENCE, IdReference );
         }
 
     }
@@ -260,115 +281,128 @@ public class ReferenceItemJspBean extends AbstractReferenceListManageJspBean {
     /**
      * Returns the form to create a referenceitem
      *
-     * @param request The Http request
+     * @param request
+     *            The Http request
      * @return the html code of the referenceitem form
      */
-    @View(VIEW_CREATE_REFERENCEITEM)
-    public String getCreateReferenceItem(HttpServletRequest request) {
+    @View( VIEW_CREATE_REFERENCEITEM )
+    public String getCreateReferenceItem( HttpServletRequest request )
+    {
 
-        _referenceitem = (_referenceitem != null) ? _referenceitem : new ReferenceItem();
-        _referenceitem.setIdreference(IdReference);
-        Map<String, Object> model = getModel();
-        model.put(MARK_REFERENCEITEM, _referenceitem);
-        return getPage(PROPERTY_PAGE_TITLE_CREATE_REFERENCEITEM, TEMPLATE_CREATE_REFERENCEITEM, model);
+        _referenceitem = ( _referenceitem != null ) ? _referenceitem : new ReferenceItem( );
+        _referenceitem.setIdreference( IdReference );
+        Map<String, Object> model = getModel( );
+        model.put( MARK_REFERENCEITEM, _referenceitem );
+        return getPage( PROPERTY_PAGE_TITLE_CREATE_REFERENCEITEM, TEMPLATE_CREATE_REFERENCEITEM, model );
     }
 
     /**
      * Process the data capture form of a new referenceitem
      *
-     * @param request The Http Request
+     * @param request
+     *            The Http Request
      * @return The Jsp URL of the process result
      */
-    @Action(ACTION_CREATE_REFERENCEITEM)
-    public String doCreateReferenceItem(HttpServletRequest request) {
-        populate(_referenceitem, request, request.getLocale());
-        IdReference = _referenceitem.getIdreference();
+    @Action( ACTION_CREATE_REFERENCEITEM )
+    public String doCreateReferenceItem( HttpServletRequest request )
+    {
+        populate( _referenceitem, request, request.getLocale( ) );
+        IdReference = _referenceitem.getIdreference( );
         // Check constraints
-        if (!validateBean(_referenceitem, VALIDATION_ATTRIBUTES_PREFIX)) {
-            return redirectView(request, VIEW_CREATE_REFERENCEITEM);
+        if ( !validateBean( _referenceitem, VALIDATION_ATTRIBUTES_PREFIX ) )
+        {
+            return redirectView( request, VIEW_CREATE_REFERENCEITEM );
         }
 
-        ReferenceItemHome.create(_referenceitem);
-        addInfo(INFO_REFERENCEITEM_CREATED, getLocale());
+        ReferenceItemHome.create( _referenceitem );
+        addInfo( INFO_REFERENCEITEM_CREATED, getLocale( ) );
 
-        return redirect(request, VIEW_MANAGE_REFERENCEITEMS, PARAMETER_ID_REFERENCE, IdReference);
+        return redirect( request, VIEW_MANAGE_REFERENCEITEMS, PARAMETER_ID_REFERENCE, IdReference );
         // return redirectView( request, VIEW_MANAGE_REFERENCEITEMS );
     }
 
     /**
-     * Manages the removal form of a referenceitem whose identifier is in the http
-     * request
+     * Manages the removal form of a referenceitem whose identifier is in the http request
      *
-     * @param request The Http request
+     * @param request
+     *            The Http request
      * @return the html code to confirm
      */
-    @Action(ACTION_CONFIRM_REMOVE_REFERENCEITEM)
-    public String getConfirmRemoveReferenceItem(HttpServletRequest request) {
-        int nId = Integer.parseInt(request.getParameter(PARAMETER_ID_REFERENCEITEM));
-        UrlItem url = new UrlItem(getActionUrl(ACTION_REMOVE_REFERENCEITEM));
-        url.addParameter(PARAMETER_ID_REFERENCEITEM, nId);
+    @Action( ACTION_CONFIRM_REMOVE_REFERENCEITEM )
+    public String getConfirmRemoveReferenceItem( HttpServletRequest request )
+    {
+        int nId = Integer.parseInt( request.getParameter( PARAMETER_ID_REFERENCEITEM ) );
+        UrlItem url = new UrlItem( getActionUrl( ACTION_REMOVE_REFERENCEITEM ) );
+        url.addParameter( PARAMETER_ID_REFERENCEITEM, nId );
 
-        String strMessageUrl = AdminMessageService.getMessageUrl(request, MESSAGE_CONFIRM_REMOVE_REFERENCEITEM,
-                url.getUrl(), AdminMessage.TYPE_CONFIRMATION);
+        String strMessageUrl = AdminMessageService.getMessageUrl( request, MESSAGE_CONFIRM_REMOVE_REFERENCEITEM, url.getUrl( ), AdminMessage.TYPE_CONFIRMATION );
 
-        return redirect(request, strMessageUrl);
+        return redirect( request, strMessageUrl );
     }
 
     /**
      * Handles the removal form of a referenceitem
      *
-     * @param request The Http request
+     * @param request
+     *            The Http request
      * @return the jsp URL to display the form to manage referenceitems
      */
-    @Action(ACTION_REMOVE_REFERENCEITEM)
-    public String doRemoveReferenceItem(HttpServletRequest request) {
-        int nId = Integer.parseInt(request.getParameter(PARAMETER_ID_REFERENCEITEM));
+    @Action( ACTION_REMOVE_REFERENCEITEM )
+    public String doRemoveReferenceItem( HttpServletRequest request )
+    {
+        int nId = Integer.parseInt( request.getParameter( PARAMETER_ID_REFERENCEITEM ) );
 
-        ReferenceItemHome.remove(nId);
-        addInfo(INFO_REFERENCEITEM_REMOVED, getLocale());
+        ReferenceItemHome.remove( nId );
+        addInfo( INFO_REFERENCEITEM_REMOVED, getLocale( ) );
 
-        return redirect(request, VIEW_MANAGE_REFERENCEITEMS, PARAMETER_ID_REFERENCE, IdReference);
+        return redirect( request, VIEW_MANAGE_REFERENCEITEMS, PARAMETER_ID_REFERENCE, IdReference );
         // return redirectView( request, VIEW_MANAGE_REFERENCEITEMS );
     }
 
     /**
      * Returns the form to update info about a referenceitem
      *
-     * @param request The Http request
+     * @param request
+     *            The Http request
      * @return The HTML form to update info
      */
-    @View(VIEW_MODIFY_REFERENCEITEM)
-    public String getModifyReferenceItem(HttpServletRequest request) {
-        int nId = Integer.parseInt(request.getParameter(PARAMETER_ID_REFERENCEITEM));
+    @View( VIEW_MODIFY_REFERENCEITEM )
+    public String getModifyReferenceItem( HttpServletRequest request )
+    {
+        int nId = Integer.parseInt( request.getParameter( PARAMETER_ID_REFERENCEITEM ) );
 
-        if (_referenceitem == null || (_referenceitem.getId() != nId)) {
-            _referenceitem = ReferenceItemHome.findByPrimaryKey(nId);
+        if ( _referenceitem == null || ( _referenceitem.getId( ) != nId ) )
+        {
+            _referenceitem = ReferenceItemHome.findByPrimaryKey( nId );
         }
 
-        Map<String, Object> model = getModel();
-        model.put(MARK_REFERENCEITEM, _referenceitem);
+        Map<String, Object> model = getModel( );
+        model.put( MARK_REFERENCEITEM, _referenceitem );
 
-        return getPage(PROPERTY_PAGE_TITLE_MODIFY_REFERENCEITEM, TEMPLATE_MODIFY_REFERENCEITEM, model);
+        return getPage( PROPERTY_PAGE_TITLE_MODIFY_REFERENCEITEM, TEMPLATE_MODIFY_REFERENCEITEM, model );
     }
 
     /**
      * Process the change form of a referenceitem
      *
-     * @param request The Http request
+     * @param request
+     *            The Http request
      * @return The Jsp URL of the process result
      */
-    @Action(ACTION_MODIFY_REFERENCEITEM)
-    public String doModifyReferenceItem(HttpServletRequest request) {
-        populate(_referenceitem, request, request.getLocale());
-        IdReference = _referenceitem.getIdreference();
+    @Action( ACTION_MODIFY_REFERENCEITEM )
+    public String doModifyReferenceItem( HttpServletRequest request )
+    {
+        populate( _referenceitem, request, request.getLocale( ) );
+        IdReference = _referenceitem.getIdreference( );
         // Check constraints
-        if (!validateBean(_referenceitem, VALIDATION_ATTRIBUTES_PREFIX)) {
-            return redirect(request, VIEW_MODIFY_REFERENCEITEM, PARAMETER_ID_REFERENCEITEM, _referenceitem.getId());
+        if ( !validateBean( _referenceitem, VALIDATION_ATTRIBUTES_PREFIX ) )
+        {
+            return redirect( request, VIEW_MODIFY_REFERENCEITEM, PARAMETER_ID_REFERENCEITEM, _referenceitem.getId( ) );
         }
 
-        ReferenceItemHome.update(_referenceitem);
-        addInfo(INFO_REFERENCEITEM_UPDATED, getLocale());
-        return redirect(request, VIEW_MANAGE_REFERENCEITEMS, PARAMETER_ID_REFERENCE, IdReference);
+        ReferenceItemHome.update( _referenceitem );
+        addInfo( INFO_REFERENCEITEM_UPDATED, getLocale( ) );
+        return redirect( request, VIEW_MANAGE_REFERENCEITEMS, PARAMETER_ID_REFERENCE, IdReference );
         // return redirectView( request, VIEW_MANAGE_REFERENCEITEMS );
     }
 }

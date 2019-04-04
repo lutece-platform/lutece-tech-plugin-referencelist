@@ -39,16 +39,17 @@ import java.io.Serializable;
 /**
  * This is the business class for the object ReferenceItem
  */
-public class ReferenceItem implements Serializable {
+public class ReferenceItem implements Serializable
+{
     private static final long serialVersionUID = 1L;
 
     // Variables declarations
     private int _nId;
 
-    @NotEmpty(message = "#i18n{referencelist.validation.referenceitem.ItemName.notEmpty}")
+    @NotEmpty( message = "#i18n{referencelist.validation.referenceitem.ItemName.notEmpty}" )
     private String _strItemName;
 
-    @NotEmpty(message = "#i18n{referencelist.validation.referenceitem.ItemValue.notEmpty}")
+    @NotEmpty( message = "#i18n{referencelist.validation.referenceitem.ItemValue.notEmpty}" )
     private String _strItemValue;
 
     private int _nIdreference;
@@ -58,16 +59,19 @@ public class ReferenceItem implements Serializable {
      * 
      * @return The Id
      */
-    public int getId() {
+    public int getId( )
+    {
         return _nId;
     }
 
     /**
      * Sets the Id
      * 
-     * @param nId The Id
+     * @param nId
+     *            The Id
      */
-    public void setId(int nId) {
+    public void setId( int nId )
+    {
         _nId = nId;
     }
 
@@ -76,16 +80,19 @@ public class ReferenceItem implements Serializable {
      * 
      * @return The ItemName
      */
-    public String getItemName() {
+    public String getItemName( )
+    {
         return _strItemName;
     }
 
     /**
      * Sets the ItemName
      * 
-     * @param strItemName The ItemName
+     * @param strItemName
+     *            The ItemName
      */
-    public void setItemName(String strItemName) {
+    public void setItemName( String strItemName )
+    {
         _strItemName = strItemName;
     }
 
@@ -94,16 +101,19 @@ public class ReferenceItem implements Serializable {
      * 
      * @return The ItemValue
      */
-    public String getItemValue() {
+    public String getItemValue( )
+    {
         return _strItemValue;
     }
 
     /**
      * Sets the ItemValue
      * 
-     * @param strItemValue The ItemValue
+     * @param strItemValue
+     *            The ItemValue
      */
-    public void setItemValue(String strItemValue) {
+    public void setItemValue( String strItemValue )
+    {
         _strItemValue = strItemValue;
     }
 
@@ -112,16 +122,19 @@ public class ReferenceItem implements Serializable {
      * 
      * @return The Idreference
      */
-    public int getIdreference() {
+    public int getIdreference( )
+    {
         return _nIdreference;
     }
 
     /**
      * Sets the Idreference
      * 
-     * @param nIdreference The Idreference
+     * @param nIdreference
+     *            The Idreference
      */
-    public void setIdreference(int nIdreference) {
+    public void setIdreference( int nIdreference )
+    {
         _nIdreference = nIdreference;
     }
 }

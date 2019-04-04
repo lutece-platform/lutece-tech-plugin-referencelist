@@ -40,7 +40,8 @@ import java.io.Serializable;
 /**
  * This is the business class for the object Reference
  */
-public class Reference implements Serializable, RBACResource {
+public class Reference implements Serializable, RBACResource
+{
     private static final long serialVersionUID = 1L;
 
     // RBAC management
@@ -52,10 +53,10 @@ public class Reference implements Serializable, RBACResource {
     // Variables declarations
     private int _nId;
 
-    @NotEmpty(message = "#i18n{referencelist.validation.reference.Name.notEmpty}")
+    @NotEmpty( message = "#i18n{referencelist.validation.reference.Name.notEmpty}" )
     private String _strName;
 
-    @NotEmpty(message = "#i18n{referencelist.validation.reference.Description.notEmpty}")
+    @NotEmpty( message = "#i18n{referencelist.validation.reference.Description.notEmpty}" )
     private String _strDescription;
 
     /**
@@ -63,16 +64,19 @@ public class Reference implements Serializable, RBACResource {
      * 
      * @return The Id
      */
-    public int getId() {
+    public int getId( )
+    {
         return _nId;
     }
 
     /**
      * Sets the Id
      * 
-     * @param nId The Id
+     * @param nId
+     *            The Id
      */
-    public void setId(int nId) {
+    public void setId( int nId )
+    {
         _nId = nId;
     }
 
@@ -81,16 +85,19 @@ public class Reference implements Serializable, RBACResource {
      * 
      * @return The Name
      */
-    public String getName() {
+    public String getName( )
+    {
         return _strName;
     }
 
     /**
      * Sets the Name
      * 
-     * @param strName The Name
+     * @param strName
+     *            The Name
      */
-    public void setName(String strName) {
+    public void setName( String strName )
+    {
         _strName = strName;
     }
 
@@ -99,26 +106,31 @@ public class Reference implements Serializable, RBACResource {
      * 
      * @return The Description
      */
-    public String getDescription() {
+    public String getDescription( )
+    {
         return _strDescription;
     }
 
     /**
      * Sets the Description
      * 
-     * @param strDescription The Description
+     * @param strDescription
+     *            The Description
      */
-    public void setDescription(String strDescription) {
+    public void setDescription( String strDescription )
+    {
         _strDescription = strDescription;
     }
 
     @Override
-    public String getResourceTypeCode() {
+    public String getResourceTypeCode( )
+    {
         return RESOURCE_TYPE;
     }
 
     @Override
-    public String getResourceId() {
-        return String.valueOf(this.getId());
+    public String getResourceId( )
+    {
+        return String.valueOf( this.getId( ) );
     }
 }
