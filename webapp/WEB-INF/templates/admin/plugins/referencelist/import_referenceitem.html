@@ -3,14 +3,27 @@
 <@box>
 	<@boxHeader title='#i18n{referencelist.import_referenceitems.title}' />
 	<@boxBody>
-    <@tform name='import_referenceitem' params='enctype="multipart/form-data"' action='jsp/admin/plugins/referencelist/ManageReferenceItems.jsp'>
+		<#if import_error_base64?has_content>
+			<div class="alert alert-danger alert-dismissible" role="alert">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+						aria-hidden="true">&times;</span></button>
+				#i18n{referencelist.info.referenceitem.fileErrors}
+				<a download='log.txt'
+					href='data:text/plain;base64,${import_error_base64}'><strong>#i18n{referencelist.info.referenceitem.import.download}</strong></a>
+			</div>
+		</#if>
 
-        <@messages errors=errors />
-        <input type="hidden" id="id" name="id"/>
-				<@formGroup labelKey='#i18n{referencelist.import_referenceitems.labelFile}' helpKey='#i18n{referencelist.import_referenceitems.labelFile.help}' mandatory=true>
-				<input type='file' name='file' accept=".csv" required/>
-				</@formGroup>
-				<@actionButtons button1Name="action_importReferenceItem" button2Name="view_importReferenceItem"/>
-    </@tform>
+
+		<@tform name='import_referenceitem' params='enctype="multipart/form-data"'
+			action='jsp/admin/plugins/referencelist/ManageReferenceItems.jsp'>
+
+			<@messages errors=errors />
+			<input type="hidden" id="id" name="id" />
+			<@formGroup labelKey='#i18n{referencelist.import_referenceitems.labelFile}'
+				helpKey='#i18n{referencelist.import_referenceitems.labelFile.help}' mandatory=true>
+				<input type='file' name='file' accept=".csv" required />
+			</@formGroup>
+			<@actionButtons button1Name="action_importReferenceItem" button2Name="view_importReferenceItem" />
+		</@tform>
 	</@boxBody>
 </@box>

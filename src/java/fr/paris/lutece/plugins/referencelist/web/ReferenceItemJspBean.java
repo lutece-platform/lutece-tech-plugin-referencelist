@@ -79,6 +79,7 @@ public class ReferenceItemJspBean extends AbstractReferenceListManageJspBean {
 
     // Markers
     private static final String MARK_REFERENCEITEM_LIST = "referenceitem_list";
+    private static final String MARK_IMPORT_ERROR_BASE64 = "import_error_base64";
     private static final String MARK_REFERENCEITEM = "referenceitem";
 
     private static final String JSP_MANAGE_REFERENCEITEMS = "jsp/admin/plugins/referencelist/ManageReferenceItems.jsp";
@@ -176,17 +177,14 @@ public class ReferenceItemJspBean extends AbstractReferenceListManageJspBean {
                 return redirectView(request, VIEW_IMPORT_REFERENCEITEM);
             }
             // Check File errors
-            String errorsMessage;
-
-            errorsMessage = ReferenceItemPrepareImport.isErrorInCSVFile(csvFile.getInputStream());
-
+            String errorsMessage = ReferenceItemPrepareImport.isErrorInCSVFile(csvFile.getInputStream());
             if (errorsMessage != null) {
-                addError(I18nService.getLocalizedString(INFO_REFERENCEITEM_FILE_ERRORS, getLocale()) + errorsMessage);
-                return redirectView(request, VIEW_IMPORT_REFERENCEITEM);
+                Map<String, Object> model = getModel();
+                model.put(MARK_IMPORT_ERROR_BASE64, errorsMessage);
+                return getPage("PROPERTY_PAGE_TITLE_IMPORT_REFERENCEITEM", TEMPLATE_IMPORT_REFERENCEITEM, model);
             }
 
             // CandidateItems to Import
-
             candidateItems = ReferenceItemPrepareImport.findCandidateItems(csvFile.getInputStream(), refId);
 
         }

@@ -12,6 +12,8 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
 
 import fr.paris.lutece.plugins.referencelist.business.ReferenceItem;
+import fr.paris.lutece.portal.service.message.AdminMessageService;
+import fr.paris.lutece.portal.service.util.AppLogService;
 
 public class ReferenceItemPrepareImport {
 
@@ -101,7 +103,7 @@ public class ReferenceItemPrepareImport {
         }
 
         if (errorsMessages.length() > 0) {
-            return getHtmlLinkBase64Src("log_file", errorsMessages, errorsCount);
+            return getHtmlLinkBase64Src(errorsMessages);
         } else {
             return null;
         }
@@ -166,23 +168,18 @@ public class ReferenceItemPrepareImport {
      * @param strFileName    Name of import file
      * @param strFileMessage Message to include in text file
      * @param errorsCount    Number of errors
-     * @return Return null if one of parameters is null or return a Html link with
-     *         base64 text file src
-     * @throws UnsupportedEncodingException
+     * @return Return null if UnsupportedEncodingException and return a base64 text
+     *         file src
      * 
      */
-    private static String getHtmlLinkBase64Src(String strFileName, String strFileMessage, int errorsCount) {
+    private static String getHtmlLinkBase64Src(String strFileMessage) {
         byte[] encodedBytes = Base64.encodeBase64(strFileMessage.getBytes());
-        String strencodedBytes;
         try {
-            strencodedBytes = new String(encodedBytes, "UTF-8");
+            return new String(encodedBytes, "UTF-8");
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            AppLogService.error("Unable to convert byte to string for logfile errors");
             return null;
         }
-        String strLink = " - <a style='' download='" + strFileName + ".txt' href='data:text/plain;base64,"
-                + strencodedBytes + "'><strong>" + errorsCount + " error(s)</strong></a> ";
-        return strLink;
     }
 
 }
