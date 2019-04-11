@@ -92,9 +92,20 @@ public class ReferenceListService
      * 
      * @return the list of all References Items
      */
-    public ReferenceList getReferenceListByName( String referenceName, String lang )
+    public ReferenceList getReferenceList( String referenceName, String lang )
     {
         int idReference = ReferenceHome.findPrimaryKeyByName( referenceName );
+        return getReferenceList(idReference);
+    }
+
+
+      /**
+     * Returns the list of all References Items of a Reference id
+     * 
+     * @return the list of all References Items
+     */
+    public ReferenceList getReferenceList( int idReference )
+    {
         List<ReferenceItem> listReferenceItems = ReferenceItemHome.getReferenceItemsList( idReference );
         ReferenceList list = new ReferenceList( );
         for ( ReferenceItem ref : listReferenceItems )
