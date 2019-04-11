@@ -55,6 +55,7 @@ public final class ReferenceDAO implements IReferenceDAO
     private static final String SQL_QUERY_UPDATE = "UPDATE referencelist_reference SET name = ?, description = ? WHERE id_reference = ?";
     private static final String SQL_QUERY_SELECTALL = "SELECT id_reference, name, description FROM referencelist_reference";
     private static final String SQL_QUERY_SELECTALL_ID = "SELECT id_reference FROM referencelist_reference";
+    private static final String SQL_QUERY_SELECT_ID = "SELECT id_reference FROM referencelist_reference WHERE name = ?";
 
     /**
      * {@inheritDoc }
@@ -104,6 +105,28 @@ public final class ReferenceDAO implements IReferenceDAO
 
         daoUtil.free( );
         return reference;
+    }
+
+    /**
+     * {@inheritDoc }
+     */
+    @Override
+    public int loadByName( String referenceName, Plugin plugin )
+    {
+
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_ID, plugin );
+        daoUtil.setString( 1, referenceName );
+        daoUtil.executeQuery( );
+        int idReference = 0;
+
+        if ( daoUtil.next( ) )
+        {
+            int nIndex = 1;
+            idReference = daoUtil.getInt( nIndex++ );
+        }
+        daoUtil.free( );
+        return idReference;
+
     }
 
     /**
@@ -206,4 +229,5 @@ public final class ReferenceDAO implements IReferenceDAO
         daoUtil.free( );
         return referenceList;
     }
+
 }

@@ -108,6 +108,18 @@ public final class ReferenceHome
     }
 
     /**
+     * Returns an instance of a reference whose identifier is specified in parameter
+     * 
+     * @param nKey
+     *            The reference primary key
+     * @return an instance of Reference
+     */
+    public static int findPrimaryKeyByName( String referenceName )
+    {
+        return _dao.loadByName( referenceName, _plugin );
+    }
+
+    /**
      * Load the data of all the reference objects and returns them as a list
      * 
      * @return the list which contains the data of all the reference objects

@@ -88,6 +88,17 @@ public interface IReferenceDAO
     Reference load( int nKey, Plugin plugin );
 
     /**
+     * Load the data from the table
+     * 
+     * @param referenceName
+     *            The name of the reference
+     * @param plugin
+     *            the Plugin
+     * @return The instance of the reference
+     */
+    int loadByName( String referenceName, Plugin plugin );
+
+    /**
      * Load the data of all the reference objects and returns them as a list
      * 
      * @param plugin

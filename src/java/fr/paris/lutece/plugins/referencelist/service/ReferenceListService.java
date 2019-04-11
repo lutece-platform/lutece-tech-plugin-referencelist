@@ -37,6 +37,9 @@ import java.util.List;
 
 import fr.paris.lutece.plugins.referencelist.business.Reference;
 import fr.paris.lutece.plugins.referencelist.business.ReferenceHome;
+import fr.paris.lutece.plugins.referencelist.business.ReferenceItem;
+import fr.paris.lutece.plugins.referencelist.business.ReferenceItemHome;
+import fr.paris.lutece.util.ReferenceList;
 
 /**
  *
@@ -72,10 +75,33 @@ public class ReferenceListService
      * 
      * @return the list of all References
      */
-    public List<Reference> getReferenceList( )
+
+    public ReferenceList getReferencesList( )
     {
         List<Reference> listReference = ReferenceHome.getReferencesList( );
-        return listReference;
+        ReferenceList list = new ReferenceList( );
+        for ( Reference ref : listReference )
+        {
+            list.addItem( String.valueOf( ref.getId( ) ), ref.getName( ) );
+        }
+        return list;
+    }
+
+    /**
+     * Returns the list of all References Items of a Reference name
+     * 
+     * @return the list of all References Items
+     */
+    public ReferenceList getReferenceListByName( String referenceName, String lang )
+    {
+        int idReference = ReferenceHome.findPrimaryKeyByName( referenceName );
+        List<ReferenceItem> listReferenceItems = ReferenceItemHome.getReferenceItemsList( idReference );
+        ReferenceList list = new ReferenceList( );
+        for ( ReferenceItem ref : listReferenceItems )
+        {
+            list.addItem( String.valueOf( ref.getItemValue( ) ), ref.getItemName( ) );
+        }
+        return list;
     }
 
 }

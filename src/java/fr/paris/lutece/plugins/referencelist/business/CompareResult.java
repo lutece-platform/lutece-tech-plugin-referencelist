@@ -38,6 +38,9 @@ import java.util.Locale;
 
 import fr.paris.lutece.portal.service.i18n.I18nService;
 
+/**
+ * This class provides instances management methods (create, find, ...) for Result of ReferenceItemPrepareImport
+ */
 public class CompareResult
 {
     List<ReferenceItem> _updateListCandidateReferenceItems;
@@ -49,6 +52,12 @@ public class CompareResult
     private static final String INFO_REFERENCEITEM_TO_UPDATE = "referencelist.info.referenceitem.import.updated";
     private static final String INFO_REFERENCEITEM_TO_INSERT = "referencelist.info.referenceitem.import.toinsert";
 
+    /**
+     * 
+     * @param insertListCandidateReferenceItems
+     * @param updateListCandidateReferenceItems
+     * @param duplicateListCandidateReferenceItems
+     */
     public CompareResult( List<ReferenceItem> insertListCandidateReferenceItems, List<ReferenceItem> updateListCandidateReferenceItems,
             List<ReferenceItem> duplicateListCandidateReferenceItems )
     {
