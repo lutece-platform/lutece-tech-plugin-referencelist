@@ -1,6 +1,3 @@
-<!-- <#include "referencelistmanage_tabs.html" />
-<@tabs2 tab="reference" /> -->
-
 <@box>
 	<@boxHeader title='#i18n{referencelist.manage_reference.title}' boxTools=true>
 		<@tform class='form-inline pull-right' name='manage_reference' action='jsp/admin/plugins/referencelist/ManageReferences.jsp'>
@@ -19,25 +16,22 @@
             <th>#i18n{portal.util.labelActions}</th>
         </tr>
         <@tableHeadBodySeparator />
-            <#list reference_list as reference >
-        <tr>
-            <input type="hidden" id="id" name="id"/>
-            <td>
-                ${reference.name}
-            </td>
-            <td>
-                ${reference.description}
-            </td>
-        <td>
-			<@aButton href='jsp/admin/plugins/referencelist/ManageReferences.jsp?view=modifyReference&id=${reference.id}' title='#i18n{portal.util.labelModify}' buttonIcon='pencil' />
-            <@aButton href='jsp/admin/plugins/referencelist/ManageReferences.jsp?action=confirmRemoveReference&id=${reference.id}' title='#i18n{portal.util.labelDelete}' buttonIcon='trash' color='btn-danger' /> 
-            <@aButton href='jsp/admin/plugins/referencelist/ManageReferenceItems.jsp?view=modifyReference&id=${reference.id}' buttonIcon='eye' color='btn-info' />
-
-
-
-        </td>
-        </tr>
-        </#list>
+        <#list reference_list as reference >
+	     	<tr>
+	     		<input type="hidden" id="id" name="id"/>
+	          	<td>
+	              ${reference.name}
+	          	</td>
+	          	<td>
+	              ${reference.description}
+	          	</td>
+	      		<td>
+					<@aButton href='jsp/admin/plugins/referencelist/ManageReferences.jsp?view=modifyReference&id=${reference.id}' title='#i18n{portal.util.labelModify}' buttonIcon='pencil' />
+		          	<@aButton href='jsp/admin/plugins/referencelist/ManageReferences.jsp?action=confirmRemoveReference&id=${reference.id}' title='#i18n{portal.util.labelDelete}' buttonIcon='trash' color='btn-danger' /> 
+		          	<@aButton href='jsp/admin/plugins/referencelist/ManageReferenceItems.jsp?view=modifyReference&id=${reference.id}' buttonIcon='eye' color='btn-info' />
+	     		</td>
+   			</tr>
+    	</#list>
     </@table>
 
     <@paginationAdmin paginator=paginator />

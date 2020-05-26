@@ -2,9 +2,9 @@
 <@tabs2 tab="referenceitem" /> -->
 
 <@box>
-	<@boxHeader title='#i18n{referencelist.manage_referenceitem.title}' boxTools=true>
+	<@boxHeader boxTools=true>
         <@tform class='form-inline pull-right' name='manage_referenceitem' action='jsp/admin/plugins/referencelist/ManageReferenceItems.jsp'>
-        <@button type='submit' name='view_importReferenceItem' buttonIcon='plus' title='#i18n{referencelist.manage_referenceitems.importAdd}' />
+        	<@button type='submit' name='view_importReferenceItem' buttonIcon='plus' title='#i18n{referencelist.manage_referenceitems.importAdd}' />
 			<@button type='submit' name='view_createReferenceItem' buttonIcon='plus' title='#i18n{referencelist.manage_referenceitems.buttonAdd}' />
 		</@tform>
 	</@boxHeader>
@@ -34,10 +34,10 @@
                 ${referenceitem.idreference}
             </td>
         <td>
-			<@aButton href='jsp/admin/plugins/referencelist/ManageReferenceItems.jsp?view=modifyReferenceItem&id=${referenceitem.id}' title='#i18n{portal.util.labelModify}' buttonIcon='pencil' />
-						
+			<@aButton href='jsp/admin/plugins/referencelist/ManageReferenceItems.jsp?view=modifyReferenceItem&id=${referenceitem.id}' title='#i18n{portal.util.labelModify}' buttonIcon='pencil' />		
 			<@aButton href='jsp/admin/plugins/referencelist/ManageReferenceItems.jsp?action=confirmRemoveReferenceItem&id=${referenceitem.id}' title='#i18n{portal.util.labelDelete}' buttonIcon='trash' color='btn-danger' />
-
+			<@aButton href='jsp/admin/plugins/referencelist/ManageReferences.jsp' buttonIcon='eye' color='btn-info' />
+			
         </td>
         </tr>
         </#list>
