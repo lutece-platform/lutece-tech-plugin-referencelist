@@ -1,0 +1,44 @@
+<@box>
+	<@boxHeader title='#i18n{referencelist.manage_reference.title}' boxTools=true>
+		<@tform class='form-inline pull-right' name='manage_reference' action='jsp/admin/plugins/referencelist/ManageReferences.jsp'>
+			<@button type='submit' name='view_createReference' buttonIcon='plus' title='Ajouter une référence' />
+		</@tform>
+	</@boxHeader>
+	<@boxBody>    
+    <@messages infos=infos />
+    <@paginationAdmin paginator=paginator combo=1 />
+    <div class="clearfix"></div>
+    <@table>
+        <tr>
+            <input type="hidden" id="id" name="id"/>
+            <th>Nom de l'option</th>
+            <th>Langue</th>
+            <th>Valeur</th>
+            <th>#i18n{portal.util.labelActions}</th>
+        </tr>
+        <@tableHeadBodySeparator />
+        <#list monoling_values_list as monovalue >
+	     	<tr>
+	     		<input type="hidden" id="id" name="id"/>
+	          	<td>
+	              ${monovalue.name}
+	          	</td>
+	          	<td>
+	              ${monovalue.lang}
+	          	</td>
+	          	<td>
+	              ${monovalue.value}
+	          	</td>
+	      		<td>
+					<@aButton href='jsp/admin/plugins/referencelist/ManageReferences.jsp?view=modifyReference&id=1' title='#i18n{portal.util.labelModify}' buttonIcon='pencil' />
+		          	<@aButton href='jsp/admin/plugins/referencelist/ManageReferences.jsp?action=confirmRemoveReference&id=1' title='#i18n{portal.util.labelDelete}' buttonIcon='trash' color='btn-danger' /> 
+		          	<@aButton href='jsp/admin/plugins/referencelist/ManageReferenceItems.jsp?view=modifyReference&id=1' buttonIcon='eye' color='btn-info' />
+	     		</td>
+   			</tr>
+    	</#list>
+    </@table>
+
+    <@paginationAdmin paginator=paginator />
+
+  </@boxBody>
+</@box>
