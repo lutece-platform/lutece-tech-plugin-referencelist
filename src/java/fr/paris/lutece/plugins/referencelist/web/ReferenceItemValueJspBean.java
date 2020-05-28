@@ -33,7 +33,7 @@
  */
 package fr.paris.lutece.plugins.referencelist.web;
 
-import fr.paris.lutece.plugins.referencelist.business.MonolingValue;
+import fr.paris.lutece.plugins.referencelist.business.ReferenceItemValue;
 import fr.paris.lutece.plugins.referencelist.business.ReferenceHome;
 import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.message.AdminMessage;
@@ -52,7 +52,7 @@ import javax.servlet.http.HttpServletRequest;
  * This class provides the user interface to manage monolingual values features ( manage, create, modify, remove )
  */
 @Controller( controllerJsp = "ManageMonolingValues.jsp", controllerPath = "jsp/admin/plugins/referencelist/", right = "REFERENCELIST_MANAGEMENT" )
-public class MonolingValueJspBean extends AbstractReferenceListManageJspBean
+public class ReferenceItemValueJspBean extends AbstractReferenceListManageJspBean
 {
     // Templates
     private static final String TEMPLATE_MANAGE_MONOLING_VALUES = "/admin/plugins/referencelist/manage_monoling_values.html";
@@ -79,27 +79,27 @@ public class MonolingValueJspBean extends AbstractReferenceListManageJspBean
     @View( value = VIEW_MANAGE_MONOLING_VALUES, defaultView = true )
     public String getManageReferences( HttpServletRequest request )
     {
-        List<MonolingValue> listMonolingValues = new ArrayList<MonolingValue>( );//ReferenceHome.getReferencesList( );
+        List<ReferenceItemValue> listMonolingValues = new ArrayList<ReferenceItemValue>( );//ReferenceHome.getReferencesList( );
         
-        MonolingValue value = new MonolingValue();
+        ReferenceItemValue value = new ReferenceItemValue();
         value.setName("civilite.monsieur");
         value.setLang("fr");
         value.setValue("M.");
         listMonolingValues.add( value );
         
-        value = new MonolingValue();
+        value = new ReferenceItemValue();
         value.setName("civilite.monsieur");
         value.setLang("es");
         value.setValue("Sr");
         listMonolingValues.add( value );
         
-        value = new MonolingValue();
+        value = new ReferenceItemValue();
         value.setName("civilite.madame");
         value.setLang("fr");
         value.setValue("Mme");
         listMonolingValues.add( value );
         
-        value = new MonolingValue();
+        value = new ReferenceItemValue();
         value.setName("civilite.madame");
         value.setLang("es");
         value.setValue("Sra");

@@ -1,4 +1,4 @@
-<jsp:useBean id="referencelistmanageMonolingValues" scope="session" class="fr.paris.lutece.plugins.referencelist.web.MonolingValueJspBean" />
+<jsp:useBean id="referencelistmanageMonolingValues" scope="session" class="fr.paris.lutece.plugins.referencelist.web.ReferenceItemValueJspBean" />
 <% String strContent = referencelistmanageMonolingValues.processController ( request , response ); %>
 
 <%@ page errorPage="../../ErrorPage.jsp" %>
