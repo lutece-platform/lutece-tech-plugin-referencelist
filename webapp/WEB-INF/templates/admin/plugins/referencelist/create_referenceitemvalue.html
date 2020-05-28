@@ -1,0 +1,14 @@
+<@box>
+	<@boxHeader title='#i18n{referencelist.create_referenceitem.title}' />
+	<@boxBody>
+    	<p>CREATE</p>
+    	<@tform name='create_referenceitem' action='jsp/admin/plugins/referencelist/ManageReferenceItemValues.jsp'>
+
+       		<@messages errors=errors />
+        	<input type="hidden" id="id" name="id"/>
+			<input type='hidden' name='idreference' value=''/>
+			
+			<@actionButtons button1Name="action_createReferenceItemValue" button2Name="view_manageReferenceItemValues"/>
+    	</@tform>
+	</@boxBody>
+</@box>
