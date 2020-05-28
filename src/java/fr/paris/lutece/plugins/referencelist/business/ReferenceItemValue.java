@@ -44,11 +44,35 @@ public class ReferenceItemValue implements Serializable
 {
     private static final long serialVersionUID = 1L;
     
+ // Variables declarations
+    private int _nId;
+    
     private String _strName;
     
     private String _strLang;
 
 	private String _strValue;
+    
+	/**
+     * Returns the Id
+     * 
+     * @return The Id
+     */
+    public int getId( )
+    {
+        return _nId;
+    }
+
+    /**
+     * Sets the Id
+     * 
+     * @param nId
+     *            The Id
+     */
+    public void setId( int nId )
+    {
+        _nId = nId;
+    }
     
 	/**
      * Returns the Name

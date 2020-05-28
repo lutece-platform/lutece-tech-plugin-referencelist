@@ -34,7 +34,7 @@
 package fr.paris.lutece.plugins.referencelist.web;
 
 import fr.paris.lutece.plugins.referencelist.business.ReferenceItemValue;
-import fr.paris.lutece.plugins.referencelist.business.ReferenceHome;
+import fr.paris.lutece.plugins.referencelist.business.ReferenceItemValueHome; 
 import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.message.AdminMessage;
 import fr.paris.lutece.portal.service.message.AdminMessageService;
@@ -49,66 +49,64 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * This class provides the user interface to manage monolingual values features ( manage, create, modify, remove )
+ * This class provides the user interface to manage reference item values ( list, create, modify, remove )
  */
-@Controller( controllerJsp = "ManageMonolingValues.jsp", controllerPath = "jsp/admin/plugins/referencelist/", right = "REFERENCELIST_MANAGEMENT" )
+@Controller( controllerJsp = "ManageReferenceItemValues.jsp", controllerPath = "jsp/admin/plugins/referencelist/", right = "REFERENCELIST_MANAGEMENT" )
 public class ReferenceItemValueJspBean extends AbstractReferenceListManageJspBean
-{
-    // Templates
-    private static final String TEMPLATE_MANAGE_MONOLING_VALUES = "/admin/plugins/referencelist/manage_monoling_values.html";
-    // Properties for page titles
-    private static final String PROPERTY_PAGE_TITLE_MANAGE_REFERENCES = "referencelist.manage_monoling_values.pageTitle";
-    /* Markers */
-    // marker for the list in the template
-    private static final String MARK_MONOLING_VALUES_LIST = "monoling_values_list";
-    
-    private static final String JSP_MANAGE_MONOLING_VALUES = "jsp/admin/plugins/referencelist/ManageMonolingValues.jsp";
-    
-    // Views
-    private static final String VIEW_MANAGE_MONOLING_VALUES = "manageMonolingValues";
-    // Session variable to store working values   
+{	
+	// plugin relative path
+	public static final String PLUGIN_PATH = "/admin/plugins/referencelist/";
+	
+    // JSP
+    private static final String JSP_MANAGE_REFERENCE_ITEM_VALUES = "jsp/" + PLUGIN_PATH + "ManageReferenceItemValues.jsp";
 
-
+    /* List View */
+    private static final String VIEW_LIST_REFERENCE_ITEM_VALUES = "manageReferenceItemValues";
+    private static final String TEMPLATE_LIST_REFERENCEITEMVALUES = PLUGIN_PATH + "manage_reference_item_values.html";
+    private static final String MARK_LIST_REFERENCEITEMVALUES = "referenceitemvalues_list";
+    private static final String PROPERTY_PAGE_TITLE_LIST_REFERENCEITEMVALUES = "referencelist.manage_reference_item_values.pageTitle";
+    
+    /* Create View */
+    private static final String VIEW_CREATE_REFERENCE_ITEM_VALUES = "createReferenceItemValues";
+    private static final String TEMPLATE_CREATE_REFERENCEITEMVALUES = PLUGIN_PATH + "/manage_reference_item_values.html";
+    private static final String PROPERTY_PAGE_TITLE_CREATE_REFERENCEITEMVALUES = "referencelist.manage_reference_item_values.pageTitle";
+   
     /**
-     * Build the Manage View
+     * Returns the form to create a reference item value
+     *
+     * @param request
+     *            The Http request
+     * @return the html code of the reference item value form
+     */
+    @View( VIEW_CREATE_REFERENCE_ITEM_VALUES )
+    public String getCreateReferenceItem( HttpServletRequest request )
+    {
+        Map<String, Object> model = getModel( );
+        
+        return getPage( PROPERTY_PAGE_TITLE_CREATE_REFERENCEITEMVALUES, TEMPLATE_CREATE_REFERENCEITEMVALUES, model );
+    }
+    
+    /**
+     * Build the Default List View
      * 
      * @param request
      *            The HTTP request
      * @return The page
      */
-    @View( value = VIEW_MANAGE_MONOLING_VALUES, defaultView = true )
-    public String getManageReferences( HttpServletRequest request )
+    @View( value = VIEW_LIST_REFERENCE_ITEM_VALUES, defaultView = true )
+    public String getManageReferenceItemValues( HttpServletRequest request )
     {
-        List<ReferenceItemValue> listMonolingValues = new ArrayList<ReferenceItemValue>( );//ReferenceHome.getReferencesList( );
-        
-        ReferenceItemValue value = new ReferenceItemValue();
-        value.setName("civilite.monsieur");
-        value.setLang("fr");
-        value.setValue("M.");
-        listMonolingValues.add( value );
-        
-        value = new ReferenceItemValue();
-        value.setName("civilite.monsieur");
-        value.setLang("es");
-        value.setValue("Sr");
-        listMonolingValues.add( value );
-        
-        value = new ReferenceItemValue();
-        value.setName("civilite.madame");
-        value.setLang("fr");
-        value.setValue("Mme");
-        listMonolingValues.add( value );
-        
-        value = new ReferenceItemValue();
-        value.setName("civilite.madame");
-        value.setLang("es");
-        value.setValue("Sra");
-        listMonolingValues.add( value );
+    	
+    	//@TODO récupérer l'identifiant du référentiel
+        List<ReferenceItemValue> listReferenceItemValues = ReferenceItemValueHome.getReferenceItemValueList( 0 );
         
         // getPaginatedListModel should be added in Abstract class
-        Map<String, Object> model = getPaginatedListModel( request, MARK_MONOLING_VALUES_LIST, listMonolingValues, JSP_MANAGE_MONOLING_VALUES );
+        Map<String, Object> model = getPaginatedListModel( request, MARK_LIST_REFERENCEITEMVALUES, listReferenceItemValues, JSP_MANAGE_REFERENCE_ITEM_VALUES );
         
-        return getPage( PROPERTY_PAGE_TITLE_MANAGE_REFERENCES, TEMPLATE_MANAGE_MONOLING_VALUES, model );
+        return getPage( PROPERTY_PAGE_TITLE_LIST_REFERENCEITEMVALUES, TEMPLATE_LIST_REFERENCEITEMVALUES, model );
     }
+    
+    
+    
 
 }
