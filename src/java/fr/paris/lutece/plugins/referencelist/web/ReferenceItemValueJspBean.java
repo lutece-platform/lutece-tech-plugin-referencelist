@@ -39,6 +39,7 @@ import fr.paris.lutece.plugins.referencelist.business.ReferenceItemValueHome;
 import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.message.AdminMessage;
 import fr.paris.lutece.portal.service.message.AdminMessageService;
+import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.portal.util.mvc.admin.annotations.Controller;
 import fr.paris.lutece.portal.util.mvc.commons.annotations.Action;
 import fr.paris.lutece.portal.util.mvc.commons.annotations.View;
@@ -59,27 +60,29 @@ public class ReferenceItemValueJspBean extends AbstractReferenceListManageJspBea
 	public static final String PLUGIN_PATH = "/admin/plugins/referencelist/";
 	
     // JSP
-    private static final String JSP_MANAGE_REFERENCEITEMVALUES = "jsp/" + PLUGIN_PATH + "ManageReferenceItemValues.jsp";
+    private static final String JSP_MANAGE = "jsp/" + PLUGIN_PATH + "ManageReferenceItemValues.jsp";
 
     /* List View */
-    private static final String VIEW_MANAGE_REFERENCEITEMVALUES = "manageReferenceItemValues";
-    private static final String TEMPLATE_MANAGE_REFERENCEITEMVALUES = PLUGIN_PATH + "manage_referenceitemvalues.html";
-    private static final String MARK_MANAGE_REFERENCEITEMVALUES = "referenceitemvalues_list";
-    private static final String PROPERTY_PAGE_TITLE_MANAGE_REFERENCEITEMVALUES = "referencelist.manage_referenceitemvalues.pageTitle";
+    private static final String VIEW_MANAGE = "manage";
+    private static final String TEMPLATE_MANAGE = PLUGIN_PATH + "manage_referenceitemvalues.html";
+    private static final String MARK_MANAGE = "referenceitemvalues_list";
+    private static final String PROPERTY_PAGE_TITLE_MANAGE = "referencelist.manage_referenceitemvalues.pageTitle";
     
     /* Create View */
-    private static final String VIEW_CREATE_REFERENCEITEMVALUE = "createReferenceItemValue";
-    private static final String TEMPLATE_CREATE_REFERENCEITEMVALUE = PLUGIN_PATH + "create_referenceitemvalue.html";
-    private static final String PROPERTY_PAGE_TITLE_CREATE_REFERENCEITEMVALUE = "referencelist.create_referenceitemvalue.pageTitle";
-   
+    private static final String VIEW_CREATE = "create";
+    private static final String TEMPLATE_CREATE = PLUGIN_PATH + "create_referenceitemvalue.html";
+    private static final String PROPERTY_PAGE_TITLE_CREATE = "referencelist.create_referenceitemvalue.pageTitle";
+    private static final String ACTION_CREATE = VIEW_CREATE;
+    
     /* Modify View */
-    private static final String VIEW_MODIFY_REFERENCEITEMVALUE = "modifyReferenceItemValue";
-    private static final String TEMPLATE_MODIFY_REFERENCEITEMVALUE = PLUGIN_PATH + "modify_referenceitemvalue.html";
-    private static final String MARK_MODIFY_REFERENCEITEMVALUE = "referenceitemvalues_list";
-    private static final String PROPERTY_PAGE_TITLE_MODIFY_REFERENCEITEMVALUE = "referencelist.modify_referenceitemvalue.pageTitle";
+    private static final String VIEW_MODIFY = "modify";
+    private static final String TEMPLATE_MODIFY = PLUGIN_PATH + "modify_referenceitemvalue.html";
+    private static final String MARK_MODIFY = "referenceitemvalues_list";
+    private static final String PROPERTY_PAGE_TITLE_MODIFY = "referencelist.modify_referenceitemvalue.pageTitle";
+    private static final String ACTION_MODIFY = VIEW_MODIFY;
 
     /* Removal */
-    private static final String ACTION_REMOVE_REFERENCEITEMVALUE = "modifyReferenceItemValue";
+    private static final String ACTION_REMOVE = "remove";
     
     /**
      * Handles the removal form of a referenceitemvalue
@@ -88,15 +91,16 @@ public class ReferenceItemValueJspBean extends AbstractReferenceListManageJspBea
      *            The Http request
      * @return the jsp URL to display the form to manage referenceitemvalues
      */
-    @Action( ACTION_REMOVE_REFERENCEITEMVALUE )
-    public String doRemoveReferenceItem( HttpServletRequest request )
+    @Action( ACTION_REMOVE )
+    public String doRemoveReferenceItemValue( HttpServletRequest request )
     {
         int nId = Integer.parseInt( request.getParameter( "id" ) );
 
-        ReferenceItemHome.remove( nId );
+        ReferenceItemValueHome.remove( nId );
+        
         addInfo( "referencelist.info.referenceitemvalue.removed", getLocale( ) );
         
-        return redirect( request, VIEW_MANAGE_REFERENCEITEMVALUES );
+        return redirect( request, VIEW_MANAGE, "id", 1 );
     }
     
     /**
@@ -106,17 +110,48 @@ public class ReferenceItemValueJspBean extends AbstractReferenceListManageJspBea
      *            The Http request
      * @return The HTML form to update info
      */
-    @View( VIEW_MODIFY_REFERENCEITEMVALUE )
-    public String getModifyReferenceItem( HttpServletRequest request )
+    @View( VIEW_MODIFY )
+    public String getModifyReferenceItemValue( HttpServletRequest request )
     {
         int nId = Integer.parseInt( request.getParameter( "id" ) );
 
         ReferenceItemValue referenceItemValue = ReferenceItemValueHome.findByPrimaryKey( nId );
         
         Map<String, Object> model = getModel( );
-        model.put( MARK_MODIFY_REFERENCEITEMVALUE, referenceItemValue );
+        model.put( MARK_MODIFY, referenceItemValue );
 
-        return getPage( PROPERTY_PAGE_TITLE_MODIFY_REFERENCEITEMVALUE, TEMPLATE_MODIFY_REFERENCEITEMVALUE, model );
+        return getPage( PROPERTY_PAGE_TITLE_MODIFY, TEMPLATE_MODIFY, model );
+    }
+    
+    /**
+     * Process the change form of a ReferenceItemValue
+     *
+     * @param request
+     *            The Http request
+     * @return The Jsp URL of the process result
+     */
+    @Action( ACTION_MODIFY )
+    public String doModifyReferenceItemValue( HttpServletRequest request )
+    {
+    	ReferenceItemValue itemValue = new ReferenceItemValue( );
+    	
+        populate( itemValue, request, request.getLocale( ) );
+        
+        // @TODO get the reference item or reference id
+        //IdReference = itemValue.getIdreference( );
+        
+        // @TODO Check constraints
+        /*if ( !validateBean( _referenceitem, VALIDATION_ATTRIBUTES_PREFIX ) )
+        {
+            return redirect( request, VIEW_MODIFY_REFERENCEITEM, PARAMETER_ID_REFERENCEITEM, _referenceitem.getId( ) );
+        }*/
+
+        ReferenceItemValueHome.update( itemValue );
+        
+        addInfo( "referencelist.info.referenceitemvalue.updated", getLocale( ) ); 
+        
+        // @TODO transmit the reference id as a session data
+        return redirectView( request, VIEW_MANAGE);
     }
     
     /**
@@ -126,12 +161,44 @@ public class ReferenceItemValueJspBean extends AbstractReferenceListManageJspBea
      *            The Http request
      * @return the html code of the reference item value form
      */
-    @View( VIEW_CREATE_REFERENCEITEMVALUE )
-    public String getCreateReferenceItem( HttpServletRequest request )
+    @View( VIEW_CREATE )
+    public String getCreateReferenceItemValue( HttpServletRequest request )
     {
         Map<String, Object> model = getModel( );
         
-        return getPage( PROPERTY_PAGE_TITLE_CREATE_REFERENCEITEMVALUE, TEMPLATE_CREATE_REFERENCEITEMVALUE, model );
+        return getPage( PROPERTY_PAGE_TITLE_CREATE, TEMPLATE_CREATE, model );
+    }
+    
+    
+    /**
+     * Process the data capture form of a new referenceitem
+     *
+     * @param request
+     *            The Http Request
+     * @return The Jsp URL of the process result
+     */
+    @Action( ACTION_CREATE )
+    public String doCreateReferenceItemValue( HttpServletRequest request )
+    {
+    	ReferenceItemValue itemValue = new ReferenceItemValue( );
+    	
+    	populate( itemValue, request, request.getLocale( ) );
+        
+    	// @TODO get the reference item or reference id
+    	// int idReferenceItem = 1;
+        
+        // @TODO Check constraints
+  /*      if ( !validateBean( _referenceitem, VALIDATION_ATTRIBUTES_PREFIX ) )
+        {
+            return redirectView( request, VIEW_CREATE_REFERENCEITEM );
+        }*/
+
+        ReferenceItemValueHome.create( itemValue );
+        
+        addInfo( "referencelist.info.referenceitemvalue.created", getLocale( ) );
+        
+        // @TODO transmit the reference id
+        return redirect( request, VIEW_MANAGE, "id", 1);
     }
     
     /**
@@ -141,17 +208,16 @@ public class ReferenceItemValueJspBean extends AbstractReferenceListManageJspBea
      *            The HTTP request
      * @return The page
      */
-    @View( value = VIEW_MANAGE_REFERENCEITEMVALUES, defaultView = true )
+    @View( value = VIEW_MANAGE, defaultView = true )
     public String getManageReferenceItemValues( HttpServletRequest request )
     {
-    	
     	//@TODO récupérer l'identifiant du référentiel
         List<ReferenceItemValue> listReferenceItemValues = ReferenceItemValueHome.getReferenceItemValueList( 0 );
         
         // getPaginatedListModel should be added in Abstract class
-        Map<String, Object> model = getPaginatedListModel( request, MARK_MANAGE_REFERENCEITEMVALUES, listReferenceItemValues, JSP_MANAGE_REFERENCEITEMVALUES );
+        Map<String, Object> model = getPaginatedListModel( request, MARK_MANAGE, listReferenceItemValues, JSP_MANAGE );
         
-        return getPage( PROPERTY_PAGE_TITLE_MANAGE_REFERENCEITEMVALUES, TEMPLATE_MANAGE_REFERENCEITEMVALUES, model );
+        return getPage( PROPERTY_PAGE_TITLE_MANAGE, TEMPLATE_MANAGE, model );
     }
     
     

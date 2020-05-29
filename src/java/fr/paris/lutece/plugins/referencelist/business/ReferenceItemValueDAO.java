@@ -35,6 +35,7 @@
 package fr.paris.lutece.plugins.referencelist.business;
 
 import fr.paris.lutece.portal.service.plugin.Plugin;
+import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.util.sql.DAOUtil;
 import java.sql.Statement;
 
@@ -55,14 +56,19 @@ public final class ReferenceItemValueDAO implements IReferenceItemValueDAO
     private static final String SQL_QUERY_UPDATE = "UPDATE referencelist_item SET item_name = ?, item_value = ? WHERE id_reference_item = ?";
     private static final String SQL_QUERY_SELECTALL = "SELECT id_reference_item, item_name, item_value, idreference FROM referencelist_item";
     private static final String SQL_QUERY_SELECTALL_ID = "SELECT id_reference_item FROM referencelist_item";
-
+    
+    
+    private String _logMessage = "";
+    
     /**
      * {@inheritDoc }
      */
     @Override
     public void insert( ReferenceItemValue referenceItem, Plugin plugin )
     {
-        
+    	_logMessage = "ReferenceItemValueDAO -> insert";
+    	
+    	AppLogService.info(_logMessage);
     }
 
     /**
@@ -71,6 +77,10 @@ public final class ReferenceItemValueDAO implements IReferenceItemValueDAO
     @Override
     public ReferenceItemValue load( int nKey, Plugin plugin )
     {
+    	_logMessage = "ReferenceItemValueDAO -> load";
+       
+   		AppLogService.info(_logMessage);
+       
        return null;
     }
 
@@ -80,7 +90,9 @@ public final class ReferenceItemValueDAO implements IReferenceItemValueDAO
     @Override
     public void delete( int nKey, Plugin plugin )
     {
-        
+    	_logMessage = "ReferenceItemValueDAO -> delete";
+    	
+    	AppLogService.info(_logMessage);
     }
 
     /**
@@ -89,15 +101,21 @@ public final class ReferenceItemValueDAO implements IReferenceItemValueDAO
     @Override
     public void store( ReferenceItemValue referenceItem, Plugin plugin )
     {
-        
+    	_logMessage = "ReferenceItemValueDAO -> store";
+    	
+    	AppLogService.info(_logMessage);
     }
 
     /**
      * {@inheritDoc }
      */
     @Override
-    public List<ReferenceItemValue> selectReferenceItemValues( int IdReference, Plugin plugin )
+    public List<ReferenceItemValue> selectReferenceItemValues( int idReference, Plugin plugin )
     {
+    	_logMessage = "ReferenceItemValueDAO -> selectReferenceItemValues : idReference = " + idReference;
+    	
+    	AppLogService.info(_logMessage);
+    	
     	List<ReferenceItemValue> listReferenceItemValues = new ArrayList<ReferenceItemValue>( );
         
         ReferenceItemValue value = new ReferenceItemValue( );
