@@ -1,6 +1,17 @@
 <@box>
-	<@boxHeader title='#i18n{referencelist.modify_referenceitem.title}' />
+	<@boxHeader title='#i18n{referencelist.modify_referenceitemvalue.title}' />
 	<@boxBody>
     	<p>MODIFY</p>
+    	<@tform method="get" action="jsp/admin/plugins/referencelist/ManageReferenceItemValues.jsp">
+			<@messages errors=errors />
+			<input type="hidden" name="id" value="${referenceitemvalue.id}"/>
+			<!-- @formGroup labelKey='#i18n{referencelist.modify_referenceitem.labelItemName}' helpKey='#i18n{referencelist.modify_referenceitem.labelItemName.help}' mandatory=true>
+				<@input type='text' name='item_name' value='${referenceitem.itemName}' />
+			</@formGroup>
+			<@formGroup labelKey='#i18n{referencelist.modify_referenceitem.labelItemValue}' helpKey='#i18n{referencelist.modify_referenceitem.labelItemValue.help}' mandatory=true>
+				<@input type='text' name='item_value' value='${referenceitem.itemValue}' />
+			</@formGroup -->
+	        <@actionButtons button1Name="action_modifyReferenceItemValue" button2Name="view_manageReferenceItemValue"/>
+	    </@tform>
 	</@boxBody>
 </@box>

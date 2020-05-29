@@ -46,7 +46,8 @@ import java.util.List;
 public final class ReferenceItemValueHome
 {
     // Static variable pointed at the DAO instance
-    //private static IReferenceItemValueDAO _dao = SpringContextService.getBean( "referencelist.referenceItemValueValueDAO" );
+    private static IReferenceItemValueDAO _dao = SpringContextService.getBean( "referencelist.referenceItemValueDAO" );
+    
     private static Plugin _plugin = PluginService.getPlugin( "referencelist" );
 
     /**
@@ -65,7 +66,7 @@ public final class ReferenceItemValueHome
      */
     public static ReferenceItemValue create( ReferenceItemValue referenceItemValue )
     {
-        //_dao.insert( referenceItemValue, _plugin );
+        _dao.insert( referenceItemValue, _plugin );
 
         return referenceItemValue;
     }
@@ -79,7 +80,7 @@ public final class ReferenceItemValueHome
      */
     public static ReferenceItemValue update( ReferenceItemValue referenceItemValue )
     {
-       // _dao.store( referenceItemValue, _plugin );
+        _dao.store( referenceItemValue, _plugin );
 
         return referenceItemValue;
     }
@@ -92,7 +93,7 @@ public final class ReferenceItemValueHome
      */
     public static void remove( int nKey )
     {
-        //_dao.delete( nKey, _plugin );
+        _dao.delete( nKey, _plugin );
     }
 
     /**
@@ -104,7 +105,7 @@ public final class ReferenceItemValueHome
      */
     public static ReferenceItemValue findByPrimaryKey( int nKey )
     {
-        return null; //_dao.load( nKey, _plugin );
+        return _dao.load( nKey, _plugin );
     }
 
     /**
@@ -113,34 +114,8 @@ public final class ReferenceItemValueHome
      * @return the list which contains the data of all the referenceItemValue objects
      */
     public static List<ReferenceItemValue> getReferenceItemValueList( int nIdReference )
-    {
-    	List<ReferenceItemValue> listReferenceItemValues = new ArrayList<ReferenceItemValue>( );
-        
-        ReferenceItemValue value = new ReferenceItemValue();
-        value.setName("civilite.monsieur");
-        value.setLang("fr");
-        value.setValue("M.");
-        listReferenceItemValues.add( value );
-        
-        value = new ReferenceItemValue();
-        value.setName("civilite.monsieur");
-        value.setLang("es");
-        value.setValue("Sr");
-        listReferenceItemValues.add( value );
-        
-        value = new ReferenceItemValue();
-        value.setName("civilite.madame");
-        value.setLang("fr");
-        value.setValue("Mme");
-        listReferenceItemValues.add( value );
-        
-        value = new ReferenceItemValue();
-        value.setName("civilite.madame");
-        value.setLang("es");
-        value.setValue("Sra");
-        listReferenceItemValues.add( value );
-        
-        return listReferenceItemValues ;//_dao.selectReferenceItemValuesList( nIdReference, _plugin );
+    {        
+        return _dao.selectReferenceItemValues( nIdReference, _plugin );
     }
 
     

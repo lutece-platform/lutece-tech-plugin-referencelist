@@ -6,6 +6,6 @@
 
     <bean id="referencelist.referenceDAO" class="fr.paris.lutece.plugins.referencelist.business.ReferenceDAO" />
     <bean id="referencelist.referenceItemDAO" class="fr.paris.lutece.plugins.referencelist.business.ReferenceItemDAO" />
-
+	<bean id="referencelist.referenceItemValueDAO" class="fr.paris.lutece.plugins.referencelist.business.ReferenceItemValueDAO" />
 
 </beans>
