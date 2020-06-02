@@ -53,6 +53,8 @@ public class ReferenceItemValue implements Serializable
 
 	private String _strValue;
     
+	private int _nIdItem;
+	
 	/**
      * Returns the Id
      * 
@@ -123,6 +125,20 @@ public class ReferenceItemValue implements Serializable
 	 */
 	public void setValue( String _strValue ) {
 		this._strValue = _strValue;
+	}
+
+	/**
+	 * @return the reference item id
+	 */
+	public int getIdItem() {
+		return _nIdItem;
+	}
+
+	/**
+	 * @param the reference item id to set
+	 */
+	public void setIdItem(int nIdItem) {
+		this._nIdItem = nIdItem;
 	}
 
 	

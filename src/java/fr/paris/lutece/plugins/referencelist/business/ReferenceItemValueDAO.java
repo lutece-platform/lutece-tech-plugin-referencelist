@@ -64,11 +64,15 @@ public final class ReferenceItemValueDAO implements IReferenceItemValueDAO
      * {@inheritDoc }
      */
     @Override
-    public void insert( ReferenceItemValue referenceItem, Plugin plugin )
+    public void insert( ReferenceItemValue itemValue, Plugin plugin )
     {
     	_logMessage = "ReferenceItemValueDAO -> insert";
     	
     	AppLogService.info(_logMessage);
+    	
+    	AppLogService.info("itemValue created : name = " + itemValue.getName() );
+    	AppLogService.info("itemValue created : lang = " + itemValue.getLang() );
+    	AppLogService.info("itemValue created : value = " + itemValue.getValue() );
     }
 
     /**
@@ -78,10 +82,16 @@ public final class ReferenceItemValueDAO implements IReferenceItemValueDAO
     public ReferenceItemValue load( int nKey, Plugin plugin )
     {
     	_logMessage = "ReferenceItemValueDAO -> load";
-       
+    	
+    	ReferenceItemValue value = new ReferenceItemValue( );
+    	value.setId(1);
+        value.setName("civilite.monsieur");
+        value.setLang("fr");
+        value.setValue("M.");
+    	
    		AppLogService.info(_logMessage);
        
-       return null;
+       return value;
     }
 
     /**
@@ -99,11 +109,15 @@ public final class ReferenceItemValueDAO implements IReferenceItemValueDAO
      * {@inheritDoc }
      */
     @Override
-    public void store( ReferenceItemValue referenceItem, Plugin plugin )
+    public void store( ReferenceItemValue itemValue, Plugin plugin )
     {
     	_logMessage = "ReferenceItemValueDAO -> store";
     	
     	AppLogService.info(_logMessage);
+    	
+    	AppLogService.info("itemValue modified : name = " + itemValue.getName() );
+    	AppLogService.info("itemValue modified : lang = " + itemValue.getLang() );
+    	AppLogService.info("itemValue modified : value = " + itemValue.getValue() );
     }
 
     /**
@@ -119,24 +133,28 @@ public final class ReferenceItemValueDAO implements IReferenceItemValueDAO
     	List<ReferenceItemValue> listReferenceItemValues = new ArrayList<ReferenceItemValue>( );
         
         ReferenceItemValue value = new ReferenceItemValue( );
+        value.setId(1);
         value.setName("civilite.monsieur");
         value.setLang("fr");
         value.setValue("M.");
         listReferenceItemValues.add( value );
         
         value = new ReferenceItemValue();
+        value.setId(2);
         value.setName("civilite.monsieur");
         value.setLang("es");
         value.setValue("Sr");
         listReferenceItemValues.add( value );
         
         value = new ReferenceItemValue();
+        value.setId(3);
         value.setName("civilite.madame");
         value.setLang("fr");
         value.setValue("Mme");
         listReferenceItemValues.add( value );
         
         value = new ReferenceItemValue();
+        value.setId(4);
         value.setName("civilite.madame");
         value.setLang("es");
         value.setValue("Sra");

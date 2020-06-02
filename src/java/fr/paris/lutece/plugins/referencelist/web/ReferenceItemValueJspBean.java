@@ -35,7 +35,8 @@ package fr.paris.lutece.plugins.referencelist.web;
 
 import fr.paris.lutece.plugins.referencelist.business.ReferenceItemHome;
 import fr.paris.lutece.plugins.referencelist.business.ReferenceItemValue;
-import fr.paris.lutece.plugins.referencelist.business.ReferenceItemValueHome; 
+import fr.paris.lutece.plugins.referencelist.business.ReferenceItemValueHome;
+import fr.paris.lutece.plugins.referencelist.util.SelectItem;
 import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.message.AdminMessage;
 import fr.paris.lutece.portal.service.message.AdminMessageService;
@@ -77,12 +78,17 @@ public class ReferenceItemValueJspBean extends AbstractReferenceListManageJspBea
     /* Modify View */
     private static final String VIEW_MODIFY = "modify";
     private static final String TEMPLATE_MODIFY = PLUGIN_PATH + "modify_referenceitemvalue.html";
-    private static final String MARK_MODIFY = "referenceitemvalues_list";
+    private static final String MARK_MODIFY = "referenceitemvalue";
     private static final String PROPERTY_PAGE_TITLE_MODIFY = "referencelist.modify_referenceitemvalue.pageTitle";
     private static final String ACTION_MODIFY = VIEW_MODIFY;
 
     /* Removal */
     private static final String ACTION_REMOVE = "remove";
+    
+    private static final String PARAMETER_ID_REFERENCE = "idReference";
+    
+    private static final String MARK_SELECTLIST = "referenceitems";
+    
     
     /**
      * Handles the removal form of a referenceitemvalue
@@ -96,11 +102,13 @@ public class ReferenceItemValueJspBean extends AbstractReferenceListManageJspBea
     {
         int nId = Integer.parseInt( request.getParameter( "id" ) );
 
+        int nIdReference = Integer.parseInt( request.getParameter( PARAMETER_ID_REFERENCE ) );
+        
         ReferenceItemValueHome.remove( nId );
         
         addInfo( "referencelist.info.referenceitemvalue.removed", getLocale( ) );
         
-        return redirect( request, VIEW_MANAGE, "id", 1 );
+        return redirect( request, VIEW_MANAGE, PARAMETER_ID_REFERENCE, nIdReference );
     }
     
     /**
@@ -115,11 +123,18 @@ public class ReferenceItemValueJspBean extends AbstractReferenceListManageJspBea
     {
         int nId = Integer.parseInt( request.getParameter( "id" ) );
 
+        int nIdReference = Integer.parseInt( request.getParameter( PARAMETER_ID_REFERENCE ) );
+
         ReferenceItemValue referenceItemValue = ReferenceItemValueHome.findByPrimaryKey( nId );
         
+        List<SelectItem> referenceitems = buildReferenceItemComboList(nIdReference);
+        
         Map<String, Object> model = getModel( );
+        
         model.put( MARK_MODIFY, referenceItemValue );
-
+        model.put(PARAMETER_ID_REFERENCE, nIdReference);
+        model.put(MARK_SELECTLIST, referenceitems);
+        
         return getPage( PROPERTY_PAGE_TITLE_MODIFY, TEMPLATE_MODIFY, model );
     }
     
@@ -137,8 +152,8 @@ public class ReferenceItemValueJspBean extends AbstractReferenceListManageJspBea
     	
         populate( itemValue, request, request.getLocale( ) );
         
-        // @TODO get the reference item or reference id
-        //IdReference = itemValue.getIdreference( );
+        // from hidden input data
+    	int nIdReference = Integer.parseInt( request.getParameter( PARAMETER_ID_REFERENCE ) );
         
         // @TODO Check constraints
         /*if ( !validateBean( _referenceitem, VALIDATION_ATTRIBUTES_PREFIX ) )
@@ -150,8 +165,7 @@ public class ReferenceItemValueJspBean extends AbstractReferenceListManageJspBea
         
         addInfo( "referencelist.info.referenceitemvalue.updated", getLocale( ) ); 
         
-        // @TODO transmit the reference id as a session data
-        return redirectView( request, VIEW_MANAGE);
+        return redirect( request, VIEW_MANAGE, PARAMETER_ID_REFERENCE, nIdReference);
     }
     
     /**
@@ -164,7 +178,15 @@ public class ReferenceItemValueJspBean extends AbstractReferenceListManageJspBea
     @View( VIEW_CREATE )
     public String getCreateReferenceItemValue( HttpServletRequest request )
     {
+    	int nIdReference = Integer.parseInt( request.getParameter( PARAMETER_ID_REFERENCE ) );
+    	
+    	List<SelectItem> referenceitems = buildReferenceItemComboList(nIdReference);
+        
         Map<String, Object> model = getModel( );
+        
+        model.put(PARAMETER_ID_REFERENCE, nIdReference);
+        
+        model.put(MARK_SELECTLIST, referenceitems);
         
         return getPage( PROPERTY_PAGE_TITLE_CREATE, TEMPLATE_CREATE, model );
     }
@@ -183,9 +205,9 @@ public class ReferenceItemValueJspBean extends AbstractReferenceListManageJspBea
     	ReferenceItemValue itemValue = new ReferenceItemValue( );
     	
     	populate( itemValue, request, request.getLocale( ) );
-        
-    	// @TODO get the reference item or reference id
-    	// int idReferenceItem = 1;
+    	
+    	// from hidden input data
+    	int nIdReference = Integer.parseInt( request.getParameter( PARAMETER_ID_REFERENCE ) );
         
         // @TODO Check constraints
   /*      if ( !validateBean( _referenceitem, VALIDATION_ATTRIBUTES_PREFIX ) )
@@ -197,8 +219,7 @@ public class ReferenceItemValueJspBean extends AbstractReferenceListManageJspBea
         
         addInfo( "referencelist.info.referenceitemvalue.created", getLocale( ) );
         
-        // @TODO transmit the reference id
-        return redirect( request, VIEW_MANAGE, "id", 1);
+        return redirect( request, VIEW_MANAGE, PARAMETER_ID_REFERENCE, nIdReference);
     }
     
     /**
@@ -211,13 +232,35 @@ public class ReferenceItemValueJspBean extends AbstractReferenceListManageJspBea
     @View( value = VIEW_MANAGE, defaultView = true )
     public String getManageReferenceItemValues( HttpServletRequest request )
     {
-    	//@TODO récupérer l'identifiant du référentiel
-        List<ReferenceItemValue> listReferenceItemValues = ReferenceItemValueHome.getReferenceItemValueList( 0 );
+    	int nIdReference = Integer.parseInt( request.getParameter( PARAMETER_ID_REFERENCE ) );
+    	 
+        List<ReferenceItemValue> listReferenceItemValues = ReferenceItemValueHome.getReferenceItemValueList( nIdReference );
         
         // getPaginatedListModel should be added in Abstract class
-        Map<String, Object> model = getPaginatedListModel( request, MARK_MANAGE, listReferenceItemValues, JSP_MANAGE );
+        Map<String, Object> model = getPaginatedListModel( request, MARK_MANAGE, listReferenceItemValues, JSP_MANAGE + 
+        		"?" + PARAMETER_ID_REFERENCE + "=" + nIdReference);
+        
+        model.put(PARAMETER_ID_REFERENCE, nIdReference);
         
         return getPage( PROPERTY_PAGE_TITLE_MANAGE, TEMPLATE_MANAGE, model );
+    }
+    
+    
+    public List<SelectItem> buildReferenceItemComboList( int idReference )
+    {
+    	List<SelectItem> referenceitems = new ArrayList<SelectItem>( );
+        
+        SelectItem selectItem = new SelectItem();
+        selectItem.setCode("1");
+        selectItem.setName("civilite.monsieur");
+        referenceitems.add(selectItem);
+        
+        selectItem = new SelectItem();
+        selectItem.setCode("2");
+        selectItem.setName("civilite.madame");
+        referenceitems.add(selectItem);
+        
+        return referenceitems;
     }
     
     

@@ -23,3 +23,16 @@ item_value long varchar NOT NULL,
 idreference int default '0' NOT NULL,
 PRIMARY KEY (id_reference_item)
 );
+
+--
+-- Structure for table referencelist_itemvalue
+--
+
+DROP TABLE IF EXISTS referencelist_itemvalue;
+CREATE TABLE referencelist_itemvalue (
+	id int AUTO_INCREMENT,
+	id_reference_item int NOT NULL,
+	lang varchar NOT NULL,
+	value long varchar NOT NULL,
+	PRIMARY KEY (id)
+);

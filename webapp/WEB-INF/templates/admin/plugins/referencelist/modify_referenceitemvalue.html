@@ -1,13 +1,17 @@
 <@box>
-	<@boxHeader title='#i18n{referencelist.modify_referenceitemvalue.title}' />
+	<@boxHeader title="#i18n{referencelist.referenceitemvalue.modify.title}" />
 	<@boxBody>
-    	<p>MODIFY</p>
-    	<@tform action="jsp/admin/plugins/referencelist/ManageReferenceItemValues.jsp">
-    	
-			<@messages errors=errors />
-			<input type="hidden" name="id" value="1"/>
-			<input type="hidden" name="idreference" value=""/>
-			
+    	<@tform action="jsp/admin/plugins/referencelist/ManageReferenceItemValues.jsp?idReference=${idReference}">
+    		<@messages errors=errors />
+			<@formGroup labelKey="#i18n{referencelist.referenceitemvalue.labelItemName}">
+				<@select name="idItem" items=referenceitems />
+			</@formGroup>
+			<@formGroup labelKey="#i18n{referencelist.referenceitemvalue.labelLanguage}">
+				<@input type="text" name="lang" value="${referenceitemvalue.lang}" />
+			</@formGroup>
+			<@formGroup labelKey="#i18n{referencelist.referenceitemvalue.labelItemValue}">
+				<@input type="text" name="value" value="${referenceitemvalue.value}" />
+			</@formGroup>
 	        <@actionButtons button1Name="action_modify" button2Name="view_manage"/>
 	    </@tform>
 	</@boxBody>
