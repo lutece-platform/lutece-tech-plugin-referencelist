@@ -5,13 +5,13 @@
     		<@messages errors=errors />
     		<input type="hidden" name="id" value="${referenceitemvalue.id}"/>
 			<@formGroup labelKey="#i18n{referencelist.referenceitemvalue.labelItemName}">
-				<@select name="idItem" items=referenceitems />
+				<@select name="idItem" items=referenceitems default_value="${referenceitemvalue.idItem}"/>
 			</@formGroup>
 			<@formGroup labelKey="#i18n{referencelist.referenceitemvalue.labelLanguage}">
-				<@input type="text" name="lang" value="${referenceitemvalue.lang}" />
+				<@input type="text" name="lang" value=referenceitemvalue.lang />
 			</@formGroup>
 			<@formGroup labelKey="#i18n{referencelist.referenceitemvalue.labelItemValue}">
-				<@input type="text" name="value" value="${referenceitemvalue.value}" />
+				<@input type="text" name="value" value=referenceitemvalue.value />
 			</@formGroup>
 	        <@actionButtons button1Name="action_modify" button2Name="view_manage"/>
 	    </@tform>

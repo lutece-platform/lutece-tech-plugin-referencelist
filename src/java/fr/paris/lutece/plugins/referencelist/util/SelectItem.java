@@ -41,6 +41,8 @@ public class SelectItem {
 	
 	private String code;
 	
+	private String name;
+	
 	/**
 	 * @return the code
 	 */
@@ -68,6 +70,4 @@ public class SelectItem {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	private String name;
 }

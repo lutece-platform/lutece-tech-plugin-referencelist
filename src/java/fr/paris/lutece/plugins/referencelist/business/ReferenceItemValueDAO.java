@@ -48,7 +48,7 @@ import java.util.List;
 public final class ReferenceItemValueDAO implements IReferenceItemValueDAO
 {
     // Constants
-    private static final String SQL_QUERY_SELECT = "SELECT id_itemvalue, item_name, lang, value FROM referencelist_itemvalue v, referencelist_item i" 
+    private static final String SQL_QUERY_SELECT = "SELECT id_itemvalue, i.id_reference_item, item_name, lang, value FROM referencelist_itemvalue v, referencelist_item i" 
     		 										+ " where v.id_reference_item = i.id_reference_item ";
     
     private static final String SQL_QUERY_INSERT = "INSERT INTO referencelist_itemvalue ( id_reference_item, lang, value ) VALUES ( ?, ?, ? ) ";
@@ -109,6 +109,7 @@ public final class ReferenceItemValueDAO implements IReferenceItemValueDAO
             int nIndex = 1;
 
             value.setId( daoUtil.getInt( nIndex++ ) );
+            value.setIdItem( daoUtil.getInt( nIndex++ ) );
             value.setName( daoUtil.getString( nIndex++ ) );
             value.setLang( daoUtil.getString( nIndex++ ) );
             value.setValue( daoUtil.getString( nIndex++ ) );
@@ -141,8 +142,8 @@ public final class ReferenceItemValueDAO implements IReferenceItemValueDAO
     {    	
     	AppLogService.info("ReferenceItemValueDAO -> store");
     	
-    	AppLogService.info("itemValue created : id = " + itemValue.getId( ) );
-    	AppLogService.info("itemValue created : idItem = " + itemValue.getIdItem( ) );
+    	AppLogService.info("itemValue modified : id = " + itemValue.getId( ) );
+    	AppLogService.info("itemValue modified : idItem = " + itemValue.getIdItem( ) );
     	AppLogService.info("itemValue modified : lang = " + itemValue.getLang() );
     	AppLogService.info("itemValue modified : value = " + itemValue.getValue() );
     	
@@ -186,6 +187,7 @@ public final class ReferenceItemValueDAO implements IReferenceItemValueDAO
             int nIndex = 1;
 
             value.setId( daoUtil.getInt( nIndex++ ) );
+            value.setIdItem( daoUtil.getInt( nIndex++ ) );
             value.setName( daoUtil.getString( nIndex++ ) );
             value.setLang( daoUtil.getString( nIndex++ ) );
             value.setValue( daoUtil.getString( nIndex++ ) );

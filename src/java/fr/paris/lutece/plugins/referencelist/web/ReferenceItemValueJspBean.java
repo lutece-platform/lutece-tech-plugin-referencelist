@@ -33,23 +33,21 @@
  */
 package fr.paris.lutece.plugins.referencelist.web;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import fr.paris.lutece.plugins.referencelist.business.ReferenceItem;
 import fr.paris.lutece.plugins.referencelist.business.ReferenceItemHome;
 import fr.paris.lutece.plugins.referencelist.business.ReferenceItemValue;
 import fr.paris.lutece.plugins.referencelist.business.ReferenceItemValueHome;
 import fr.paris.lutece.plugins.referencelist.util.SelectItem;
-import fr.paris.lutece.portal.service.i18n.I18nService;
-import fr.paris.lutece.portal.service.message.AdminMessage;
-import fr.paris.lutece.portal.service.message.AdminMessageService;
-import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.portal.util.mvc.admin.annotations.Controller;
 import fr.paris.lutece.portal.util.mvc.commons.annotations.Action;
 import fr.paris.lutece.portal.util.mvc.commons.annotations.View;
-import fr.paris.lutece.util.url.UrlItem;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * This class provides the user interface to manage reference item values ( list, create, modify, remove )
@@ -245,22 +243,33 @@ public class ReferenceItemValueJspBean extends AbstractReferenceListManageJspBea
         return getPage( PROPERTY_PAGE_TITLE_MANAGE, TEMPLATE_MANAGE, model );
     }
     
-    
+    /**
+     * Builds the combo list of items for a given reference
+     * @param idReference the id of the reference
+     * @return the list of items
+     */
     public List<SelectItem> buildReferenceItemComboList( int idReference )
     {
-    	List<SelectItem> referenceitems = new ArrayList<SelectItem>( );
+    	List<SelectItem> selectItems = new ArrayList<SelectItem>( );
         
-        SelectItem selectItem = new SelectItem();
-        selectItem.setCode("1");
-        selectItem.setName("civilite.monsieur");
-        referenceitems.add(selectItem);
+    	List<ReferenceItem> referenceItems = ReferenceItemHome.getReferenceItemsList( idReference );
+    	Iterator<ReferenceItem> itemsIterator = referenceItems.iterator();
+    	
+    	SelectItem selectItem;
+    	ReferenceItem referenceItem;
+    	
+    	while (itemsIterator.hasNext())
+    	{
+	        selectItem = new SelectItem();
+	        
+	        referenceItem = itemsIterator.next();
+	        
+	        selectItem.setCode(String.valueOf(referenceItem.getId()));
+	        selectItem.setName(referenceItem.getItemName());
+	        selectItems.add(selectItem);
+    	}
         
-        selectItem = new SelectItem();
-        selectItem.setCode("2");
-        selectItem.setName("civilite.madame");
-        referenceitems.add(selectItem);
-        
-        return referenceitems;
+        return selectItems;
     }
     
     
