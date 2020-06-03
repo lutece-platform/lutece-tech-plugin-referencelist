@@ -1,7 +1,7 @@
 <@box>
 	<@boxHeader title="#i18n{referencelist.referenceitemvalue.create.title}" />
 	<@boxBody>
-    	<@tform action="jsp/admin/plugins/referencelist/ManageReferenceItemValues.jsp?idReference=${idReference}">
+    	<@tform action="jsp/admin/plugins/referencelist/ManageReferenceItemValues.jsp">
        		<@messages errors=errors />
 			<@formGroup labelKey="#i18n{referencelist.referenceitemvalue.labelItemName}">
 				<@select name="idItem" items=referenceitems />
