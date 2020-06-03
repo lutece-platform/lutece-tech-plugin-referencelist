@@ -1,5 +1,5 @@
 <@box>
-	<@boxHeader boxTools=true>
+	<@boxHeader boxTools=true title="#i18n{referencelist.referenceitemvalue.manage.title}">
 		<@tform class="form-inline pull-right" name="manage_reference" action="jsp/admin/plugins/referencelist/ManageReferenceItemValues.jsp?idReference=${idReference}">
 			<@button type="submit" name="view_create" buttonIcon="plus" title="#i18n{referencelist.referenceitemvalue.manage.buttonAdd}" />
 		</@tform>
@@ -10,7 +10,6 @@
     <div class="clearfix"></div>
     <@table>
         <tr>
-            <input type="hidden" id="id" name="id"/>
             <th>#i18n{referencelist.referenceitemvalue.labelItemName}</th>
             <th>#i18n{referencelist.referenceitemvalue.labelLanguage}</th>
             <th>#i18n{referencelist.referenceitemvalue.labelItemValue}</th>

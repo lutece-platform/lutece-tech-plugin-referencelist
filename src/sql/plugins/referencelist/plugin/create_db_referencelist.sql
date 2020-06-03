@@ -30,9 +30,9 @@ PRIMARY KEY (id_reference_item)
 
 DROP TABLE IF EXISTS referencelist_itemvalue;
 CREATE TABLE referencelist_itemvalue (
-	id int AUTO_INCREMENT,
-	id_reference_item int NOT NULL,
-	lang varchar NOT NULL,
+	id_itemvalue int AUTO_INCREMENT,
+	lang varchar(10) NOT NULL,
 	value long varchar NOT NULL,
-	PRIMARY KEY (id)
+	id_reference_item int NOT NULL,
+	PRIMARY KEY (id_itemvalue)
 );

@@ -3,6 +3,7 @@
 	<@boxBody>
     	<@tform action="jsp/admin/plugins/referencelist/ManageReferenceItemValues.jsp?idReference=${idReference}">
     		<@messages errors=errors />
+    		<input type="hidden" name="id" value="${referenceitemvalue.id}"/>
 			<@formGroup labelKey="#i18n{referencelist.referenceitemvalue.labelItemName}">
 				<@select name="idItem" items=referenceitems />
 			</@formGroup>
