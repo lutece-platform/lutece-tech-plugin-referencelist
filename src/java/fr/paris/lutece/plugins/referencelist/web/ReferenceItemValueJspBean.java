@@ -223,10 +223,13 @@ public class ReferenceItemValueJspBean extends AbstractReferenceListManageJspBea
     {
     	HttpSession session = request.getSession(  );
     	
-    	if ( session.getAttribute( PARAMETER_ID_REFERENCE ) == null || 
-    		!session.getAttribute( PARAMETER_ID_REFERENCE ).equals( request.getParameter( PARAMETER_ID_REFERENCE ) ) )
+    	AppLogService.info("request.getParameter = " + request.getParameter( PARAMETER_ID_REFERENCE ));
+    	AppLogService.info("session.getAttribute = " + session.getAttribute( PARAMETER_ID_REFERENCE ));
+    	
+    	if ( request.getParameter( PARAMETER_ID_REFERENCE ) != null )
     	{
-    		session.setAttribute(PARAMETER_ID_REFERENCE, request.getParameter( PARAMETER_ID_REFERENCE ));
+    		 if (!request.getParameter( PARAMETER_ID_REFERENCE ).equals( session.getAttribute( PARAMETER_ID_REFERENCE ) ))
+    			session.setAttribute(PARAMETER_ID_REFERENCE, request.getParameter( PARAMETER_ID_REFERENCE ));
     	}
     	else AppLogService.error("Unknown Id Reference. Pass the Id Reference as a GET parameter : \"?idReference=\"");
     	
