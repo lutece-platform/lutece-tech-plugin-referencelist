@@ -3,16 +3,16 @@
 	<@boxBody>
     	<@tform action="jsp/admin/plugins/referencelist/ManageReferenceItemValues.jsp">
        		<@messages errors=errors />
-			<@formGroup labelKey="#i18n{referencelist.referenceitemvalue.labelItemName}">
+			<@formGroup labelKey="#i18n{referencelist.referenceitemvalue.labelItemName}" mandatory=true>
 				<@select name="idItem" items=referenceitems />
 			</@formGroup>
-			<@formGroup labelKey="#i18n{referencelist.referenceitemvalue.labelLanguage}">
+			<@formGroup labelKey="#i18n{referencelist.referenceitemvalue.labelLanguage}" mandatory=true>
 				<@input type="text" name="lang" value="" />
 			</@formGroup>
-			<@formGroup labelKey="#i18n{referencelist.referenceitemvalue.labelItemValue}">
+			<@formGroup labelKey="#i18n{referencelist.referenceitemvalue.labelItemValue}" mandatory=true>
 				<@input type="text" name="value" value="" />
 			</@formGroup>
-			<@actionButtons button1Name="action_create" button2Name="view_manage"/>
+			<@actionButtons button1Name="action_create" url2="jsp/admin/plugins/referencelist/ManageReferenceItemValues.jsp"/>
     	</@tform>
 	</@boxBody>
 </@box>
