@@ -14,7 +14,7 @@
 				<@formGroup labelKey='#i18n{referencelist.create_referenceitem.labelItemValue}' helpKey='#i18n{referencelist.create_referenceitem.labelItemValue.help}' mandatory=true>
 					<@input type='text' name='item_value' value='${referenceitem.itemValue!\'\'}' />
 				</@formGroup>
-				<@actionButtons button1Name="action_createReferenceItem" button2Name="view_manageReferenceItem"/>
+				<@actionButtons button1Name="action_createReferenceItem" url2="jsp/admin/plugins/referencelist/ManageReferenceItems.jsp?id=${referenceitem.idreference}"/>
     </@tform>
 	</@boxBody>
 </@box>
