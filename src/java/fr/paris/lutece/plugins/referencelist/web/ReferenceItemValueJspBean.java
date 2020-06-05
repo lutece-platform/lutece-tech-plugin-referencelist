@@ -50,6 +50,7 @@ import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.portal.util.mvc.admin.annotations.Controller;
 import fr.paris.lutece.portal.util.mvc.commons.annotations.Action;
 import fr.paris.lutece.portal.util.mvc.commons.annotations.View;
+import fr.paris.lutece.util.ReferenceList;
 
 /**
  * This class provides the user interface to manage reference item values ( list, create, modify, remove )
@@ -125,7 +126,7 @@ public class ReferenceItemValueJspBean extends AbstractReferenceListManageJspBea
 
         ReferenceItemValue referenceItemValue = ReferenceItemValueHome.findByPrimaryKey( nId );
         
-        List<SelectItem> referenceitems = buildReferenceItemComboList(nIdReference);
+        ReferenceList referenceitems = buildReferenceItemComboList(nIdReference);
         
         Map<String, Object> model = getModel( );
         
@@ -174,8 +175,11 @@ public class ReferenceItemValueJspBean extends AbstractReferenceListManageJspBea
     {
     	int nIdReference = Integer.parseInt( (String) request.getSession( ).getAttribute( PARAMETER_ID_REFERENCE ) );
     	
-    	List<SelectItem> referenceitems = buildReferenceItemComboList(nIdReference);
+    	ReferenceList referenceitems = buildReferenceItemComboList(nIdReference);
         
+    	// doesn't work yet
+    	// ReferenceList referenceitems = ReferenceList.convert(ReferenceItemHome.getReferenceItemsList( nIdReference ), "id", "name", true);
+    	
         Map<String, Object> model = getModel( );
         
         model.put(MARK_SELECTLIST, referenceitems);
@@ -251,19 +255,19 @@ public class ReferenceItemValueJspBean extends AbstractReferenceListManageJspBea
      * @param idReference the id of the reference
      * @return the list of items
      */
-    public List<SelectItem> buildReferenceItemComboList( int idReference )
+    public ReferenceList buildReferenceItemComboList( int idReference )
     {
-    	List<SelectItem> selectItems = new ArrayList<SelectItem>( );
+    	ReferenceList selectItems = new ReferenceList( );
         
     	List<ReferenceItem> referenceItems = ReferenceItemHome.getReferenceItemsList( idReference );
     	Iterator<ReferenceItem> itemsIterator = referenceItems.iterator();
     	
-    	SelectItem selectItem;
+    	fr.paris.lutece.util.ReferenceItem selectItem;
     	ReferenceItem referenceItem;
     	
     	while (itemsIterator.hasNext())
     	{
-	        selectItem = new SelectItem();
+	        selectItem = new fr.paris.lutece.util.ReferenceItem();
 	        
 	        referenceItem = itemsIterator.next();
 	        
