@@ -45,7 +45,6 @@ import fr.paris.lutece.plugins.referencelist.business.ReferenceItem;
 import fr.paris.lutece.plugins.referencelist.business.ReferenceItemHome;
 import fr.paris.lutece.plugins.referencelist.business.ReferenceItemValue;
 import fr.paris.lutece.plugins.referencelist.business.ReferenceItemValueHome;
-import fr.paris.lutece.plugins.referencelist.util.SelectItem;
 import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.portal.util.mvc.admin.annotations.Controller;
 import fr.paris.lutece.portal.util.mvc.commons.annotations.Action;
