@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2019, Mairie de Paris
+ * Copyright (c) 2002-2020, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -31,7 +31,6 @@
  *
  * License 1.0
  */
-
 package fr.paris.lutece.plugins.referencelist.business;
 
 import fr.paris.lutece.portal.service.plugin.Plugin;
@@ -48,36 +47,36 @@ import java.util.List;
 public final class ReferenceItemValueDAO implements IReferenceItemValueDAO
 {
     // Constants
-    private static final String SQL_QUERY_SELECT = "SELECT id_itemvalue, i.id_reference_item, item_name, lang, value FROM referencelist_itemvalue v, referencelist_item i" 
-    		 										+ " where v.id_reference_item = i.id_reference_item ";
-    
+    private static final String SQL_QUERY_SELECT = "SELECT id_itemvalue, i.id_reference_item, item_name, lang, value FROM referencelist_itemvalue v, referencelist_item i"
+            + " where v.id_reference_item = i.id_reference_item order by lang, item_name";
+
     private static final String SQL_QUERY_INSERT = "INSERT INTO referencelist_itemvalue ( id_reference_item, lang, value ) VALUES ( ?, ?, ? ) ";
     private static final String SQL_QUERY_DELETE = "DELETE FROM referencelist_itemvalue WHERE id_itemvalue = ? ";
     private static final String SQL_QUERY_UPDATE = "UPDATE referencelist_itemvalue SET id_reference_item = ?, lang = ?, value = ? WHERE id_itemvalue = ?";
-    
-    private static final String SQL_QUERY_SELECTALL = SQL_QUERY_SELECT + " and i.idreference = ?";  
-    private static final String SQL_QUERY_SELECTONE = SQL_QUERY_SELECT + " and v.id_itemvalue = ?"; 
-    
+
+    private static final String SQL_QUERY_SELECTALL = SQL_QUERY_SELECT + " and i.idreference = ?";
+    private static final String SQL_QUERY_SELECTONE = SQL_QUERY_SELECT + " and v.id_itemvalue = ?";
+
     private String _logMessage = "";
-    
+
     /**
      * {@inheritDoc }
      */
     @Override
     public void insert( ReferenceItemValue itemValue, Plugin plugin )
-    {	
-    	AppLogService.info("ReferenceItemValueDAO -> insert");
-    	
-    	AppLogService.info("itemValue created : idItem = " + itemValue.getIdItem( ) );
-    	AppLogService.info("itemValue created : lang = " + itemValue.getLang( ) );
-    	AppLogService.info("itemValue created : value = " + itemValue.getValue( ) );
-    	
-    	DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, Statement.RETURN_GENERATED_KEYS, plugin );
-        
-    	try
+    {
+        AppLogService.info( "ReferenceItemValueDAO -> insert" );
+
+        AppLogService.info( "itemValue created : idItem = " + itemValue.getIdItem( ) );
+        AppLogService.info( "itemValue created : lang = " + itemValue.getLang( ) );
+        AppLogService.info( "itemValue created : value = " + itemValue.getValue( ) );
+
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, Statement.RETURN_GENERATED_KEYS, plugin );
+
+        try
         {
             int nIndex = 1;
-            
+
             daoUtil.setInt( nIndex++, itemValue.getIdItem( ) );
             daoUtil.setString( nIndex++, itemValue.getLang( ) );
             daoUtil.setString( nIndex++, itemValue.getValue( ) );
@@ -96,11 +95,11 @@ public final class ReferenceItemValueDAO implements IReferenceItemValueDAO
     @Override
     public ReferenceItemValue load( int nKey, Plugin plugin )
     {
-    	ReferenceItemValue value = new ReferenceItemValue( );
-    	
-   		AppLogService.info("ReferenceItemValueDAO -> load");
-       
-   		DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTONE, plugin );
+        ReferenceItemValue value = new ReferenceItemValue( );
+
+        AppLogService.info( "ReferenceItemValueDAO -> load" );
+
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTONE, plugin );
         daoUtil.setInt( 1, nKey );
         daoUtil.executeQuery( );
 
@@ -116,7 +115,7 @@ public final class ReferenceItemValueDAO implements IReferenceItemValueDAO
         }
 
         daoUtil.free( );
-       
+
         return value;
     }
 
@@ -126,12 +125,12 @@ public final class ReferenceItemValueDAO implements IReferenceItemValueDAO
     @Override
     public void delete( int nKey, Plugin plugin )
     {
-		AppLogService.info("ReferenceItemValueDAO -> delete id = " + nKey);
-    	
-		DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, plugin );
-	    daoUtil.setInt( 1, nKey );
-	    daoUtil.executeUpdate( );
-	    daoUtil.free( );
+        AppLogService.info( "ReferenceItemValueDAO -> delete id = " + nKey );
+
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, plugin );
+        daoUtil.setInt( 1, nKey );
+        daoUtil.executeUpdate( );
+        daoUtil.free( );
     }
 
     /**
@@ -139,25 +138,25 @@ public final class ReferenceItemValueDAO implements IReferenceItemValueDAO
      */
     @Override
     public void store( ReferenceItemValue itemValue, Plugin plugin )
-    {    	
-    	AppLogService.info("ReferenceItemValueDAO -> store");
-    	
-    	AppLogService.info("itemValue modified : id = " + itemValue.getId( ) );
-    	AppLogService.info("itemValue modified : idItem = " + itemValue.getIdItem( ) );
-    	AppLogService.info("itemValue modified : lang = " + itemValue.getLang() );
-    	AppLogService.info("itemValue modified : value = " + itemValue.getValue() );
-    	
-    	DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, plugin );
+    {
+        AppLogService.info( "ReferenceItemValueDAO -> store" );
 
-    	try
+        AppLogService.info( "itemValue modified : id = " + itemValue.getId( ) );
+        AppLogService.info( "itemValue modified : idItem = " + itemValue.getIdItem( ) );
+        AppLogService.info( "itemValue modified : lang = " + itemValue.getLang( ) );
+        AppLogService.info( "itemValue modified : value = " + itemValue.getValue( ) );
+
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, plugin );
+
+        try
         {
             int nIndex = 1;
-            
+
             daoUtil.setInt( nIndex++, itemValue.getIdItem( ) );
             daoUtil.setString( nIndex++, itemValue.getLang( ) );
             daoUtil.setString( nIndex++, itemValue.getValue( ) );
             daoUtil.setInt( nIndex++, itemValue.getId( ) );
-            
+
             daoUtil.executeUpdate( );
         }
         finally
@@ -172,10 +171,10 @@ public final class ReferenceItemValueDAO implements IReferenceItemValueDAO
     @Override
     public List<ReferenceItemValue> selectReferenceItemValues( int idReference, Plugin plugin )
     {
-    	AppLogService.info("ReferenceItemValueDAO -> selectReferenceItemValues : idReference = " + idReference);
-    	
-    	List<ReferenceItemValue> listReferenceItemValues = new ArrayList<ReferenceItemValue>( );
-        
+        AppLogService.info( "ReferenceItemValueDAO -> selectReferenceItemValues : idReference = " + idReference );
+
+        List<ReferenceItemValue> listReferenceItemValues = new ArrayList<ReferenceItemValue>( );
+
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL, plugin );
         daoUtil.setInt( 1, idReference );
 
@@ -183,7 +182,7 @@ public final class ReferenceItemValueDAO implements IReferenceItemValueDAO
 
         while ( daoUtil.next( ) )
         {
-        	ReferenceItemValue value = new ReferenceItemValue( );
+            ReferenceItemValue value = new ReferenceItemValue( );
             int nIndex = 1;
 
             value.setId( daoUtil.getInt( nIndex++ ) );
@@ -196,10 +195,8 @@ public final class ReferenceItemValueDAO implements IReferenceItemValueDAO
         }
 
         daoUtil.free( );
-        
+
         return listReferenceItemValues;
     }
 
-    
-    
 }

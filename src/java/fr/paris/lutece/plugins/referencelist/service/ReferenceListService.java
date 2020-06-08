@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2019, Mairie de Paris
+ * Copyright (c) 2002-2020, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -95,11 +95,10 @@ public class ReferenceListService
     public ReferenceList getReferenceList( String referenceName, String lang )
     {
         int idReference = ReferenceHome.findPrimaryKeyByName( referenceName );
-        return getReferenceList(idReference);
+        return getReferenceList( idReference );
     }
 
-
-      /**
+    /**
      * Returns the list of all References Items of a Reference id
      * 
      * @return the list of all References Items
