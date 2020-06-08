@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2019, Mairie de Paris
+ * Copyright (c) 2002-2020, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -31,11 +31,9 @@
  *
  * License 1.0
  */
-
 package fr.paris.lutece.plugins.referencelist.business;
 
 import fr.paris.lutece.test.LuteceTestCase;
-
 
 /**
  * This is the business class test for the object Reference
@@ -47,38 +45,38 @@ public class ReferenceBusinessTest extends LuteceTestCase
     private static final String DESCRIPTION1 = "Description1";
     private static final String DESCRIPTION2 = "Description2";
 
-	/**
-	* test Reference
-	*/
-    public void testBusiness(  )
+    /**
+     * test Reference
+     */
+    public void testBusiness( )
     {
         // Initialize an object
-        Reference reference = new Reference();
+        Reference reference = new Reference( );
         reference.setName( NAME1 );
         reference.setDescription( DESCRIPTION1 );
 
         // Create test
         ReferenceHome.create( reference );
         Reference referenceStored = ReferenceHome.findByPrimaryKey( reference.getId( ) );
-        assertEquals( referenceStored.getName() , reference.getName( ) );
-        assertEquals( referenceStored.getDescription() , reference.getDescription( ) );
+        assertEquals( referenceStored.getName( ), reference.getName( ) );
+        assertEquals( referenceStored.getDescription( ), reference.getDescription( ) );
 
         // Update test
         reference.setName( NAME2 );
         reference.setDescription( DESCRIPTION2 );
         ReferenceHome.update( reference );
         referenceStored = ReferenceHome.findByPrimaryKey( reference.getId( ) );
-        assertEquals( referenceStored.getName() , reference.getName( ) );
-        assertEquals( referenceStored.getDescription() , reference.getDescription( ) );
+        assertEquals( referenceStored.getName( ), reference.getName( ) );
+        assertEquals( referenceStored.getDescription( ), reference.getDescription( ) );
 
         // List test
-        ReferenceHome.getReferencesList();
+        ReferenceHome.getReferencesList( );
 
         // Delete test
         ReferenceHome.remove( reference.getId( ) );
         referenceStored = ReferenceHome.findByPrimaryKey( reference.getId( ) );
         assertNull( referenceStored );
-        
+
     }
 
 }

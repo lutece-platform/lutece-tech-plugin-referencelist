@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2019, Mairie de Paris
+ * Copyright (c) 2002-2020, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -47,7 +47,7 @@ public final class ReferenceItemValueHome
 {
     // Static variable pointed at the DAO instance
     private static IReferenceItemValueDAO _dao = SpringContextService.getBean( "referencelist.referenceItemValueDAO" );
-    
+
     private static Plugin _plugin = PluginService.getPlugin( "referencelist" );
 
     /**
@@ -114,9 +114,8 @@ public final class ReferenceItemValueHome
      * @return the list which contains the data of all the referenceItemValue objects
      */
     public static List<ReferenceItemValue> getReferenceItemValueList( int nIdReference )
-    {        
+    {
         return _dao.selectReferenceItemValues( nIdReference, _plugin );
     }
 
-    
 }

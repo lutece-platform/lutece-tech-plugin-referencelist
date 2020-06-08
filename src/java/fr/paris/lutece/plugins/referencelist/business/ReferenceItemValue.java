@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2019, Mairie de Paris
+ * Copyright (c) 2002-2020, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -43,19 +43,19 @@ import java.io.Serializable;
 public class ReferenceItemValue implements Serializable
 {
     private static final long serialVersionUID = 1L;
-    
- // Variables declarations
+
+    // Variables declarations
     private int _nId;
-    
+
     private String _strName;
-    
+
     private String _strLang;
 
-	private String _strValue;
-    
-	private int _nIdItem;
-	
-	/**
+    private String _strValue;
+
+    private int _nIdItem;
+
+    /**
      * Returns the Id
      * 
      * @return The Id
@@ -75,8 +75,8 @@ public class ReferenceItemValue implements Serializable
     {
         _nId = nId;
     }
-    
-	/**
+
+    /**
      * Returns the Name
      * 
      * @return The Name
@@ -96,52 +96,57 @@ public class ReferenceItemValue implements Serializable
     {
         _strName = strName;
     }
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public String getLang( ) {
-		return _strLang;
-	}
-	
-	/**
-	 * 
-	 * @param _strLang
-	 */
-	public void setLang( String _strLang ) {
-		this._strLang = _strLang;
-	}
-	
+
     /**
-	 * @return the _strValue
-	 */
-	public String getValue( ) {
-		return _strValue;
-	}
+     * 
+     * @return
+     */
+    public String getLang( )
+    {
+        return _strLang;
+    }
 
-	/**
-	 * @param _strValue the _strValue to set
-	 */
-	public void setValue( String _strValue ) {
-		this._strValue = _strValue;
-	}
+    /**
+     * 
+     * @param _strLang
+     */
+    public void setLang( String _strLang )
+    {
+        this._strLang = _strLang;
+    }
 
-	/**
-	 * @return the reference item id
-	 */
-	public int getIdItem() {
-		return _nIdItem;
-	}
+    /**
+     * @return the _strValue
+     */
+    public String getValue( )
+    {
+        return _strValue;
+    }
 
-	/**
-	 * @param the reference item id to set
-	 */
-	public void setIdItem(int nIdItem) {
-		this._nIdItem = nIdItem;
-	}
+    /**
+     * @param _strValue
+     *            the _strValue to set
+     */
+    public void setValue( String _strValue )
+    {
+        this._strValue = _strValue;
+    }
 
-	
+    /**
+     * @return the reference item id
+     */
+    public int getIdItem( )
+    {
+        return _nIdItem;
+    }
 
-   
+    /**
+     * @param the
+     *            reference item id to set
+     */
+    public void setIdItem( int nIdItem )
+    {
+        this._nIdItem = nIdItem;
+    }
+
 }
