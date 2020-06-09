@@ -45,6 +45,7 @@ import fr.paris.lutece.plugins.referencelist.business.ReferenceItem;
 import fr.paris.lutece.plugins.referencelist.business.ReferenceItemHome;
 import fr.paris.lutece.plugins.referencelist.business.ReferenceItemValue;
 import fr.paris.lutece.plugins.referencelist.business.ReferenceItemValueHome;
+import fr.paris.lutece.plugins.referencelist.service.ReferenceListService;
 import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.portal.util.mvc.admin.annotations.Controller;
@@ -290,6 +291,18 @@ public class ReferenceItemValueJspBean extends AbstractReferenceListManageJspBea
     public ReferenceList buildLanguagesComboList()
     {
     	ReferenceList selectItems = new ReferenceList( );
+    	
+    	//
+/*    	ReferenceList list = ReferenceListService.getInstance().getReferenceList(1, "fr");
+    	
+    	Iterator < fr.paris.lutece.util.ReferenceItem > it = list.iterator();
+    	while (it.hasNext())
+    	{
+    		fr.paris.lutece.util.ReferenceItem item = it.next();
+    		
+    		AppLogService.info( " code = " + item.getCode( ) + ", name = " + item.getName( ) );
+    	}*/
+    	//
     	
     	fr.paris.lutece.util.ReferenceItem selectItem;
     	

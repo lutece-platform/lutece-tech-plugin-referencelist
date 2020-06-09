@@ -48,13 +48,17 @@ public final class ReferenceItemDAO implements IReferenceItemDAO
 {
     // Constants
     private static final String SQL_QUERY_SELECT = "SELECT id_reference_item, item_name, item_value, idreference FROM referencelist_item WHERE id_reference_item = ?";
-    private static final String SQL_QUERY_SELECT_ID = "SELECT id_reference_item, item_name, item_value, idreference FROM referencelist_item WHERE idreference = ?";
     private static final String SQL_QUERY_SELECT_NAME = "SELECT id_reference_item, item_name, item_value, idreference FROM referencelist_item WHERE idreference = ? AND item_name = ?";
     private static final String SQL_QUERY_INSERT = "INSERT INTO referencelist_item ( item_name, item_value, idreference ) VALUES ( ?, ?, ? ) ";
     private static final String SQL_QUERY_DELETE = "DELETE FROM referencelist_item WHERE id_reference_item = ? ";
     private static final String SQL_QUERY_UPDATE = "UPDATE referencelist_item SET item_name = ?, item_value = ? WHERE id_reference_item = ?";
     private static final String SQL_QUERY_SELECTALL = "SELECT id_reference_item, item_name, item_value, idreference FROM referencelist_item";
     private static final String SQL_QUERY_SELECTALL_ID = "SELECT id_reference_item FROM referencelist_item";
+
+    private static final String SQL_QUERY_SELECT_ID = "SELECT id_reference_item, item_name, item_value, idreference FROM referencelist_item WHERE idreference = ?";
+    private static final String SQL_QUERY_SELECT_TRANSLATION = "SELECT i.item_name, i.item_value, v.value FROM referencelist_item i LEFT OUTER JOIN referencelist_itemvalue v " 
+    		+ " ON i.id_reference_item = v.id_reference_item WHERE i.idreference = ? "
+    		+ " AND (v.lang = ? OR v.lang IS NULL) ";
 
     /**
      * {@inheritDoc }
@@ -153,7 +157,7 @@ public final class ReferenceItemDAO implements IReferenceItemDAO
         {
             ReferenceItem referenceItem = new ReferenceItem( );
             int nIndex = 1;
-
+            
             referenceItem.setId( daoUtil.getInt( nIndex++ ) );
             referenceItem.setItemName( daoUtil.getString( nIndex++ ) );
             referenceItem.setItemValue( daoUtil.getString( nIndex++ ) );
@@ -165,6 +169,45 @@ public final class ReferenceItemDAO implements IReferenceItemDAO
         daoUtil.close( );
         return referenceItemList;
     }
+    
+    
+    /**
+     * {@inheritDoc }
+     */
+    @Override
+    public List<ReferenceItem> selectReferenceItemsTranslatedList( int IdReference, String strLang, Plugin plugin )
+    {
+        List<ReferenceItem> referenceItemList = new ArrayList<ReferenceItem>( );
+
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_TRANSLATION, plugin );
+        daoUtil.setInt( 1, IdReference );
+        daoUtil.setString( 2, strLang );
+        
+        daoUtil.executeQuery( );
+
+        while ( daoUtil.next( ) )
+        {
+            ReferenceItem referenceItem = new ReferenceItem( );
+            
+            referenceItem.setItemName( daoUtil.getString( 1 ) );
+            
+            String strTranslation = daoUtil.getString( 3 );
+            
+            if ( strTranslation == null || strTranslation.isEmpty() )
+            	referenceItem.setItemValue( daoUtil.getString( 2 ) );
+            else 
+            	referenceItem.setItemValue( strTranslation );
+            
+            referenceItemList.add( referenceItem );
+        }
+
+        daoUtil.close( );
+        
+        return referenceItemList;
+    }
+    
+    
+    
 
     /**
      * {@inheritDoc }

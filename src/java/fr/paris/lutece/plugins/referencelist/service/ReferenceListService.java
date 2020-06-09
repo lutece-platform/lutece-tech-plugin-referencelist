@@ -90,27 +90,56 @@ public class ReferenceListService
     /**
      * Returns the list of all References Items of a Reference name
      * 
+     * @param referenceName the reference name
+     * @param lang the language
      * @return the list of all References Items
      */
     public ReferenceList getReferenceList( String referenceName, String lang )
     {
         int idReference = ReferenceHome.findPrimaryKeyByName( referenceName );
-        return getReferenceList( idReference );
+        
+        return getReferenceList( idReference, lang );
     }
 
     /**
      * Returns the list of all References Items of a Reference id
      * 
+     * @param idReference the reference id
      * @return the list of all References Items
      */
     public ReferenceList getReferenceList( int idReference )
     {
-        List<ReferenceItem> listReferenceItems = ReferenceItemHome.getReferenceItemsList( idReference );
+        return getReferenceList( idReference, null);
+    }
+    
+    /**
+     * Returns the list of all References Items of a Reference id 
+     * and the translation for the given language
+     * 
+     * @param idReference the reference id
+     * @param lang the language
+     * @return the list of all References Items
+     */
+    public ReferenceList getReferenceList( int idReference, String lang )
+    {
+        List<ReferenceItem> listReferenceItems = null;
+        
         ReferenceList list = new ReferenceList( );
+        
+        if ( lang == null || lang.isEmpty() )
+        {
+        	listReferenceItems = ReferenceItemHome.getReferenceItemsList( idReference );	
+        }
+        else 
+        {
+        	listReferenceItems = ReferenceItemHome.getReferenceItemsList( idReference , lang);	
+        }
+        
         for ( ReferenceItem ref : listReferenceItems )
         {
             list.addItem( String.valueOf( ref.getItemValue( ) ), ref.getItemName( ) );
         }
+        
         return list;
     }
 
