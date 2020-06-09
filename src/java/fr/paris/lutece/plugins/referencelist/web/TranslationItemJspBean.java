@@ -91,7 +91,6 @@ public class TranslationItemJspBean extends AbstractReferenceListManageJspBean
 
     private static final String MARK_SELECTLIST = "referenceitems";
     private static final String MARK_SELECTLANGUAGES = "languages";
-    
 
     /**
      * Handles the removal form of a translationitem
@@ -134,8 +133,8 @@ public class TranslationItemJspBean extends AbstractReferenceListManageJspBean
 
         model.put( MARK_MODIFY, translationItem );
         model.put( MARK_SELECTLIST, referenceitems );
-        model.put( MARK_SELECTLANGUAGES, buildLanguagesComboList());
-        
+        model.put( MARK_SELECTLANGUAGES, buildLanguagesComboList( ) );
+
         return getPage( PROPERTY_PAGE_TITLE_MODIFY, TEMPLATE_MODIFY, model );
     }
 
@@ -186,7 +185,7 @@ public class TranslationItemJspBean extends AbstractReferenceListManageJspBean
         Map<String, Object> model = getModel( );
 
         model.put( MARK_SELECTLIST, referenceitems );
-        model.put( MARK_SELECTLANGUAGES, buildLanguagesComboList());
+        model.put( MARK_SELECTLANGUAGES, buildLanguagesComboList( ) );
 
         return getPage( PROPERTY_PAGE_TITLE_CREATE, TEMPLATE_CREATE, model );
     }
@@ -282,42 +281,40 @@ public class TranslationItemJspBean extends AbstractReferenceListManageJspBean
 
         return selectItems;
     }
-    
+
     /**
      * Builds the combo list of languages
      * 
      * @return the list of languages
      */
-    public ReferenceList buildLanguagesComboList()
+    public ReferenceList buildLanguagesComboList( )
     {
-    	ReferenceList selectItems = new ReferenceList( );
-    	
-    	//
-/*    	ReferenceList list = ReferenceListService.getInstance().getReferenceList(1, "fr");
-    	
-    	Iterator < fr.paris.lutece.util.ReferenceItem > it = list.iterator();
-    	while (it.hasNext())
-    	{
-    		fr.paris.lutece.util.ReferenceItem item = it.next();
-    		
-    		AppLogService.info( " code = " + item.getCode( ) + ", name = " + item.getName( ) );
-    	}*/
-    	//
-    	
-    	fr.paris.lutece.util.ReferenceItem selectItem;
-    	
-    	String[] listLangs = I18nService.getLocalizedString( "referencelist.languages", getLocale( ) ).split(",");
-    	
-    	for (String strLang : listLangs) 
-    	{
-    		selectItem = new fr.paris.lutece.util.ReferenceItem( );
-    		
-        	selectItem.setCode(strLang);
-        	selectItem.setName(strLang);
-        	
-        	selectItems.add( selectItem );
-    	}
-    	 	
-    	return selectItems;
+        ReferenceList selectItems = new ReferenceList( );
+
+        //
+        /*
+         * ReferenceList list = ReferenceListService.getInstance().getReferenceList(1, "fr");
+         * 
+         * Iterator < fr.paris.lutece.util.ReferenceItem > it = list.iterator(); while (it.hasNext()) { fr.paris.lutece.util.ReferenceItem item = it.next();
+         * 
+         * AppLogService.info( " code = " + item.getCode( ) + ", name = " + item.getName( ) ); }
+         */
+        //
+
+        fr.paris.lutece.util.ReferenceItem selectItem;
+
+        String [ ] listLangs = I18nService.getLocalizedString( "referencelist.languages", getLocale( ) ).split( "," );
+
+        for ( String strLang : listLangs )
+        {
+            selectItem = new fr.paris.lutece.util.ReferenceItem( );
+
+            selectItem.setCode( strLang );
+            selectItem.setName( strLang );
+
+            selectItems.add( selectItem );
+        }
+
+        return selectItems;
     }
 }

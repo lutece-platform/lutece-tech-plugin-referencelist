@@ -88,7 +88,8 @@ public interface ITranslationItemDAO
     /**
      * Load the data of all the TranslationItems objects in a reference and returns them as a list
      * 
-     * @param nIdReference the reference id
+     * @param nIdReference
+     *            the reference id
      * @param plugin
      *            the Plugin
      * @return The list which contains the data of all the TranslationItem objects

@@ -121,16 +121,17 @@ public final class ReferenceItemHome
     /**
      * Load the data of all the referenceItem objects and returns them as a list
      * 
-     * @param nIdReference the identifier of the reference
-     * @param strLang the language 
+     * @param nIdReference
+     *            the identifier of the reference
+     * @param strLang
+     *            the language
      * @return the list which contains the data of all the referenceItem objects
-     */ 
+     */
     public static List<ReferenceItem> getReferenceItemsList( int nIdReference, String strLang )
     {
-        return _dao.selectReferenceItemsTranslatedList( nIdReference, strLang, _plugin ); 
-    } 
-    
-    
+        return _dao.selectReferenceItemsTranslatedList( nIdReference, strLang, _plugin );
+    }
+
     /**
      * Load the id of all the referenceItem objects and returns them as a list
      * 
