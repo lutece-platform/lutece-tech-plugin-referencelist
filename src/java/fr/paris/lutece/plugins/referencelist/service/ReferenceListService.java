@@ -88,7 +88,7 @@ public class ReferenceListService
     }
 
     /**
-     * Returns the list of all References Items of a Reference name
+     * Returns the list of all References Items of a Reference name with values translated 
      * 
      * @param referenceName
      *            the reference name
@@ -104,7 +104,7 @@ public class ReferenceListService
     }
 
     /**
-     * Returns the list of all References Items of a Reference id
+     * Returns the list of all References Items of a Reference id with their default values
      * 
      * @param idReference
      *            the reference id
@@ -116,7 +116,7 @@ public class ReferenceListService
     }
 
     /**
-     * Returns the list of all References Items of a Reference id and the translationitem for the given language
+     * Returns the list of all ReferenceItems of a Reference id with translated value
      * 
      * @param idReference
      *            the reference id
