@@ -77,7 +77,7 @@ public final class ReferenceItemDAO implements IReferenceItemDAO
         }
         finally
         {
-            daoUtil.free( );
+            daoUtil.close( );
         }
     }
 
@@ -103,7 +103,7 @@ public final class ReferenceItemDAO implements IReferenceItemDAO
             referenceItem.setIdreference( daoUtil.getInt( nIndex++ ) );
         }
 
-        daoUtil.free( );
+        daoUtil.close( );
         return referenceItem;
     }
 
@@ -116,7 +116,7 @@ public final class ReferenceItemDAO implements IReferenceItemDAO
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, plugin );
         daoUtil.setInt( 1, nKey );
         daoUtil.executeUpdate( );
-        daoUtil.free( );
+        daoUtil.close( );
     }
 
     /**
@@ -133,7 +133,7 @@ public final class ReferenceItemDAO implements IReferenceItemDAO
         daoUtil.setInt( nIndex, referenceItem.getId( ) );
 
         daoUtil.executeUpdate( );
-        daoUtil.free( );
+        daoUtil.close( );
     }
 
     /**
@@ -162,7 +162,7 @@ public final class ReferenceItemDAO implements IReferenceItemDAO
             referenceItemList.add( referenceItem );
         }
 
-        daoUtil.free( );
+        daoUtil.close( );
         return referenceItemList;
     }
 
@@ -181,7 +181,7 @@ public final class ReferenceItemDAO implements IReferenceItemDAO
             referenceItemList.add( daoUtil.getInt( 1 ) );
         }
 
-        daoUtil.free( );
+        daoUtil.close( );
         return referenceItemList;
     }
 
@@ -198,7 +198,7 @@ public final class ReferenceItemDAO implements IReferenceItemDAO
         {
             referenceItemList.addItem( daoUtil.getInt( 1 ), daoUtil.getString( 2 ) );
         }
-        daoUtil.free( );
+        daoUtil.close( );
         return referenceItemList;
     }
 
@@ -223,7 +223,7 @@ public final class ReferenceItemDAO implements IReferenceItemDAO
             referenceItem.setItemValue( daoUtil.getString( nIndex++ ) );
             referenceItem.setIdreference( daoUtil.getInt( nIndex++ ) );
         }
-        daoUtil.free( );
+        daoUtil.close( );
         return referenceItem;
     }
 }

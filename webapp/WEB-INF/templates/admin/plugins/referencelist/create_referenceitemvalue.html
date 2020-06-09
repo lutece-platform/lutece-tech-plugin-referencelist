@@ -7,7 +7,7 @@
 				<@select name="idItem" items=referenceitems />
 			</@formGroup>
 			<@formGroup labelKey="#i18n{referencelist.referenceitemvalue.labelLanguage}" mandatory=true>
-				<@input type="text" name="lang" value="" />
+				<@select name="lang" items=languages />
 			</@formGroup>
 			<@formGroup labelKey="#i18n{referencelist.referenceitemvalue.labelItemValue}" mandatory=true>
 				<@input type="text" name="value" value="" />

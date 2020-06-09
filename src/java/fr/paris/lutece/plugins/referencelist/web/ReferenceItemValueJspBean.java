@@ -45,6 +45,7 @@ import fr.paris.lutece.plugins.referencelist.business.ReferenceItem;
 import fr.paris.lutece.plugins.referencelist.business.ReferenceItemHome;
 import fr.paris.lutece.plugins.referencelist.business.ReferenceItemValue;
 import fr.paris.lutece.plugins.referencelist.business.ReferenceItemValueHome;
+import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.portal.util.mvc.admin.annotations.Controller;
 import fr.paris.lutece.portal.util.mvc.commons.annotations.Action;
@@ -88,6 +89,8 @@ public class ReferenceItemValueJspBean extends AbstractReferenceListManageJspBea
     private static final String PARAMETER_ID_REFERENCE = "idReference";
 
     private static final String MARK_SELECTLIST = "referenceitems";
+    private static final String MARK_SELECTLANGUAGES = "languages";
+    
 
     /**
      * Handles the removal form of a referenceitemvalue
@@ -130,7 +133,8 @@ public class ReferenceItemValueJspBean extends AbstractReferenceListManageJspBea
 
         model.put( MARK_MODIFY, referenceItemValue );
         model.put( MARK_SELECTLIST, referenceitems );
-
+        model.put( MARK_SELECTLANGUAGES, buildLanguagesComboList());
+        
         return getPage( PROPERTY_PAGE_TITLE_MODIFY, TEMPLATE_MODIFY, model );
     }
 
@@ -181,6 +185,7 @@ public class ReferenceItemValueJspBean extends AbstractReferenceListManageJspBea
         Map<String, Object> model = getModel( );
 
         model.put( MARK_SELECTLIST, referenceitems );
+        model.put( MARK_SELECTLANGUAGES, buildLanguagesComboList());
 
         return getPage( PROPERTY_PAGE_TITLE_CREATE, TEMPLATE_CREATE, model );
     }
@@ -276,5 +281,30 @@ public class ReferenceItemValueJspBean extends AbstractReferenceListManageJspBea
 
         return selectItems;
     }
-
+    
+    /**
+     * Builds the combo list of languages
+     * 
+     * @return the list of languages
+     */
+    public ReferenceList buildLanguagesComboList()
+    {
+    	ReferenceList selectItems = new ReferenceList( );
+    	
+    	fr.paris.lutece.util.ReferenceItem selectItem;
+    	
+    	String[] listLangs = I18nService.getLocalizedString( "referencelist.languages", getLocale( ) ).split(",");
+    	
+    	for (String strLang : listLangs) 
+    	{
+    		selectItem = new fr.paris.lutece.util.ReferenceItem( );
+    		
+        	selectItem.setCode(strLang);
+        	selectItem.setName(strLang);
+        	
+        	selectItems.add( selectItem );
+    	}
+    	 	
+    	return selectItems;
+    }
 }

@@ -80,7 +80,7 @@ public class ReferenceItemJspBean extends AbstractReferenceListManageJspBean
     private static final String MARK_REFERENCEITEM_LIST = "referenceitem_list";
     private static final String MARK_IMPORT_ERROR_BASE64 = "import_error_base64";
     private static final String MARK_REFERENCEITEM = "referenceitem";
-
+    
     private static final String JSP_MANAGE_REFERENCEITEMS = "jsp/admin/plugins/referencelist/ManageReferenceItems.jsp";
 
     // Properties
@@ -139,8 +139,10 @@ public class ReferenceItemJspBean extends AbstractReferenceListManageJspBean
 
         List<ReferenceItem> listReferenceItems = ReferenceItemHome.getReferenceItemsList( IdReference );
         Map<String, Object> model = getPaginatedListModel( request, MARK_REFERENCEITEM_LIST, listReferenceItems,
-                JSP_MANAGE_REFERENCEITEMS + "?id=" + IdReference );
-
+                JSP_MANAGE_REFERENCEITEMS + "?idReference=" + IdReference );
+        
+        model.put(PARAMETER_ID_REFERENCE, IdReference);
+        
         return getPage( PROPERTY_PAGE_TITLE_MANAGE_REFERENCEITEMS, TEMPLATE_MANAGE_REFERENCEITEMS, model );
     }
 
