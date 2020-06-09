@@ -42,9 +42,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class provides Data Access methods for ReferenceItemValue objects
+ * This class provides Data Access methods for TranslationItem objects
  */
-public final class ReferenceItemValueDAO implements IReferenceItemValueDAO
+public final class TranslationItemDAO implements ITranslationItemDAO
 {
     // Constants
     private static final String SQL_QUERY_SELECT = "SELECT id_itemvalue, i.id_reference_item, item_name, lang, value FROM referencelist_itemvalue v, referencelist_item i"
@@ -63,13 +63,13 @@ public final class ReferenceItemValueDAO implements IReferenceItemValueDAO
      * {@inheritDoc }
      */
     @Override
-    public void insert( ReferenceItemValue itemValue, Plugin plugin )
+    public void insert( TranslationItem item, Plugin plugin )
     {
-        AppLogService.info( "ReferenceItemValueDAO -> insert" );
+        AppLogService.info( "TranslationItemDAO -> insert" );
 
-        AppLogService.info( "itemValue created : idItem = " + itemValue.getIdItem( ) );
-        AppLogService.info( "itemValue created : lang = " + itemValue.getLang( ) );
-        AppLogService.info( "itemValue created : value = " + itemValue.getValue( ) );
+        AppLogService.info( "item created : idItem = " + item.getIdItem( ) );
+        AppLogService.info( "item created : lang = " + item.getLang( ) );
+        AppLogService.info( "item created : value = " + item.getValue( ) );
 
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, Statement.RETURN_GENERATED_KEYS, plugin );
 
@@ -77,9 +77,9 @@ public final class ReferenceItemValueDAO implements IReferenceItemValueDAO
         {
             int nIndex = 1;
 
-            daoUtil.setInt( nIndex++, itemValue.getIdItem( ) );
-            daoUtil.setString( nIndex++, itemValue.getLang( ) );
-            daoUtil.setString( nIndex++, itemValue.getValue( ) );
+            daoUtil.setInt( nIndex++, item.getIdItem( ) );
+            daoUtil.setString( nIndex++, item.getLang( ) );
+            daoUtil.setString( nIndex++, item.getValue( ) );
 
             daoUtil.executeUpdate( );
         }
@@ -93,11 +93,11 @@ public final class ReferenceItemValueDAO implements IReferenceItemValueDAO
      * {@inheritDoc }
      */
     @Override
-    public ReferenceItemValue load( int nKey, Plugin plugin )
+    public TranslationItem load( int nKey, Plugin plugin )
     {
-        ReferenceItemValue value = new ReferenceItemValue( );
+        TranslationItem item = new TranslationItem( );
 
-        AppLogService.info( "ReferenceItemValueDAO -> load" );
+        AppLogService.info( "TranslationItemDAO -> load" );
 
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTONE, plugin );
         daoUtil.setInt( 1, nKey );
@@ -107,16 +107,16 @@ public final class ReferenceItemValueDAO implements IReferenceItemValueDAO
         {
             int nIndex = 1;
 
-            value.setId( daoUtil.getInt( nIndex++ ) );
-            value.setIdItem( daoUtil.getInt( nIndex++ ) );
-            value.setName( daoUtil.getString( nIndex++ ) );
-            value.setLang( daoUtil.getString( nIndex++ ) );
-            value.setValue( daoUtil.getString( nIndex++ ) );
+            item.setId( daoUtil.getInt( nIndex++ ) );
+            item.setIdItem( daoUtil.getInt( nIndex++ ) );
+            item.setName( daoUtil.getString( nIndex++ ) );
+            item.setLang( daoUtil.getString( nIndex++ ) );
+            item.setValue( daoUtil.getString( nIndex++ ) );
         }
 
         daoUtil.free( );
 
-        return value;
+        return item;
     }
 
     /**
@@ -125,7 +125,7 @@ public final class ReferenceItemValueDAO implements IReferenceItemValueDAO
     @Override
     public void delete( int nKey, Plugin plugin )
     {
-        AppLogService.info( "ReferenceItemValueDAO -> delete id = " + nKey );
+        AppLogService.info( "TranslationItemDAO -> delete id = " + nKey );
 
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, plugin );
         daoUtil.setInt( 1, nKey );
@@ -137,14 +137,14 @@ public final class ReferenceItemValueDAO implements IReferenceItemValueDAO
      * {@inheritDoc }
      */
     @Override
-    public void store( ReferenceItemValue itemValue, Plugin plugin )
+    public void store( TranslationItem item, Plugin plugin )
     {
-        AppLogService.info( "ReferenceItemValueDAO -> store" );
+        AppLogService.info( "TranslationItemDAO -> store" );
 
-        AppLogService.info( "itemValue modified : id = " + itemValue.getId( ) );
-        AppLogService.info( "itemValue modified : idItem = " + itemValue.getIdItem( ) );
-        AppLogService.info( "itemValue modified : lang = " + itemValue.getLang( ) );
-        AppLogService.info( "itemValue modified : value = " + itemValue.getValue( ) );
+        AppLogService.info( "item modified : id = " + item.getId( ) );
+        AppLogService.info( "item modified : idItem = " + item.getIdItem( ) );
+        AppLogService.info( "item modified : lang = " + item.getLang( ) );
+        AppLogService.info( "item modified : value = " + item.getValue( ) );
 
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, plugin );
 
@@ -152,10 +152,10 @@ public final class ReferenceItemValueDAO implements IReferenceItemValueDAO
         {
             int nIndex = 1;
 
-            daoUtil.setInt( nIndex++, itemValue.getIdItem( ) );
-            daoUtil.setString( nIndex++, itemValue.getLang( ) );
-            daoUtil.setString( nIndex++, itemValue.getValue( ) );
-            daoUtil.setInt( nIndex++, itemValue.getId( ) );
+            daoUtil.setInt( nIndex++, item.getIdItem( ) );
+            daoUtil.setString( nIndex++, item.getLang( ) );
+            daoUtil.setString( nIndex++, item.getValue( ) );
+            daoUtil.setInt( nIndex++, item.getId( ) );
 
             daoUtil.executeUpdate( );
         }
@@ -169,11 +169,11 @@ public final class ReferenceItemValueDAO implements IReferenceItemValueDAO
      * {@inheritDoc }
      */
     @Override
-    public List<ReferenceItemValue> selectReferenceItemValues( int idReference, Plugin plugin )
+    public List<TranslationItem> selectTranslationItems( int idReference, Plugin plugin )
     {
-        AppLogService.info( "ReferenceItemValueDAO -> selectReferenceItemValues : idReference = " + idReference );
+        AppLogService.info( "TranslationItemDAO -> selectTranslationItems : idReference = " + idReference );
 
-        List<ReferenceItemValue> listReferenceItemValues = new ArrayList<ReferenceItemValue>( );
+        List<TranslationItem> listTranslationItems = new ArrayList<TranslationItem>( );
 
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL, plugin );
         daoUtil.setInt( 1, idReference );
@@ -182,21 +182,21 @@ public final class ReferenceItemValueDAO implements IReferenceItemValueDAO
 
         while ( daoUtil.next( ) )
         {
-            ReferenceItemValue value = new ReferenceItemValue( );
+            TranslationItem item = new TranslationItem( );
             int nIndex = 1;
 
-            value.setId( daoUtil.getInt( nIndex++ ) );
-            value.setIdItem( daoUtil.getInt( nIndex++ ) );
-            value.setName( daoUtil.getString( nIndex++ ) );
-            value.setLang( daoUtil.getString( nIndex++ ) );
-            value.setValue( daoUtil.getString( nIndex++ ) );
+            item.setId( daoUtil.getInt( nIndex++ ) );
+            item.setIdItem( daoUtil.getInt( nIndex++ ) );
+            item.setName( daoUtil.getString( nIndex++ ) );
+            item.setLang( daoUtil.getString( nIndex++ ) );
+            item.setValue( daoUtil.getString( nIndex++ ) );
 
-            listReferenceItemValues.add( value );
+            listTranslationItems.add( item );
         }
 
         daoUtil.free( );
 
-        return listReferenceItemValues;
+        return listTranslationItems;
     }
 
 }

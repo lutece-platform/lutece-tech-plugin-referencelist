@@ -41,55 +41,55 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class provides instances management methods (create, find, ...) for ReferenceItemValueValue objects
+ * This class provides instances management methods (create, find, ...) for TranslationItemValue objects
  */
-public final class ReferenceItemValueHome
+public final class TranslationItemHome
 {
     // Static variable pointed at the DAO instance
-    private static IReferenceItemValueDAO _dao = SpringContextService.getBean( "referencelist.referenceItemValueDAO" );
+    private static ITranslationItemDAO _dao = SpringContextService.getBean( "referencelist.translationItemDAO" );
 
     private static Plugin _plugin = PluginService.getPlugin( "referencelist" );
 
     /**
      * Private constructor - this class need not be instantiated
      */
-    private ReferenceItemValueHome( )
+    private TranslationItemHome( )
     {
     }
 
     /**
-     * Create an instance of the referenceItemValue class
+     * Create an instance of the translationItem class
      * 
-     * @param referenceItemValue
-     *            The instance of the ReferenceItemValue which contains the informations to store
-     * @return The instance of referenceItemValue which has been created with its primary key.
+     * @param translationItem
+     *            The instance of the TranslationItem which contains the informations to store
+     * @return The instance of translationItem which has been created with its primary key.
      */
-    public static ReferenceItemValue create( ReferenceItemValue referenceItemValue )
+    public static TranslationItem create( TranslationItem translationItem )
     {
-        _dao.insert( referenceItemValue, _plugin );
+        _dao.insert( translationItem, _plugin );
 
-        return referenceItemValue;
+        return translationItem;
     }
 
     /**
-     * Update of the referenceItemValue which is specified in parameter
+     * Update of the translationItem which is specified in parameter
      * 
-     * @param referenceItemValue
-     *            The instance of the ReferenceItemValue which contains the data to store
-     * @return The instance of the referenceItemValue which has been updated
+     * @param translationItem
+     *            The instance of the TranslationItem which contains the data to store
+     * @return The instance of the translationItem which has been updated
      */
-    public static ReferenceItemValue update( ReferenceItemValue referenceItemValue )
+    public static TranslationItem update( TranslationItem translationItem )
     {
-        _dao.store( referenceItemValue, _plugin );
+        _dao.store( translationItem, _plugin );
 
-        return referenceItemValue;
+        return translationItem;
     }
 
     /**
-     * Remove the referenceItemValue whose identifier is specified in parameter
+     * Remove the translationItem whose identifier is specified in parameter
      * 
      * @param nKey
-     *            The referenceItemValue Id
+     *            The translationItem Id
      */
     public static void remove( int nKey )
     {
@@ -97,25 +97,25 @@ public final class ReferenceItemValueHome
     }
 
     /**
-     * Returns an instance of a referenceItemValue whose identifier is specified in parameter
+     * Returns an instance of a translationItem whose identifier is specified in parameter
      * 
      * @param nKey
-     *            The referenceItemValue primary key
-     * @return an instance of ReferenceItemValue
+     *            The translationItem primary key
+     * @return an instance of TranslationItem
      */
-    public static ReferenceItemValue findByPrimaryKey( int nKey )
+    public static TranslationItem findByPrimaryKey( int nKey )
     {
         return _dao.load( nKey, _plugin );
     }
 
     /**
-     * Load the data of all the referenceItemValue objects and returns them as a list
+     * Load the data of all the translationItem objects and returns them as a list
      * 
-     * @return the list which contains the data of all the referenceItemValue objects
+     * @return the list which contains the data of all the translationItem objects
      */
-    public static List<ReferenceItemValue> getReferenceItemValueList( int nIdReference )
+    public static List<TranslationItem> getTranslationItemList( int nIdReference )
     {
-        return _dao.selectReferenceItemValues( nIdReference, _plugin );
+        return _dao.selectTranslationItems( nIdReference, _plugin );
     }
 
 }

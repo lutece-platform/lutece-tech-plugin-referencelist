@@ -114,7 +114,7 @@ public class ReferenceListService
     
     /**
      * Returns the list of all References Items of a Reference id 
-     * and the translation for the given language
+     * and the translationitem for the given language
      * 
      * @param idReference the reference id
      * @param lang the language

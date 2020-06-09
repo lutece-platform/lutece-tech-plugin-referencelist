@@ -37,35 +37,35 @@ import fr.paris.lutece.portal.service.plugin.Plugin;
 import java.util.List;
 
 /**
- * IReferenceItemValueDAO Interface
+ * ITranslationItemDAO Interface
  */
-public interface IReferenceItemValueDAO
+public interface ITranslationItemDAO
 {
     /**
      * Insert a new record in the table.
      * 
-     * @param referenceItem
-     *            instance of the ReferenceItemValue object to insert
+     * @param translationItem
+     *            instance of the TranslationItem object to insert
      * @param plugin
      *            the Plugin
      */
-    void insert( ReferenceItemValue referenceItemValue, Plugin plugin );
+    void insert( TranslationItem translationItem, Plugin plugin );
 
     /**
      * Update the record in the table
      * 
-     * @param referenceItem
-     *            the reference of the ReferenceItemValue
+     * @param translationItem
+     *            the reference of the TranslationItem
      * @param plugin
      *            the Plugin
      */
-    void store( ReferenceItemValue referenceItemValue, Plugin plugin );
+    void store( TranslationItem translationItem, Plugin plugin );
 
     /**
      * Delete a record from the table
      * 
      * @param nKey
-     *            The identifier of the ReferenceItemValue to delete
+     *            The identifier of the TranslationItem to delete
      * @param plugin
      *            the Plugin
      */
@@ -78,20 +78,21 @@ public interface IReferenceItemValueDAO
      * Load the data from the table
      * 
      * @param nKey
-     *            The identifier of the ReferenceItemValue
+     *            The identifier of the TranslationItem
      * @param plugin
      *            the Plugin
-     * @return The instance of the ReferenceItemValue
+     * @return The instance of the TranslationItem
      */
-    ReferenceItemValue load( int nKey, Plugin plugin );
+    TranslationItem load( int nKey, Plugin plugin );
 
     /**
-     * Load the data of all the ReferenceItemValue objects and returns them as a list
+     * Load the data of all the TranslationItems objects in a reference and returns them as a list
      * 
+     * @param nIdReference the reference id
      * @param plugin
      *            the Plugin
-     * @return The list which contains the data of all the ReferenceItemValue objects
+     * @return The list which contains the data of all the TranslationItem objects
      */
-    List<ReferenceItemValue> selectReferenceItemValues( int IdReference, Plugin plugin );
+    List<TranslationItem> selectTranslationItems( int nIdReference, Plugin plugin );
 
 }

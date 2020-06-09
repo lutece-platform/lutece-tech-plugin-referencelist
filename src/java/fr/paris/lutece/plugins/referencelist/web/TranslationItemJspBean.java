@@ -43,8 +43,8 @@ import javax.servlet.http.HttpSession;
 
 import fr.paris.lutece.plugins.referencelist.business.ReferenceItem;
 import fr.paris.lutece.plugins.referencelist.business.ReferenceItemHome;
-import fr.paris.lutece.plugins.referencelist.business.ReferenceItemValue;
-import fr.paris.lutece.plugins.referencelist.business.ReferenceItemValueHome;
+import fr.paris.lutece.plugins.referencelist.business.TranslationItem;
+import fr.paris.lutece.plugins.referencelist.business.TranslationItemHome;
 import fr.paris.lutece.plugins.referencelist.service.ReferenceListService;
 import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.util.AppLogService;
@@ -54,34 +54,34 @@ import fr.paris.lutece.portal.util.mvc.commons.annotations.View;
 import fr.paris.lutece.util.ReferenceList;
 
 /**
- * This class provides the user interface to manage reference item values ( list, create, modify, remove )
+ * This class provides the user interface to manage translation items ( list, create, modify, remove )
  */
-@Controller( controllerJsp = "ManageReferenceItemValues.jsp", controllerPath = "jsp/admin/plugins/referencelist/", right = "REFERENCELIST_MANAGEMENT" )
-public class ReferenceItemValueJspBean extends AbstractReferenceListManageJspBean
+@Controller( controllerJsp = "ManageTranslations.jsp", controllerPath = "jsp/admin/plugins/referencelist/", right = "REFERENCELIST_MANAGEMENT" )
+public class TranslationItemJspBean extends AbstractReferenceListManageJspBean
 {
     // plugin relative path
     public static final String PLUGIN_PATH = "/admin/plugins/referencelist/";
 
     // JSP
-    private static final String JSP_MANAGE = "jsp/" + PLUGIN_PATH + "ManageReferenceItemValues.jsp";
+    private static final String JSP_MANAGE = "jsp/" + PLUGIN_PATH + "ManageTranslations.jsp";
 
     /* List View */
     private static final String VIEW_MANAGE = "manage";
-    private static final String TEMPLATE_MANAGE = PLUGIN_PATH + "manage_referenceitemvalues.html";
-    private static final String MARK_MANAGE = "referenceitemvalues_list";
-    private static final String PROPERTY_PAGE_TITLE_MANAGE = "referencelist.manage_referenceitemvalues.pageTitle";
+    private static final String TEMPLATE_MANAGE = PLUGIN_PATH + "manage_translationitems.html";
+    private static final String MARK_MANAGE = "translationitems_list";
+    private static final String PROPERTY_PAGE_TITLE_MANAGE = "referencelist.manage_translationitems.pageTitle";
 
     /* Create View */
     private static final String VIEW_CREATE = "create";
-    private static final String TEMPLATE_CREATE = PLUGIN_PATH + "create_referenceitemvalue.html";
-    private static final String PROPERTY_PAGE_TITLE_CREATE = "referencelist.create_referenceitemvalue.pageTitle";
+    private static final String TEMPLATE_CREATE = PLUGIN_PATH + "create_translationitem.html";
+    private static final String PROPERTY_PAGE_TITLE_CREATE = "referencelist.create_translationitem.pageTitle";
     private static final String ACTION_CREATE = VIEW_CREATE;
 
     /* Modify View */
     private static final String VIEW_MODIFY = "modify";
-    private static final String TEMPLATE_MODIFY = PLUGIN_PATH + "modify_referenceitemvalue.html";
-    private static final String MARK_MODIFY = "referenceitemvalue";
-    private static final String PROPERTY_PAGE_TITLE_MODIFY = "referencelist.modify_referenceitemvalue.pageTitle";
+    private static final String TEMPLATE_MODIFY = PLUGIN_PATH + "modify_translationitem.html";
+    private static final String MARK_MODIFY = "translationitem";
+    private static final String PROPERTY_PAGE_TITLE_MODIFY = "referencelist.modify_translationitem.pageTitle";
     private static final String ACTION_MODIFY = VIEW_MODIFY;
 
     /* Removal */
@@ -94,45 +94,45 @@ public class ReferenceItemValueJspBean extends AbstractReferenceListManageJspBea
     
 
     /**
-     * Handles the removal form of a referenceitemvalue
+     * Handles the removal form of a translationitem
      *
      * @param request
      *            The Http request
-     * @return the jsp URL to display the form to manage referenceitemvalues
+     * @return the jsp URL to display the form to manage translationitems
      */
     @Action( ACTION_REMOVE )
-    public String doRemoveReferenceItemValue( HttpServletRequest request )
+    public String doRemoveTranslationItem( HttpServletRequest request )
     {
         int nId = Integer.parseInt( request.getParameter( "id" ) );
 
-        ReferenceItemValueHome.remove( nId );
+        TranslationItemHome.remove( nId );
 
-        addInfo( "referencelist.info.referenceitemvalue.removed", getLocale( ) );
+        addInfo( "referencelist.info.translationitem.removed", getLocale( ) );
 
         return redirectView( request, VIEW_MANAGE );
     }
 
     /**
-     * Returns the form to update info about a referenceitemvalue
+     * Returns the form to update info about a translationitem
      *
      * @param request
      *            The Http request
      * @return The HTML form to update info
      */
     @View( VIEW_MODIFY )
-    public String getModifyReferenceItemValue( HttpServletRequest request )
+    public String getModifyTranslationItem( HttpServletRequest request )
     {
         int nId = Integer.parseInt( request.getParameter( "id" ) );
 
         int nIdReference = Integer.parseInt( (String) request.getSession( ).getAttribute( PARAMETER_ID_REFERENCE ) );
 
-        ReferenceItemValue referenceItemValue = ReferenceItemValueHome.findByPrimaryKey( nId );
+        TranslationItem translationItem = TranslationItemHome.findByPrimaryKey( nId );
 
         ReferenceList referenceitems = buildReferenceItemComboList( nIdReference );
 
         Map<String, Object> model = getModel( );
 
-        model.put( MARK_MODIFY, referenceItemValue );
+        model.put( MARK_MODIFY, translationItem );
         model.put( MARK_SELECTLIST, referenceitems );
         model.put( MARK_SELECTLANGUAGES, buildLanguagesComboList());
         
@@ -140,16 +140,16 @@ public class ReferenceItemValueJspBean extends AbstractReferenceListManageJspBea
     }
 
     /**
-     * Process the change form of a ReferenceItemValue
+     * Process the change form of a TranslationItem
      *
      * @param request
      *            The Http request
      * @return The Jsp URL of the process result
      */
     @Action( ACTION_MODIFY )
-    public String doModifyReferenceItemValue( HttpServletRequest request )
+    public String doModifyTranslationItem( HttpServletRequest request )
     {
-        ReferenceItemValue itemValue = new ReferenceItemValue( );
+        TranslationItem itemValue = new TranslationItem( );
 
         populate( itemValue, request, request.getLocale( ) );
 
@@ -159,9 +159,9 @@ public class ReferenceItemValueJspBean extends AbstractReferenceListManageJspBea
          * PARAMETER_ID_REFERENCEITEM, _referenceitem.getId( ) ); }
          */
 
-        ReferenceItemValueHome.update( itemValue );
+        TranslationItemHome.update( itemValue );
 
-        addInfo( "referencelist.info.referenceitemvalue.updated", getLocale( ) );
+        addInfo( "referencelist.info.translationitem.updated", getLocale( ) );
 
         return redirectView( request, VIEW_MANAGE );
     }
@@ -174,7 +174,7 @@ public class ReferenceItemValueJspBean extends AbstractReferenceListManageJspBea
      * @return the html code of the reference item value form
      */
     @View( VIEW_CREATE )
-    public String getCreateReferenceItemValue( HttpServletRequest request )
+    public String getCreateTranslationItem( HttpServletRequest request )
     {
         int nIdReference = Integer.parseInt( (String) request.getSession( ).getAttribute( PARAMETER_ID_REFERENCE ) );
 
@@ -199,9 +199,9 @@ public class ReferenceItemValueJspBean extends AbstractReferenceListManageJspBea
      * @return The Jsp URL of the process result
      */
     @Action( ACTION_CREATE )
-    public String doCreateReferenceItemValue( HttpServletRequest request )
+    public String doCreateTranslationItem( HttpServletRequest request )
     {
-        ReferenceItemValue itemValue = new ReferenceItemValue( );
+        TranslationItem itemValue = new TranslationItem( );
 
         populate( itemValue, request, request.getLocale( ) );
 
@@ -210,9 +210,9 @@ public class ReferenceItemValueJspBean extends AbstractReferenceListManageJspBea
          * if ( !validateBean( _referenceitem, VALIDATION_ATTRIBUTES_PREFIX ) ) { return redirectView( request, VIEW_CREATE_REFERENCEITEM ); }
          */
 
-        ReferenceItemValueHome.create( itemValue );
+        TranslationItemHome.create( itemValue );
 
-        addInfo( "referencelist.info.referenceitemvalue.created", getLocale( ) );
+        addInfo( "referencelist.info.translationitem.created", getLocale( ) );
 
         return redirectView( request, VIEW_MANAGE );
     }
@@ -225,7 +225,7 @@ public class ReferenceItemValueJspBean extends AbstractReferenceListManageJspBea
      * @return The page
      */
     @View( value = VIEW_MANAGE, defaultView = true )
-    public String getManageReferenceItemValues( HttpServletRequest request )
+    public String getManageTranslations( HttpServletRequest request )
     {
         HttpSession session = request.getSession( );
 
@@ -242,10 +242,10 @@ public class ReferenceItemValueJspBean extends AbstractReferenceListManageJspBea
 
         int nIdReference = Integer.parseInt( (String) session.getAttribute( PARAMETER_ID_REFERENCE ) );
 
-        List<ReferenceItemValue> listReferenceItemValues = ReferenceItemValueHome.getReferenceItemValueList( nIdReference );
+        List<TranslationItem> listTranslationItems = TranslationItemHome.getTranslationItemList( nIdReference );
 
         // getPaginatedListModel should be added in Abstract class
-        Map<String, Object> model = getPaginatedListModel( request, MARK_MANAGE, listReferenceItemValues, JSP_MANAGE );
+        Map<String, Object> model = getPaginatedListModel( request, MARK_MANAGE, listTranslationItems, JSP_MANAGE );
 
         model.put( PARAMETER_ID_REFERENCE, nIdReference );
 

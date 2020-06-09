@@ -40,7 +40,7 @@ import java.io.Serializable;
 /**
  * This is the business class for the object MonolingValue
  */
-public class ReferenceItemValue implements Serializable
+public class TranslationItem implements Serializable
 {
     private static final long serialVersionUID = 1L;
 
