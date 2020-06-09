@@ -33,12 +33,11 @@
  */
 package fr.paris.lutece.plugins.referencelist.business;
 
-import org.hibernate.validator.constraints.NotEmpty;
-import fr.paris.lutece.portal.service.rbac.RBACResource;
+
 import java.io.Serializable;
 
 /**
- * This is the business class for the object MonolingValue
+ * This is the business class for the object TranslationItem
  */
 public class TranslationItem implements Serializable
 {
