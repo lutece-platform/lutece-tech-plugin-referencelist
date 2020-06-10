@@ -33,26 +33,26 @@
  */
 package fr.paris.lutece.plugins.referencelist.business;
 
-import org.hibernate.validator.constraints.NotEmpty;
+
 import java.io.Serializable;
 
 /**
- * This is the business class for the object ReferenceItem
+ * This is the business class for the object TranslationItem
  */
-public class ReferenceItem implements Serializable
+public class TranslationItem implements Serializable
 {
     private static final long serialVersionUID = 1L;
 
     // Variables declarations
     private int _nId;
 
-    @NotEmpty( message = "#i18n{referencelist.validation.referenceitem.ItemName.notEmpty}" )
-    private String _strItemName;
+    private String _strName;
 
-    @NotEmpty( message = "#i18n{referencelist.validation.referenceitem.ItemValue.notEmpty}" )
-    private String _strItemValue;
+    private String _strLang;
 
-    private int _nIdreference;
+    private String _strValue;
+
+    private int _nIdItem;
 
     /**
      * Returns the Id
@@ -76,65 +76,76 @@ public class ReferenceItem implements Serializable
     }
 
     /**
-     * Returns the ItemName
+     * Returns the Name
      * 
-     * @return The ItemName
+     * @return The Name
      */
-    public String getItemName( )
+    public String getName( )
     {
-        return _strItemName;
+        return _strName;
     }
 
     /**
-     * Sets the ItemName
+     * Sets the Name
      * 
-     * @param strItemName
-     *            The ItemName
+     * @param strName
+     *            The Name
      */
-    public void setItemName( String strItemName )
+    public void setName( String strName )
     {
-        _strItemName = strItemName;
+        _strName = strName;
     }
 
     /**
-     * Returns the ItemValue
      * 
-     * @return The ItemValue
+     * @return
      */
-    public String getItemValue( )
+    public String getLang( )
     {
-        return _strItemValue;
+        return _strLang;
     }
 
     /**
-     * Sets the ItemValue
      * 
-     * @param strItemValue
-     *            The ItemValue
+     * @param _strLang
      */
-    public void setItemValue( String strItemValue )
+    public void setLang( String _strLang )
     {
-        _strItemValue = strItemValue;
+        this._strLang = _strLang;
     }
 
     /**
-     * Returns the Idreference
-     * 
-     * @return The Idreference
+     * @return the _strValue
      */
-    public int getIdreference( )
+    public String getValue( )
     {
-        return _nIdreference;
+        return _strValue;
     }
 
     /**
-     * Sets the Idreference
-     * 
-     * @param nIdreference
-     *            The Idreference
+     * @param _strValue
+     *            the _strValue to set
      */
-    public void setIdreference( int nIdreference )
+    public void setValue( String _strValue )
     {
-        _nIdreference = nIdreference;
+        this._strValue = _strValue;
     }
+
+    /**
+     * @return the reference item id
+     */
+    public int getIdItem( )
+    {
+        return _nIdItem;
+    }
+
+    /**
+     * @param the
+     *            reference item id to set
+     */
+    public void setIdItem( int nIdItem )
+    {
+        this._nIdItem = nIdItem;
+    }
+
 }

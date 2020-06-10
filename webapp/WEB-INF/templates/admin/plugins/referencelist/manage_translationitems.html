@@ -1,0 +1,41 @@
+<@box>
+	<@boxHeader boxTools=true title="#i18n{referencelist.translationitem.manage.title}">
+		<@tform class="form-inline pull-right" name="manage_reference" action="jsp/admin/plugins/referencelist/ManageTranslations.jsp">
+			<@button type="submit" name="view_create" buttonIcon="plus" title="#i18n{referencelist.translationitem.manage.buttonAdd}" />
+		</@tform>
+	</@boxHeader>
+	<@boxBody>    
+    <@messages infos=infos />
+    <@paginationAdmin paginator=paginator combo=1 />
+    <div class="clearfix"></div>
+    <@table>
+        <tr>
+            <th>#i18n{referencelist.translationitem.labelItemName}</th>
+            <th>#i18n{referencelist.translationitem.labelLanguage}</th>
+            <th>#i18n{referencelist.translationitem.labelItemValue}</th>
+            <th>#i18n{portal.util.labelActions}</th>
+        </tr>
+        <@tableHeadBodySeparator />
+        <#list translationitems_list as translationitem >
+	     	<tr>
+	          	<td>
+	              ${translationitem.name}
+	          	</td>
+	          	<td>
+	              ${translationitem.lang}
+	          	</td>
+	          	<td>
+	              ${translationitem.value}
+	          	</td>
+	      		<td>
+					<@aButton href="jsp/admin/plugins/referencelist/ManageTranslations.jsp?view=modify&id=${translationitem.id}" title="#i18n{portal.util.labelModify}" buttonIcon="pencil" />
+		          	<@aButton href="jsp/admin/plugins/referencelist/ManageTranslations.jsp?action=remove&id=${translationitem.id}" title="#i18n{portal.util.labelDelete}" buttonIcon="trash" color="btn-danger" /> 
+	     		</td>
+   			</tr>
+    	</#list>
+    </@table>
+
+    <@paginationAdmin paginator=paginator />
+
+  </@boxBody>
+</@box>
