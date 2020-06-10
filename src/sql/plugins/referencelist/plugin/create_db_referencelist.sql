@@ -25,7 +25,7 @@ PRIMARY KEY (id_reference_item)
 );
 
 --
--- Structure for table referencelist_itemvalue
+-- Structure for table referencelist_translation
 --
 
 DROP TABLE IF EXISTS referencelist_translation;
