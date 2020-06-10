@@ -13,10 +13,7 @@
 				<@formGroup labelKey='#i18n{referencelist.create_reference.labelDescription}' helpKey='#i18n{referencelist.create_reference.labelDescription.help}' mandatory=true>
 					<@input type='text' name='description' value='${reference.description!\'\'}' />
 				</@formGroup>
-				<!-- <@formGroup labelKey='#i18n{referencelist.create_reference.labelFile}' helpKey='#i18n{referencelist.create_reference.labelFile.help}'>
-				<input type='file' name='file' accept=".csv"/>
-				</@formGroup> -->
-				<@actionButtons button1Name="action_createReference" button2Name="view_manageReference"/>
+				<@actionButtons button1Name="action_createReference" url2="jsp/admin/plugins/referencelist/ManageReferences.jsp"/>
     </@tform>
 	</@boxBody>
 </@box>

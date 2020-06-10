@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2019, Mairie de Paris
+ * Copyright (c) 2002-2020, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -31,7 +31,6 @@
  *
  * License 1.0
  */
-
 package fr.paris.lutece.plugins.referencelist.web;
 
 import fr.paris.lutece.plugins.referencelist.business.CompareResult;
@@ -139,8 +138,10 @@ public class ReferenceItemJspBean extends AbstractReferenceListManageJspBean
         IdReference = Integer.parseInt( request.getParameter( PARAMETER_ID_REFERENCE ) );
 
         List<ReferenceItem> listReferenceItems = ReferenceItemHome.getReferenceItemsList( IdReference );
-        Map<String, Object> model = getPaginatedListModel( request, MARK_REFERENCEITEM_LIST, listReferenceItems, JSP_MANAGE_REFERENCEITEMS + "?id="
-                + IdReference );
+        Map<String, Object> model = getPaginatedListModel( request, MARK_REFERENCEITEM_LIST, listReferenceItems,
+                JSP_MANAGE_REFERENCEITEMS + "?idReference=" + IdReference );
+
+        model.put( PARAMETER_ID_REFERENCE, IdReference );
 
         return getPage( PROPERTY_PAGE_TITLE_MANAGE_REFERENCEITEMS, TEMPLATE_MANAGE_REFERENCEITEMS, model );
     }
@@ -236,7 +237,7 @@ public class ReferenceItemJspBean extends AbstractReferenceListManageJspBean
 
         String tmpmsg = CompareResult.createMessage( compareResult );
         Object [ ] messageArgs = {
-            tmpmsg
+                tmpmsg
         };
 
         UrlItem url = new UrlItem( getActionUrl( ACTION_DO_IMPORT_REFERENCEITEM ) );
@@ -335,7 +336,8 @@ public class ReferenceItemJspBean extends AbstractReferenceListManageJspBean
         UrlItem url = new UrlItem( getActionUrl( ACTION_REMOVE_REFERENCEITEM ) );
         url.addParameter( PARAMETER_ID_REFERENCEITEM, nId );
 
-        String strMessageUrl = AdminMessageService.getMessageUrl( request, MESSAGE_CONFIRM_REMOVE_REFERENCEITEM, url.getUrl( ), AdminMessage.TYPE_CONFIRMATION );
+        String strMessageUrl = AdminMessageService.getMessageUrl( request, MESSAGE_CONFIRM_REMOVE_REFERENCEITEM, url.getUrl( ),
+                AdminMessage.TYPE_CONFIRMATION );
 
         return redirect( request, strMessageUrl );
     }

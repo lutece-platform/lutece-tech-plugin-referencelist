@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2019, Mairie de Paris
+ * Copyright (c) 2002-2020, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -116,6 +116,20 @@ public final class ReferenceItemHome
     public static List<ReferenceItem> getReferenceItemsList( int nIdReference )
     {
         return _dao.selectReferenceItemsList( nIdReference, _plugin );
+    }
+
+    /**
+     * Load the data of all the referenceItem objects and returns them as a list
+     * 
+     * @param nIdReference
+     *            the identifier of the reference
+     * @param strLang
+     *            the language
+     * @return the list which contains the data of all the referenceItem objects
+     */
+    public static List<ReferenceItem> getReferenceItemsList( int nIdReference, String strLang )
+    {
+        return _dao.selectReferenceItemsTranslatedList( nIdReference, strLang, _plugin );
     }
 
     /**
