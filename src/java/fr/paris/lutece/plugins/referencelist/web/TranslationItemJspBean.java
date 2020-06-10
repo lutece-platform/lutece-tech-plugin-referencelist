@@ -291,14 +291,14 @@ public class TranslationItemJspBean extends AbstractReferenceListManageJspBean
     {
         ReferenceList selectItems = new ReferenceList( );
 
-        //
+        // code to test the service
         /*
-         * ReferenceList list = ReferenceListService.getInstance().getReferenceList(1, "fr");
-         * 
-         * Iterator < fr.paris.lutece.util.ReferenceItem > it = list.iterator(); while (it.hasNext()) { fr.paris.lutece.util.ReferenceItem item = it.next();
-         * 
-         * AppLogService.info( " code = " + item.getCode( ) + ", name = " + item.getName( ) ); }
-         */
+        ReferenceList list = ReferenceListService.getInstance().getReferenceList(1, "fr");
+          
+        Iterator < fr.paris.lutece.util.ReferenceItem > it = list.iterator(); while (it.hasNext()) { fr.paris.lutece.util.ReferenceItem item = it.next();
+         
+        AppLogService.info( " code = " + item.getCode( ) + ", name = " + item.getName( ) ); }
+        */ 
         //
 
         fr.paris.lutece.util.ReferenceItem selectItem;

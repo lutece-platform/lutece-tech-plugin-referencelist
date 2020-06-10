@@ -56,8 +56,8 @@ public final class ReferenceItemDAO implements IReferenceItemDAO
     private static final String SQL_QUERY_SELECTALL_ID = "SELECT id_reference_item FROM referencelist_item";
 
     private static final String SQL_QUERY_SELECT_ID = "SELECT id_reference_item, item_name, item_value, idreference FROM referencelist_item WHERE idreference = ?";
-    private static final String SQL_QUERY_SELECT_TRANSLATION = "SELECT i.item_name, i.item_value, v.value FROM referencelist_item i LEFT OUTER JOIN referencelist_itemvalue v "
-            + " ON i.id_reference_item = v.id_reference_item WHERE i.idreference = ? " + " AND (v.lang = ? OR v.lang IS NULL) ";
+    private static final String SQL_QUERY_SELECT_TRANSLATION = "SELECT i.item_name, i.item_value, t.value FROM referencelist_item i LEFT OUTER JOIN referencelist_translation t "
+            + " ON i.id_reference_item = t.id_reference_item WHERE i.idreference = ? " + " AND (t.lang = ? OR t.lang IS NULL) ";
 
     /**
      * {@inheritDoc }

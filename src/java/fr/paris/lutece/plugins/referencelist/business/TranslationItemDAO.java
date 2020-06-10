@@ -47,15 +47,15 @@ import java.util.List;
 public final class TranslationItemDAO implements ITranslationItemDAO
 {
     // Constants
-    private static final String SQL_QUERY_SELECT = "SELECT id_itemvalue, i.id_reference_item, item_name, lang, value FROM referencelist_itemvalue v, referencelist_item i"
+    private static final String SQL_QUERY_SELECT = "SELECT id_translation, i.id_reference_item, item_name, lang, value FROM referencelist_translation v, referencelist_item i"
             + " where v.id_reference_item = i.id_reference_item ";
 
-    private static final String SQL_QUERY_INSERT = "INSERT INTO referencelist_itemvalue ( id_reference_item, lang, value ) VALUES ( ?, ?, ? ) ";
-    private static final String SQL_QUERY_DELETE = "DELETE FROM referencelist_itemvalue WHERE id_itemvalue = ? ";
-    private static final String SQL_QUERY_UPDATE = "UPDATE referencelist_itemvalue SET id_reference_item = ?, lang = ?, value = ? WHERE id_itemvalue = ?";
+    private static final String SQL_QUERY_INSERT = "INSERT INTO referencelist_translation ( id_reference_item, lang, value ) VALUES ( ?, ?, ? ) ";
+    private static final String SQL_QUERY_DELETE = "DELETE FROM referencelist_translation WHERE id_translation = ? ";
+    private static final String SQL_QUERY_UPDATE = "UPDATE referencelist_translation SET id_reference_item = ?, lang = ?, value = ? WHERE id_translation = ?";
 
     private static final String SQL_QUERY_SELECTALL = SQL_QUERY_SELECT + " and i.idreference = ? ORDER BY lang, item_name";
-    private static final String SQL_QUERY_SELECTONE = SQL_QUERY_SELECT + " and v.id_itemvalue = ?";
+    private static final String SQL_QUERY_SELECTONE = SQL_QUERY_SELECT + " and v.id_translation = ?";
 
     private String _logMessage = "";
 
