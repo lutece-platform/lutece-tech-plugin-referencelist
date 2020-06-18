@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2019, Mairie de Paris
+ * Copyright (c) 2002-2020, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -119,6 +119,20 @@ public final class ReferenceItemHome
     }
 
     /**
+     * Load the data of all the referenceItem objects and returns them as a list
+     * 
+     * @param nIdReference
+     *            the identifier of the reference
+     * @param strLang
+     *            the language
+     * @return the list which contains the data of all the referenceItem objects
+     */
+    public static List<ReferenceItem> getReferenceItemsList( int nIdReference, String strLang )
+    {
+        return _dao.selectReferenceItemsTranslatedList( nIdReference, strLang, _plugin );
+    }
+
+    /**
      * Load the id of all the referenceItem objects and returns them as a list
      * 
      * @return the list which contains the id of all the referenceItem objects
@@ -173,12 +187,12 @@ public final class ReferenceItemHome
             {
                 for ( ReferenceItem referenceItem : currentListReferenceItems )
                 {
-                    // compare names;
-                    if ( candidateItem.getItemName( ).equals( referenceItem.getItemName( ) ) )
+                    // compare codes ;
+                    if ( candidateItem.getCode( ).equals( referenceItem.getCode( ) ) )
                     {
                         founded = true;
                         // compare values;
-                        if ( candidateItem.getItemValue( ).equals( referenceItem.getItemValue( ) ) )
+                        if ( candidateItem.getName( ).equals( referenceItem.getName( ) ) )
                         {
                             // duplicate candidateItem.
                             duplicateListCandidateReferenceItems.add( candidateItem );
@@ -187,6 +201,7 @@ public final class ReferenceItemHome
                         {
                             // candidateItem to update.
                             candidateItem.setId( referenceItem.getId( ) );
+                            
                             updateListCandidateReferenceItems.add( candidateItem );
                         }
                     }

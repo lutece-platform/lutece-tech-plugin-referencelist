@@ -18,8 +18,22 @@ PRIMARY KEY (id_reference)
 DROP TABLE IF EXISTS referencelist_item;
 CREATE TABLE referencelist_item (
 id_reference_item int AUTO_INCREMENT,
-item_name long varchar NOT NULL,
-item_value long varchar NOT NULL,
+name long varchar NOT NULL,
+code long varchar NOT NULL,
 idreference int default '0' NOT NULL,
 PRIMARY KEY (id_reference_item)
+);
+
+--
+-- Structure for table referencelist_translation
+--
+
+DROP TABLE IF EXISTS referencelist_translation;
+CREATE TABLE referencelist_translation (
+	id_translation int AUTO_INCREMENT,
+	lang varchar(10) NOT NULL,
+	name long varchar NOT NULL,
+	id_reference_item int NOT NULL,
+	PRIMARY KEY (id_translation),
+	FOREIGN KEY (id_reference_item) REFERENCES referencelist_item(id_reference_item) ON DELETE CASCADE
 );

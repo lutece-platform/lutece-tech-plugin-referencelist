@@ -33,57 +33,67 @@
  */
 package fr.paris.lutece.plugins.referencelist.business;
 
+import fr.paris.lutece.portal.service.plugin.Plugin;
+import java.util.List;
 
 /**
- * This is the business class for the object ReferenceItem
+ * ITranslationItemDAO Interface
  */
-public class ReferenceItem extends fr.paris.lutece.util.ReferenceItem
+public interface ITranslationItemDAO
 {
-
-    // Variables declarations
-    private int _nId;
-
-    private int _nIdreference;
+    /**
+     * Insert a new record in the table.
+     * 
+     * @param translationItem
+     *            instance of the TranslationItem object to insert
+     * @param plugin
+     *            the Plugin
+     */
+    void insert( TranslationItem translationItem, Plugin plugin );
 
     /**
-     * Returns the Id
+     * Update the record in the table
      * 
-     * @return The Id
+     * @param translationItem
+     *            the reference of the TranslationItem
+     * @param plugin
+     *            the Plugin
      */
-    public int getId( )
-    {
-        return _nId;
-    }
+    void store( TranslationItem translationItem, Plugin plugin );
 
     /**
-     * Sets the Id
+     * Delete a record from the table
      * 
-     * @param nId
-     *            The Id
+     * @param nKey
+     *            The identifier of the TranslationItem to delete
+     * @param plugin
+     *            the Plugin
      */
-    public void setId( int nId )
-    {
-        _nId = nId;
-    }
+    void delete( int nKey, Plugin plugin );
+
+    // /////////////////////////////////////////////////////////////////////////
+    // Finders
 
     /**
-     * Returns the Idreference
+     * Load the data from the table
      * 
-     * @return The Idreference
+     * @param nKey
+     *            The identifier of the TranslationItem
+     * @param plugin
+     *            the Plugin
+     * @return The instance of the TranslationItem
      */
-    public int getIdreference( )
-    {
-        return _nIdreference;
-    }
+    TranslationItem load( int nKey, Plugin plugin );
 
     /**
-     * Sets the Idreference
+     * Load the data of all the TranslationItems objects in a reference and returns them as a list
      * 
-     * @param nIdreference
-     *            The Idreference
+     * @param nIdReference
+     *            the reference id
+     * @param plugin
+     *            the Plugin
+     * @return The list which contains the data of all the TranslationItem objects
      */
-    public void setIdreference( int nIdreference )
-    {
-        _nIdreference = nIdreference;
-    }
+    List<TranslationItem> selectTranslationItems( int nIdReference, Plugin plugin );
+
 }

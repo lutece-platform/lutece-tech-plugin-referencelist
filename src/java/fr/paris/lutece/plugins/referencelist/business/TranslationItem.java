@@ -34,16 +34,25 @@
 package fr.paris.lutece.plugins.referencelist.business;
 
 
+import java.io.Serializable;
+
 /**
- * This is the business class for the object ReferenceItem
+ * This is the business class for the object TranslationItem
  */
-public class ReferenceItem extends fr.paris.lutece.util.ReferenceItem
+public class TranslationItem implements Serializable
 {
+    private static final long serialVersionUID = 1L;
 
     // Variables declarations
     private int _nId;
 
-    private int _nIdreference;
+    private String _strName;
+
+    private String _strLang;
+
+    private String _strTranslation;
+
+    private int _nIdItem;
 
     /**
      * Returns the Id
@@ -67,23 +76,80 @@ public class ReferenceItem extends fr.paris.lutece.util.ReferenceItem
     }
 
     /**
-     * Returns the Idreference
+     * Returns the Name of the ReferenceItem
      * 
-     * @return The Idreference
+     * @return The Name of the ReferenceItem
      */
-    public int getIdreference( )
+    public String getName( )
     {
-        return _nIdreference;
+        return _strName;
     }
 
     /**
-     * Sets the Idreference
+     * Sets the Name of the ReferenceItem
      * 
-     * @param nIdreference
-     *            The Idreference
+     * @param strName
+     *            The Name of the ReferenceItem
      */
-    public void setIdreference( int nIdreference )
+    public void setName( String strName )
     {
-        _nIdreference = nIdreference;
+        _strName = strName;
     }
+
+    /**
+     * 
+     * @return
+     */
+    public String getLang( )
+    {
+        return _strLang;
+    }
+
+    /**
+     * 
+     * @param _strLang
+     */
+    public void setLang( String _strLang )
+    {
+        this._strLang = _strLang;
+    }
+
+    /**
+     * Returns the translation value
+     * 
+     * @return the _strValue
+     */
+    public String getTranslation( )
+    {
+        return _strTranslation;
+    }
+
+    /**
+     * Sets the translation value
+     * 
+     * @param _strValue
+     *            the _strValue to set
+     */
+    public void setTranslation( String strTranslation )
+    {
+        this._strTranslation = strTranslation;
+    }
+
+    /**
+     * @return the reference item id
+     */
+    public int getIdItem( )
+    {
+        return _nIdItem;
+    }
+
+    /**
+     * @param the
+     *            reference item id to set
+     */
+    public void setIdItem( int nIdItem )
+    {
+        this._nIdItem = nIdItem;
+    }
+
 }

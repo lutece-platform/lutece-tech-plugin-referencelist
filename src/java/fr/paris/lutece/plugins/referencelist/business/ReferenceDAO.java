@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2019, Mairie de Paris
+ * Copyright (c) 2002-2020, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -31,7 +31,6 @@
  *
  * License 1.0
  */
-
 package fr.paris.lutece.plugins.referencelist.business;
 
 import fr.paris.lutece.portal.service.plugin.Plugin;
@@ -64,22 +63,18 @@ public final class ReferenceDAO implements IReferenceDAO
     public void insert( Reference reference, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, Statement.RETURN_GENERATED_KEYS, plugin );
-        try
-        {
-            int nIndex = 1;
-            daoUtil.setString( nIndex++, reference.getName( ) );
-            daoUtil.setString( nIndex++, reference.getDescription( ) );
+        
+        int nIndex = 1;
+        daoUtil.setString( nIndex++, reference.getName( ) );
+        daoUtil.setString( nIndex++, reference.getDescription( ) );
 
-            daoUtil.executeUpdate( );
-            if ( daoUtil.nextGeneratedKey( ) )
-            {
-                reference.setId( daoUtil.getGeneratedKeyInt( 1 ) );
-            }
-        }
-        finally
+        daoUtil.executeUpdate( );
+        if ( daoUtil.nextGeneratedKey( ) )
         {
-            daoUtil.free( );
+            reference.setId( daoUtil.getGeneratedKeyInt( 1 ) );
         }
+        
+        daoUtil.close( );
     }
 
     /**
@@ -103,7 +98,7 @@ public final class ReferenceDAO implements IReferenceDAO
             reference.setDescription( daoUtil.getString( nIndex++ ) );
         }
 
-        daoUtil.free( );
+        daoUtil.close( );
         return reference;
     }
 
@@ -124,7 +119,7 @@ public final class ReferenceDAO implements IReferenceDAO
             int nIndex = 1;
             idReference = daoUtil.getInt( nIndex++ );
         }
-        daoUtil.free( );
+        daoUtil.close( );
         return idReference;
 
     }
@@ -140,12 +135,12 @@ public final class ReferenceDAO implements IReferenceDAO
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, plugin );
         daoUtil.setInt( 1, nKey );
         daoUtil.executeUpdate( );
-        daoUtil.free( );
+        daoUtil.close( );
         // reference items
         DAOUtil daoUtil2 = new DAOUtil( SQL_QUERY_DELETE_ITEMS, plugin );
         daoUtil2.setInt( 1, nKey );
         daoUtil2.executeUpdate( );
-        daoUtil2.free( );
+        daoUtil2.close( );
 
     }
 
@@ -164,7 +159,7 @@ public final class ReferenceDAO implements IReferenceDAO
         daoUtil.setInt( nIndex, reference.getId( ) );
 
         daoUtil.executeUpdate( );
-        daoUtil.free( );
+        daoUtil.close( );
     }
 
     /**
@@ -188,7 +183,7 @@ public final class ReferenceDAO implements IReferenceDAO
 
             referenceList.add( reference );
         }
-        daoUtil.free( );
+        daoUtil.close( );
         return referenceList;
     }
 
@@ -207,7 +202,7 @@ public final class ReferenceDAO implements IReferenceDAO
             referenceList.add( daoUtil.getInt( 1 ) );
         }
 
-        daoUtil.free( );
+        daoUtil.close( );
         return referenceList;
     }
 
@@ -226,7 +221,7 @@ public final class ReferenceDAO implements IReferenceDAO
             referenceList.addItem( daoUtil.getInt( 1 ), daoUtil.getString( 2 ) );
         }
 
-        daoUtil.free( );
+        daoUtil.close( );
         return referenceList;
     }
 
