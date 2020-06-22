@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2019, Mairie de Paris
+ * Copyright (c) 2002-2020, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -31,7 +31,6 @@
  *
  * License 1.0
  */
-
 package fr.paris.lutece.plugins.referencelist.business;
 
 import fr.paris.lutece.test.LuteceTestCase;
@@ -39,47 +38,49 @@ import fr.paris.lutece.test.LuteceTestCase;
 /**
  * This is the business class test for the object ReferenceItem
  */
-public class ReferenceItemBusinessTest extends LuteceTestCase {
-    private static final String ITEMNAME1 = "ItemName1";
-    private static final String ITEMNAME2 = "ItemName2";
-    private static final String ITEMVALUE1 = "ItemValue1";
-    private static final String ITEMVALUE2 = "ItemValue2";
-    private static final int IDREFERENCE1 = 1;
+public class ReferenceItemBusinessTest extends LuteceTestCase
+{
+	public static final String NAME1 = "Name1";
+	public static final String NAME2 = "Name2";
+	public static final String CODE1 = "Code1";
+	public static final String CODE2 = "Code2";
+	public static final int IDREFERENCE1 = 1;
 
     /**
      * test ReferenceItem
      */
-    public void testBusiness() {
+    public void testBusiness( )
+    {
         // Initialize an object
-        ReferenceItem referenceItem = new ReferenceItem();
-        referenceItem.setItemName(ITEMNAME1);
-        referenceItem.setItemValue(ITEMVALUE1);
-        referenceItem.setIdreference(IDREFERENCE1);
+        ReferenceItem referenceItem = new ReferenceItem( );
+        referenceItem.setName( NAME1 );
+        referenceItem.setCode( CODE1 );
+        referenceItem.setIdreference( IDREFERENCE1 );
 
         // Create test
-        ReferenceItemHome.create(referenceItem);
-        ReferenceItem referenceItemStored = ReferenceItemHome.findByPrimaryKey(referenceItem.getId());
-        assertEquals(referenceItemStored.getItemName(), referenceItem.getItemName());
-        assertEquals(referenceItemStored.getItemValue(), referenceItem.getItemValue());
-        assertEquals(referenceItemStored.getIdreference(), referenceItem.getIdreference());
+        ReferenceItemHome.create( referenceItem );
+        ReferenceItem referenceItemStored = ReferenceItemHome.findByPrimaryKey( referenceItem.getId( ) );
+        assertEquals( referenceItemStored.getName( ), referenceItem.getName( ) );
+        assertEquals( referenceItemStored.getCode( ), referenceItem.getCode( ) );
+        assertEquals( referenceItemStored.getIdreference( ), referenceItem.getIdreference( ) );
 
         // Update test
-        referenceItem.setItemName(ITEMNAME2);
-        referenceItem.setItemValue(ITEMVALUE2);
-        referenceItem.setIdreference(IDREFERENCE1);
-        ReferenceItemHome.update(referenceItem);
-        referenceItemStored = ReferenceItemHome.findByPrimaryKey(referenceItem.getId());
-        assertEquals(referenceItemStored.getItemName(), referenceItem.getItemName());
-        assertEquals(referenceItemStored.getItemValue(), referenceItem.getItemValue());
-        assertEquals(referenceItemStored.getIdreference(), referenceItem.getIdreference());
+        referenceItem.setName( NAME2 );
+        referenceItem.setCode( CODE2 );
+        referenceItem.setIdreference( IDREFERENCE1 );
+        ReferenceItemHome.update( referenceItem );
+        referenceItemStored = ReferenceItemHome.findByPrimaryKey( referenceItem.getId( ) );
+        assertEquals( referenceItemStored.getName( ), referenceItem.getName( ) );
+        assertEquals( referenceItemStored.getCode( ), referenceItem.getCode( ) );
+        assertEquals( referenceItemStored.getIdreference( ), referenceItem.getIdreference( ) );
 
         // List test
-        ReferenceItemHome.getReferenceItemsList(0);
+        ReferenceItemHome.getReferenceItemsList( 0 );
 
         // Delete test
-        ReferenceItemHome.remove(referenceItem.getId());
-        referenceItemStored = ReferenceItemHome.findByPrimaryKey(referenceItem.getId());
-        assertNull(referenceItemStored);
+        ReferenceItemHome.remove( referenceItem.getId( ) );
+        referenceItemStored = ReferenceItemHome.findByPrimaryKey( referenceItem.getId( ) );
+        assertNull( referenceItemStored );
 
     }
 

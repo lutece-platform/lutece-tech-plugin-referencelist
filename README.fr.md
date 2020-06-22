@@ -7,25 +7,25 @@
 
 ## Introduction
 
- **referencelist** plugin is commited to provide reference data management to every LUTECE site built with it.
+Le plugin **referencelist** permet d'apporter des données référentielles à n'importe quel site basé sur LUTECE
 
-It provides a LUTECE Back Office menu to manage pairs of "key/value" data like properties files.
+Il apporte un menu dans le Back Office LUTECE permettant de gérer des listes de données en "clé/valeurs" comme dans un fichier properties
 
-Those data can be used by another plugin, for example in select combo lists, without redelivering the site.
+Ces listes peuvent être utilisées par un autre plugin pour alimenter par exemple des listes "select" ("combo lists"), sans avoir à relivrer le site.
 
 ## Configuration
 
-Activate the **referencelist** plugin through LUTECE Back Office.
+Activer le plugin **referencelist** à travers le Back Office LUTECE.
 
-Create one or more references (ex : "title") with their items ("title.mister" with "Mr", "title.madam" with "Mrs",...).
+Créer un référentiel avec sa liste d'options ("civilite.monsieur" avec "M.", "civilite.madame" et "Mme",...).
 
-Each item can also have its translated values.
+Chaque option peut avoir sa traduction dans plusieurs langues (gestion de listes multilingues)
 
 ## Usage
 
-A dedicated menu in LUTECE Back Office enables to create/modify/delete data to be used by the LUTECE site.
+Un menu dédié dans le Back Office permet de créer/modifier/supprimer les listes de données utilisées dans le site LUTECE.
 
-After configuration of a reference list, the items list can be obtained through coding by :
+Après configuration du référentiel, la liste peut être obtenu dans le code de la manière suivante :
 
 ```
  `
@@ -36,7 +36,7 @@ After configuration of a reference list, the items list can be obtained through 
 				` 
 ```
 
-If the translated value corresponding to the local doesn't still exist, the item default value shall be returned, like for the simpler invokation :
+Si la traduction correspondant à la locale n'existe pas encore, la valeur par défaut de l'option sera retournée, comme pour l'invocation suivante :
 
 ```
  `

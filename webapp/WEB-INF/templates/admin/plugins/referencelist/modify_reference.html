@@ -1,5 +1,4 @@
-<!-- <#include "referencelistmanage_tabs.html" />
-<@tabs2 tab="reference" /> -->
+
 
 <@box>
 	<@boxHeader title='#i18n{referencelist.modify_reference.title}' />
@@ -14,11 +13,8 @@
 				<@formGroup labelKey='#i18n{referencelist.modify_reference.labelDescription}' helpKey='#i18n{referencelist.modify_reference.labelDescription.help}' mandatory=true>
 					<@input type='text' name='description' value='${reference.description}' />
 				</@formGroup>
-				<!-- <@formGroup labelKey='#i18n{referencelist.modify_reference.labelFile}' helpKey='#i18n{referencelist.modify_reference.labelFile.help}'>
-					<@input type='file' name='file' />
-				</@formGroup> -->
 
-        <@actionButtons button1Name="action_modifyReference" button2Name="view_manageReference"/>
+        <@actionButtons button1Name="action_modifyReference" url2="jsp/admin/plugins/referencelist/ManageReferences.jsp"/>
     </@tform>
 	</@boxBody>
 </@box>

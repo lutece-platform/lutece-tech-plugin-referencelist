@@ -34,52 +34,58 @@
 package fr.paris.lutece.plugins.referencelist.business;
 
 import fr.paris.lutece.portal.service.plugin.Plugin;
-import fr.paris.lutece.util.ReferenceList;
 import java.util.List;
 
 /**
- * IReferenceItemDAO Interface
+ * ITranslationItemDAO Interface
  */
-public interface IReferenceItemDAO
+public interface ITranslationItemDAO
 {
+	public static final String REFERENCE_ITEM_ID = "REFERENCE_ITEM_ID";
+	
+	public static final String REFERENCE_ID = "REFERENCE_ID";
+	
     /**
      * Insert a new record in the table.
      * 
-     * @param referenceItem
-     *            instance of the ReferenceItem object to insert
+     * @param translationItem
+     *            instance of the TranslationItem object to insert
      * @param plugin
      *            the Plugin
      */
-    void insert( ReferenceItem referenceItem, Plugin plugin );
+    void insert( TranslationItem translationItem, Plugin plugin );
 
     /**
      * Update the record in the table
      * 
-     * @param referenceItem
-     *            the reference of the ReferenceItem
+     * @param translationItem
+     *            the reference of the TranslationItem
      * @param plugin
      *            the Plugin
      */
-    void store( ReferenceItem referenceItem, Plugin plugin );
+    void store( TranslationItem translationItem, Plugin plugin );
 
     /**
      * Delete a record from the table
      * 
      * @param nKey
-     *            The identifier of the ReferenceItem to delete
+     *            The identifier of the TranslationItem to delete
      * @param plugin
      *            the Plugin
      */
     void delete( int nKey, Plugin plugin );
-
+    
     /**
-     * Deletes the records associated to a Reference
+     * Delete a list of records from the table linked to a ReferenceItem or a Reference
      * 
-     * @param nIdReference
-     *           The Reference identifier of the Reference Items to delete
+     * @param idType
+     * 		  the id type : "REFERENCE_ITEM_ID" or "REFERENCE_ID"
+     * @param nId
+     * 			 The identifier of the ReferenceItem or the Reference
      * @param plugin
+     * 			the Plugin
      */
-    void deleteAll( int nIdReference, Plugin plugin );
+    void deleteAll( String idType, int nId, Plugin plugin );
     
     // /////////////////////////////////////////////////////////////////////////
     // Finders
@@ -87,64 +93,23 @@ public interface IReferenceItemDAO
     /**
      * Load the data from the table
      * 
-     * @param nIdReference
-     *            The identifier of the reference of referenceitems
-     * @param sItemName
-     *            The name of referenceitem
-     * @param plugin
-     *            the Plugin
-     * @return The instance of the referenceItem
-     */
-    ReferenceItem loadReferenceItemByName( int nIdReference, String sItemName, Plugin plugin );
-
-    /**
-     * Load the data from the table
-     * 
      * @param nKey
-     *            The identifier of the referenceItem
+     *            The identifier of the TranslationItem
      * @param plugin
      *            the Plugin
-     * @return The instance of the referenceItem
+     * @return The instance of the TranslationItem
      */
-    ReferenceItem load( int nKey, Plugin plugin );
+    TranslationItem load( int nKey, Plugin plugin );
 
     /**
-     * Load the data of all the referenceItem objects and returns them as a list
-     * 
-     * @param plugin
-     *            the Plugin
-     * @return The list which contains the data of all the referenceItem objects
-     */
-    List<ReferenceItem> selectReferenceItemsList( int nIdReference, Plugin plugin );
-
-    /**
-     * Load the translated referenceItem objects and returns them as a list
+     * Load the data of all the TranslationItems objects in a reference and returns them as a list
      * 
      * @param nIdReference
-     *            the identifier of the reference
-     * @param strLang
-     *            the language
+     *            the reference id
      * @param plugin
      *            the Plugin
-     * @return
+     * @return The list which contains the data of all the TranslationItem objects
      */
-    List<ReferenceItem> selectReferenceItemsTranslatedList( int nIdReference, String strLang, Plugin plugin );
+    List<TranslationItem> selectTranslationItems( int nIdReference, Plugin plugin );
 
-    /**
-     * Load the id of all the referenceItem objects and returns them as a list
-     * 
-     * @param plugin
-     *            the Plugin
-     * @return The list which contains the id of all the referenceItem objects
-     */
-    List<Integer> selectIdReferenceItemsList( Plugin plugin );
-
-    /**
-     * Load the data of all the referenceItem objects and returns them as a referenceList
-     * 
-     * @param plugin
-     *            the Plugin
-     * @return The referenceList which contains the data of all the referenceItem objects
-     */
-    ReferenceList selectReferenceItemsReferenceList( Plugin plugin );
 }
