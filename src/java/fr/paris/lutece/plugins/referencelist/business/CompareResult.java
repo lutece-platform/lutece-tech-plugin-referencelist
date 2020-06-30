@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2019, Mairie de Paris
+ * Copyright (c) 2002-2020, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -51,7 +51,7 @@ public class CompareResult
     private static final String INFO_REFERENCEITEM_DUPLICATE_IN_TABLE = "referencelist.info.referenceitem.import.duplicateintable";
     private static final String INFO_REFERENCEITEM_TO_UPDATE = "referencelist.info.referenceitem.import.updated";
     private static final String INFO_REFERENCEITEM_TO_INSERT = "referencelist.info.referenceitem.import.toinsert";
-
+    
     /**
      * 
      * @param insertListCandidateReferenceItems
@@ -106,7 +106,7 @@ public class CompareResult
         this._insertListCandidateReferenceItems = _insertListCandidateReferenceItems;
     }
 
-    public static String createMessage( CompareResult result )
+    public static String createMessage( CompareResult result, Locale locale )
     {
         String message = "";
         int update = result.get_updateListCandidateReferenceItems( ).size( );
@@ -115,9 +115,9 @@ public class CompareResult
 
         if ( duplicate > 0 )
             message = message + "<strong>" + duplicate + "</strong> "
-                    + I18nService.getLocalizedString( INFO_REFERENCEITEM_DUPLICATE_IN_TABLE, Locale.getDefault( ) ) + "<br>";
+                    + I18nService.getLocalizedString( INFO_REFERENCEITEM_DUPLICATE_IN_TABLE, locale ) + "<br>";
         if ( update > 0 )
-            message = message + "<strong>" + update + "</strong> " + I18nService.getLocalizedString( INFO_REFERENCEITEM_TO_UPDATE, Locale.getDefault( ) )
+            message = message + "<strong>" + update + "</strong> " + I18nService.getLocalizedString( INFO_REFERENCEITEM_TO_UPDATE, locale )
                     + " <br>";
         if ( insert > 0 )
             message = message + "<strong>" + insert + "</strong> " + I18nService.getLocalizedString( INFO_REFERENCEITEM_TO_INSERT, Locale.getDefault( ) );

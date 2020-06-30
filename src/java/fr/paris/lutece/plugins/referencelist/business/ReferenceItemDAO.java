@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2019, Mairie de Paris
+ * Copyright (c) 2002-2020, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -31,7 +31,6 @@
  *
  * License 1.0
  */
-
 package fr.paris.lutece.plugins.referencelist.business;
 
 import fr.paris.lutece.portal.service.plugin.Plugin;
@@ -48,27 +47,31 @@ import java.util.List;
 public final class ReferenceItemDAO implements IReferenceItemDAO
 {
     // Constants
-    private static final String SQL_QUERY_SELECT = "SELECT id_reference_item, item_name, item_value, idreference FROM referencelist_item WHERE id_reference_item = ?";
-    private static final String SQL_QUERY_SELECT_ID = "SELECT id_reference_item, item_name, item_value, idreference FROM referencelist_item WHERE idreference = ?";
-    private static final String SQL_QUERY_SELECT_NAME = "SELECT id_reference_item, item_name, item_value, idreference FROM referencelist_item WHERE idreference = ? AND item_name = ?";
-    private static final String SQL_QUERY_INSERT = "INSERT INTO referencelist_item ( item_name, item_value, idreference ) VALUES ( ?, ?, ? ) ";
+    private static final String SQL_QUERY_SELECT = "SELECT id_reference_item, name, code, idreference FROM referencelist_item WHERE id_reference_item = ?";
+    private static final String SQL_QUERY_SELECT_NAME = "SELECT id_reference_item, name, code, idreference FROM referencelist_item WHERE idreference = ? AND name = ?";
+    private static final String SQL_QUERY_INSERT = "INSERT INTO referencelist_item ( name, code, idreference ) VALUES ( ?, ?, ? ) ";
     private static final String SQL_QUERY_DELETE = "DELETE FROM referencelist_item WHERE id_reference_item = ? ";
-    private static final String SQL_QUERY_UPDATE = "UPDATE referencelist_item SET item_name = ?, item_value = ? WHERE id_reference_item = ?";
-    private static final String SQL_QUERY_SELECTALL = "SELECT id_reference_item, item_name, item_value, idreference FROM referencelist_item";
+    private static final String SQL_QUERY_UPDATE = "UPDATE referencelist_item SET name = ?, code = ? WHERE id_reference_item = ?";
+    private static final String SQL_QUERY_SELECTALL = "SELECT id_reference_item, name, code, idreference FROM referencelist_item";
     private static final String SQL_QUERY_SELECTALL_ID = "SELECT id_reference_item FROM referencelist_item";
 
+    private static final String SQL_QUERY_SELECT_ID = "SELECT id_reference_item, name, code, idreference FROM referencelist_item WHERE idreference = ?";
+    private static final String SQL_QUERY_SELECT_TRANSLATION = "SELECT i.code, i.name, t.name FROM referencelist_item i LEFT OUTER JOIN referencelist_translation t "
+            + " ON i.id_reference_item = t.id_reference_item WHERE i.idreference = ? " + " AND (t.lang = ? OR t.lang IS NULL) ";
+    
+    private static final String SQL_QUERY_DELETE_ALL_FROM_REFERENCE_ID = "DELETE FROM referencelist_item WHERE idreference = ? ";
+    
     /**
      * {@inheritDoc }
      */
     @Override
     public void insert( ReferenceItem referenceItem, Plugin plugin )
     {
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, Statement.RETURN_GENERATED_KEYS, plugin );
-        try
+    	try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, Statement.RETURN_GENERATED_KEYS, plugin ) )
         {
             int nIndex = 1;
-            daoUtil.setString( nIndex++, referenceItem.getItemName( ) );
-            daoUtil.setString( nIndex++, referenceItem.getItemValue( ) );
+            daoUtil.setString( nIndex++, referenceItem.getName( ) );
+            daoUtil.setString( nIndex++, referenceItem.getCode( ) );
             daoUtil.setInt( nIndex++, referenceItem.getIdreference( ) );
             daoUtil.executeUpdate( );
             if ( daoUtil.nextGeneratedKey( ) )
@@ -76,10 +79,7 @@ public final class ReferenceItemDAO implements IReferenceItemDAO
                 referenceItem.setId( daoUtil.getGeneratedKeyInt( 1 ) );
             }
         }
-        finally
-        {
-            daoUtil.free( );
-        }
+        
     }
 
     /**
@@ -88,23 +88,25 @@ public final class ReferenceItemDAO implements IReferenceItemDAO
     @Override
     public ReferenceItem load( int nKey, Plugin plugin )
     {
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT, plugin );
-        daoUtil.setInt( 1, nKey );
-        daoUtil.executeQuery( );
-        ReferenceItem referenceItem = null;
-
-        if ( daoUtil.next( ) )
-        {
-            referenceItem = new ReferenceItem( );
-            int nIndex = 1;
-
-            referenceItem.setId( daoUtil.getInt( nIndex++ ) );
-            referenceItem.setItemName( daoUtil.getString( nIndex++ ) );
-            referenceItem.setItemValue( daoUtil.getString( nIndex++ ) );
-            referenceItem.setIdreference( daoUtil.getInt( nIndex++ ) );
-        }
-
-        daoUtil.free( );
+    	ReferenceItem referenceItem = null;
+    	
+    	try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT, plugin ) )
+    	{
+	        daoUtil.setInt( 1, nKey );
+	        daoUtil.executeQuery( );
+	
+	        if ( daoUtil.next( ) )
+	        {
+	            referenceItem = new ReferenceItem( );
+	            int nIndex = 1;
+	
+	            referenceItem.setId( daoUtil.getInt( nIndex++ ) );
+	            referenceItem.setName( daoUtil.getString( nIndex++ ) );
+	            referenceItem.setCode( daoUtil.getString( nIndex++ ) );
+	            referenceItem.setIdreference( daoUtil.getInt( nIndex++ ) );
+	        }
+    	}
+        
         return referenceItem;
     }
 
@@ -114,27 +116,42 @@ public final class ReferenceItemDAO implements IReferenceItemDAO
     @Override
     public void delete( int nKey, Plugin plugin )
     {
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, plugin );
-        daoUtil.setInt( 1, nKey );
-        daoUtil.executeUpdate( );
-        daoUtil.free( );
+    	try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, plugin ) )
+    	{
+	        daoUtil.setInt( 1, nKey );
+	        daoUtil.executeUpdate( );
+    	}
     }
-
+    
+    /**
+     * {@inheritDoc }
+     */
+    @Override
+    public void deleteAll( int nIdReference, Plugin plugin )
+    {
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE_ALL_FROM_REFERENCE_ID, plugin ) )
+		{
+			daoUtil.setInt( 1, nIdReference );
+			daoUtil.executeUpdate( );
+		}
+    }
+    
     /**
      * {@inheritDoc }
      */
     @Override
     public void store( ReferenceItem referenceItem, Plugin plugin )
     {
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, plugin );
-        int nIndex = 1;
-
-        daoUtil.setString( nIndex++, referenceItem.getItemName( ) );
-        daoUtil.setString( nIndex++, referenceItem.getItemValue( ) );
-        daoUtil.setInt( nIndex, referenceItem.getId( ) );
-
-        daoUtil.executeUpdate( );
-        daoUtil.free( );
+    	try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, plugin ) )
+    	{
+	        int nIndex = 1;
+	
+	        daoUtil.setString( nIndex++, referenceItem.getName( ) );
+	        daoUtil.setString( nIndex++, referenceItem.getCode( ) );
+	        daoUtil.setInt( nIndex, referenceItem.getId( ) );
+	
+	        daoUtil.executeUpdate( );
+    	}
     }
 
     /**
@@ -145,25 +162,61 @@ public final class ReferenceItemDAO implements IReferenceItemDAO
     {
         List<ReferenceItem> referenceItemList = new ArrayList<ReferenceItem>( );
 
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_ID, plugin );
-        daoUtil.setInt( 1, IdReference );
-
-        daoUtil.executeQuery( );
-
-        while ( daoUtil.next( ) )
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_ID, plugin ) )
         {
-            ReferenceItem referenceItem = new ReferenceItem( );
-            int nIndex = 1;
+	        daoUtil.setInt( 1, IdReference );
+	
+	        daoUtil.executeQuery( );
+	
+	        while ( daoUtil.next( ) )
+	        {
+	            ReferenceItem referenceItem = new ReferenceItem( );
+	            int nIndex = 1;
+	
+	            referenceItem.setId( daoUtil.getInt( nIndex++ ) );
+	            referenceItem.setName( daoUtil.getString( nIndex++ ) );
+	            referenceItem.setCode( daoUtil.getString( nIndex++ ) );
+	            referenceItem.setIdreference( daoUtil.getInt( nIndex++ ) );
+	
+	            referenceItemList.add( referenceItem );
+	        }
+        }
+        
+        return referenceItemList;
+    }
 
-            referenceItem.setId( daoUtil.getInt( nIndex++ ) );
-            referenceItem.setItemName( daoUtil.getString( nIndex++ ) );
-            referenceItem.setItemValue( daoUtil.getString( nIndex++ ) );
-            referenceItem.setIdreference( daoUtil.getInt( nIndex++ ) );
+    /**
+     * {@inheritDoc }
+     */
+    @Override
+    public List<ReferenceItem> selectReferenceItemsTranslatedList( int IdReference, String strLang, Plugin plugin )
+    {
+        List<ReferenceItem> referenceItemList = new ArrayList<ReferenceItem>( );
 
-            referenceItemList.add( referenceItem );
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_TRANSLATION, plugin ) )
+        {
+	        daoUtil.setInt( 1, IdReference );
+	        daoUtil.setString( 2, strLang );
+	
+	        daoUtil.executeQuery( );
+	
+	        while ( daoUtil.next( ) )
+	        {
+	            ReferenceItem referenceItem = new ReferenceItem( );
+	
+	            referenceItem.setCode( daoUtil.getString( 1 ) );
+	
+	            String strTranslation = daoUtil.getString( 3 );
+	
+	            if ( strTranslation == null || strTranslation.isEmpty( ) )
+	                referenceItem.setName( daoUtil.getString( 2 ) );
+	            else
+	                referenceItem.setName( strTranslation );
+	
+	            referenceItemList.add( referenceItem );
+	        }
         }
 
-        daoUtil.free( );
         return referenceItemList;
     }
 
@@ -174,15 +227,17 @@ public final class ReferenceItemDAO implements IReferenceItemDAO
     public List<Integer> selectIdReferenceItemsList( Plugin plugin )
     {
         List<Integer> referenceItemList = new ArrayList<Integer>( );
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL_ID, plugin );
-        daoUtil.executeQuery( );
-
-        while ( daoUtil.next( ) )
+        
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL_ID, plugin ) )
         {
-            referenceItemList.add( daoUtil.getInt( 1 ) );
+	        daoUtil.executeQuery( );
+	
+	        while ( daoUtil.next( ) )
+	        {
+	            referenceItemList.add( daoUtil.getInt( 1 ) );
+	        }
         }
-
-        daoUtil.free( );
+        
         return referenceItemList;
     }
 
@@ -193,13 +248,16 @@ public final class ReferenceItemDAO implements IReferenceItemDAO
     public ReferenceList selectReferenceItemsReferenceList( Plugin plugin )
     {
         ReferenceList referenceItemList = new ReferenceList( );
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL, plugin );
-        daoUtil.executeQuery( );
-        while ( daoUtil.next( ) )
+        
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL, plugin ) )
         {
-            referenceItemList.addItem( daoUtil.getInt( 1 ), daoUtil.getString( 2 ) );
+	        daoUtil.executeQuery( );
+	        while ( daoUtil.next( ) )
+	        {
+	            referenceItemList.addItem( daoUtil.getInt( 1 ), daoUtil.getString( 2 ) );
+	        }
         }
-        daoUtil.free( );
+        
         return referenceItemList;
     }
 
@@ -209,22 +267,26 @@ public final class ReferenceItemDAO implements IReferenceItemDAO
     @Override
     public ReferenceItem loadReferenceItemByName( int nIdReference, String sItemName, Plugin plugin )
     {
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_NAME, plugin );
-        daoUtil.setInt( 1, nIdReference );
-        daoUtil.setString( 2, sItemName );
-
-        daoUtil.executeQuery( );
-        ReferenceItem referenceItem = null;
-        if ( daoUtil.next( ) )
-        {
-            referenceItem = new ReferenceItem( );
-            int nIndex = 1;
-            referenceItem.setId( daoUtil.getInt( nIndex++ ) );
-            referenceItem.setItemName( daoUtil.getString( nIndex++ ) );
-            referenceItem.setItemValue( daoUtil.getString( nIndex++ ) );
-            referenceItem.setIdreference( daoUtil.getInt( nIndex++ ) );
-        }
-        daoUtil.free( );
+    	ReferenceItem referenceItem = null;
+    	
+    	try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_NAME, plugin ) )
+    	{
+	        daoUtil.setInt( 1, nIdReference );
+	        daoUtil.setString( 2, sItemName );
+	
+	        daoUtil.executeQuery( );
+	        
+	        if ( daoUtil.next( ) )
+	        {
+	            referenceItem = new ReferenceItem( );
+	            int nIndex = 1;
+	            referenceItem.setId( daoUtil.getInt( nIndex++ ) );
+	            referenceItem.setName( daoUtil.getString( nIndex++ ) );
+	            referenceItem.setCode( daoUtil.getString( nIndex++ ) );
+	            referenceItem.setIdreference( daoUtil.getInt( nIndex++ ) );
+	        }
+    	}
+    	
         return referenceItem;
     }
 }
