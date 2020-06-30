@@ -34,44 +34,63 @@
 package fr.paris.lutece.plugins.referencelist.business;
 
 import fr.paris.lutece.portal.service.plugin.Plugin;
-import fr.paris.lutece.util.ReferenceList;
 import java.util.List;
 
 /**
- * IReferenceDAO Interface
+ * ITranslationItemDAO Interface
  */
-public interface IReferenceDAO
-{
+public interface ITranslationItemDAO
+{	
     /**
      * Insert a new record in the table.
      * 
-     * @param reference
-     *            instance of the Reference object to insert
+     * @param translationItem
+     *            instance of the TranslationItem object to insert
      * @param plugin
      *            the Plugin
      */
-    void insert( Reference reference, Plugin plugin );
+    void insert( TranslationItem translationItem, Plugin plugin );
 
     /**
      * Update the record in the table
      * 
-     * @param reference
-     *            the reference of the Reference
+     * @param translationItem
+     *            the reference of the TranslationItem
      * @param plugin
      *            the Plugin
      */
-    void store( Reference reference, Plugin plugin );
+    void store( TranslationItem translationItem, Plugin plugin );
 
     /**
      * Delete a record from the table
      * 
      * @param nKey
-     *            The identifier of the Reference to delete
+     *            The identifier of the TranslationItem to delete
      * @param plugin
      *            the Plugin
      */
     void delete( int nKey, Plugin plugin );
-
+    
+    /**
+     * Delete a list of records linked to a Reference
+     * 
+     * @param nId
+     * 			 The identifier of the Reference
+     * @param plugin
+     * 			the Plugin
+     */
+    void deleteAllFromReferenceId( int nId, Plugin plugin );
+    
+    /**
+     * Delete a list of records linked to a ReferenceItem
+     * 
+     * @param nId
+     * 			 The identifier of the ReferenceItem
+     * @param plugin
+     * 			the Plugin
+     */
+    void deleteAllFromReferenceItemId( int nId, Plugin plugin );
+    
     // /////////////////////////////////////////////////////////////////////////
     // Finders
 
@@ -79,48 +98,22 @@ public interface IReferenceDAO
      * Load the data from the table
      * 
      * @param nKey
-     *            The identifier of the reference
+     *            The identifier of the TranslationItem
      * @param plugin
      *            the Plugin
-     * @return The instance of the reference
+     * @return The instance of the TranslationItem
      */
-    Reference load( int nKey, Plugin plugin );
+    TranslationItem load( int nKey, Plugin plugin );
 
     /**
-     * Load the data from the table
+     * Load the data of all the TranslationItems objects in a reference and returns them as a list
      * 
-     * @param referenceName
-     *            The name of the reference
+     * @param nIdReference
+     *            the reference id
      * @param plugin
      *            the Plugin
-     * @return The instance of the reference
+     * @return The list which contains the data of all the TranslationItem objects
      */
-    int loadByName( String referenceName, Plugin plugin );
+    List<TranslationItem> selectTranslationItems( int nIdReference, Plugin plugin );
 
-    /**
-     * Load the data of all the reference objects and returns them as a list
-     * 
-     * @param plugin
-     *            the Plugin
-     * @return The list which contains the data of all the reference objects
-     */
-    List<Reference> selectReferencesList( Plugin plugin );
-
-    /**
-     * Load the id of all the reference objects and returns them as a list
-     * 
-     * @param plugin
-     *            the Plugin
-     * @return The list which contains the id of all the reference objects
-     */
-    List<Integer> selectIdReferencesList( Plugin plugin );
-
-    /**
-     * Load the data of all the reference objects and returns them as a referenceList
-     * 
-     * @param plugin
-     *            the Plugin
-     * @return The referenceList which contains the data of all the reference objects
-     */
-    ReferenceList selectReferencesReferenceList( Plugin plugin );
 }

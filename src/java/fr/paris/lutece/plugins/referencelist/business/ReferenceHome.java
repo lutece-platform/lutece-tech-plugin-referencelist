@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2019, Mairie de Paris
+ * Copyright (c) 2002-2020, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -47,6 +47,11 @@ public final class ReferenceHome
 {
     // Static variable pointed at the DAO instance
     private static IReferenceDAO _dao = SpringContextService.getBean( "referencelist.referenceDAO" );
+    
+    private static IReferenceItemDAO _itemdao = SpringContextService.getBean( "referencelist.referenceItemDAO" );
+
+    private static ITranslationItemDAO _translationDao = SpringContextService.getBean( "referencelist.translationItemDAO" );
+
     private static Plugin _plugin = PluginService.getPlugin( "referencelist" );
 
     /**
@@ -92,6 +97,10 @@ public final class ReferenceHome
      */
     public static void remove( int nKey )
     {
+    	 _translationDao.deleteAllFromReferenceId( nKey, _plugin );
+    	 
+        _itemdao.deleteAll(nKey, _plugin);
+               
         _dao.delete( nKey, _plugin );
     }
 
