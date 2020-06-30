@@ -3,16 +3,16 @@
     <parent>
         <artifactId>lutece-global-pom</artifactId>
         <groupId>fr.paris.lutece.tools</groupId>
-        <version>4.0.5</version>
+        <version>5.1.0</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>fr.paris.lutece.plugins</groupId>
-        <artifactId>plugin-referencelist</artifactId>
+    <artifactId>plugin-referencelist</artifactId>
     <packaging>lutece-plugin</packaging>
     <version>1.0.2-SNAPSHOT</version>
 
-		<name>Lutece referencelist plugin</name>
+	<name>Lutece referencelist plugin</name>
 
      <repositories>
          <repository>
@@ -54,7 +54,7 @@
         <developerConnection>scm:git:https://github.com/lutece-platform/lutece-tech-plugin-referencelist.git</developerConnection>
         <url>https://github.com/lutece-platform/lutece-tech-plugin-referencelist.git</url>
         <tag>HEAD</tag>
-  </scm>
+  	</scm>
 
 
 </project>

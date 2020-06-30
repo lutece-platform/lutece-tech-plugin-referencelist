@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2019, Mairie de Paris
+ * Copyright (c) 2002-2020, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -88,30 +88,62 @@ public class ReferenceListService
     }
 
     /**
-     * Returns the list of all References Items of a Reference name
+     * Returns the list of all References Items of a Reference name with values translated 
      * 
+     * @param referenceName
+     *            the reference name
+     * @param lang
+     *            the language
      * @return the list of all References Items
      */
     public ReferenceList getReferenceList( String referenceName, String lang )
     {
         int idReference = ReferenceHome.findPrimaryKeyByName( referenceName );
-        return getReferenceList(idReference);
+
+        return getReferenceList( idReference, lang );
     }
 
-
-      /**
-     * Returns the list of all References Items of a Reference id
+    /**
+     * Returns the list of all References Items of a Reference id with their default values
      * 
+     * @param idReference
+     *            the reference id
      * @return the list of all References Items
      */
     public ReferenceList getReferenceList( int idReference )
     {
-        List<ReferenceItem> listReferenceItems = ReferenceItemHome.getReferenceItemsList( idReference );
+        return getReferenceList( idReference, null );
+    }
+
+    /**
+     * Returns the list of all ReferenceItems of a Reference id with translated value
+     * 
+     * @param idReference
+     *            the reference id
+     * @param lang
+     *            the language
+     * @return the list of all References Items
+     */
+    public ReferenceList getReferenceList( int idReference, String lang )
+    {
+        List<ReferenceItem> listReferenceItems = null;
+
         ReferenceList list = new ReferenceList( );
+
+        if ( lang == null || lang.isEmpty( ) )
+        {
+            listReferenceItems = ReferenceItemHome.getReferenceItemsList( idReference );
+        }
+        else
+        {
+            listReferenceItems = ReferenceItemHome.getReferenceItemsList( idReference, lang );
+        }
+
         for ( ReferenceItem ref : listReferenceItems )
         {
-            list.addItem( String.valueOf( ref.getItemValue( ) ), ref.getItemName( ) );
+            list.addItem( String.valueOf( ref.getCode( ) ), ref.getName( ) );
         }
+
         return list;
     }
 

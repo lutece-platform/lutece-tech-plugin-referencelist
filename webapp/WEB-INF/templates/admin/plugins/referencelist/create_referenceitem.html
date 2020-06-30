@@ -1,5 +1,3 @@
-<!-- <#include "referencelistmanage_tabs.html" />
-<@tabs2 tab="referenceitem" /> -->
 <@box>
 	<@boxHeader title='#i18n{referencelist.create_referenceitem.title}' />
 	<@boxBody>
@@ -8,13 +6,13 @@
         <@messages errors=errors />
         <input type="hidden" id="id" name="id"/>
 		<input type='hidden' name='idreference' value='${referenceitem.idreference}'/>
-				<@formGroup labelKey='#i18n{referencelist.create_referenceitem.labelItemName}' helpKey='#i18n{referencelist.create_referenceitem.labelItemName.help}' mandatory=true>
-					<@input type='text' name='item_name' value='${referenceitem.itemName!\'\'}' />
-				</@formGroup>
-				<@formGroup labelKey='#i18n{referencelist.create_referenceitem.labelItemValue}' helpKey='#i18n{referencelist.create_referenceitem.labelItemValue.help}' mandatory=true>
-					<@input type='text' name='item_value' value='${referenceitem.itemValue!\'\'}' />
-				</@formGroup>
-				<@actionButtons button1Name="action_createReferenceItem" button2Name="view_manageReferenceItem"/>
+		<@formGroup labelKey='#i18n{referencelist.create_referenceitem.labelCode}' helpKey='#i18n{referencelist.create_referenceitem.labelCode.help}' mandatory=true>
+			<@input type='text' name='code' value='${referenceitem.code!\'\'}' />
+		</@formGroup>
+		<@formGroup labelKey='#i18n{referencelist.create_referenceitem.labelName}' helpKey='#i18n{referencelist.create_referenceitem.labelName.help}' mandatory=true>
+			<@input type='text' name='name' value='${referenceitem.name!\'\'}' />
+		</@formGroup>
+		<@actionButtons button1Name="action_createReferenceItem" url2="jsp/admin/plugins/referencelist/ManageReferenceItems.jsp?id=${referenceitem.idreference}"/>
     </@tform>
 	</@boxBody>
 </@box>
