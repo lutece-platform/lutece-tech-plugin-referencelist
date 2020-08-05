@@ -1,18 +1,20 @@
 
 <@box>
-	<@boxHeader title='#i18n{referencelist.create_reference.title}' />
+	<@boxHeader title='#i18n{referencelist.reference.create.title}' />
 	<@boxBody>
     <@tform name='create_reference' params='enctype="multipart/form-data"' action='jsp/admin/plugins/referencelist/ManageReferences.jsp'>
         <@messages errors=errors />
-        <input type="hidden" id="id" name="id"/>
-        
-				<@formGroup labelKey='#i18n{referencelist.create_reference.labelName}' helpKey='#i18n{referencelist.create_reference.labelName.help}' mandatory=true>
-					<@input type='text' name='name' value='${reference.name!\'\'}' />
-				</@formGroup>
-				<@formGroup labelKey='#i18n{referencelist.create_reference.labelDescription}' helpKey='#i18n{referencelist.create_reference.labelDescription.help}' mandatory=true>
-					<@input type='text' name='description' value='${reference.description!\'\'}' />
-				</@formGroup>
-				<@actionButtons button1Name="action_createReference" url2="jsp/admin/plugins/referencelist/ManageReferences.jsp"/>
-    </@tform>
+        <input type="hidden" id="id" name="id"/>        
+		<@formGroup labelKey='#i18n{referencelist.reference.labelName}' helpKey='#i18n{referencelist.reference.labelName.help}' mandatory=true>
+			<@input type='text' name='name' value='${reference.name!\'\'}' />
+		</@formGroup>
+		<@formGroup labelKey='#i18n{referencelist.reference.labelDescription}' helpKey='#i18n{referencelist.reference.labelDescription.help}' mandatory=true>
+			<@input type='text' name='description' value='${reference.description!\'\'}' />
+		</@formGroup>
+		<@formGroup labelKey="#i18n{referencelist.reference.labelParentItem}" helpKey='#i18n{referencelist.reference.labelParentItem.help}' mandatory=false>
+			<@input type='text' name='idParentItem' value='' />
+		</@formGroup>
+		<@actionButtons button1Name="action_createReference" url2="jsp/admin/plugins/referencelist/ManageReferences.jsp"/>
+  </@tform>
 	</@boxBody>
 </@box>

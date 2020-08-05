@@ -59,9 +59,9 @@ public class ReferenceJspBean extends AbstractReferenceListManageJspBean
     // Parameters
     private static final String PARAMETER_ID_REFERENCE = "id";
     // Properties for page titles
-    private static final String PROPERTY_PAGE_TITLE_MANAGE_REFERENCES = "referencelist.manage_references.pageTitle";
-    private static final String PROPERTY_PAGE_TITLE_MODIFY_REFERENCE = "referencelist.modify_reference.pageTitle";
-    private static final String PROPERTY_PAGE_TITLE_CREATE_REFERENCE = "referencelist.create_reference.pageTitle";
+    private static final String PROPERTY_PAGE_TITLE_MANAGE_REFERENCES = "referencelist.reference.manage.pageTitle";
+    private static final String PROPERTY_PAGE_TITLE_MODIFY_REFERENCE = "referencelist.reference.modify.pageTitle";
+    private static final String PROPERTY_PAGE_TITLE_CREATE_REFERENCE = "referencelist.reference.create.pageTitle";
     // Markers
     private static final String MARK_REFERENCE_LIST = "reference_list";
     private static final String MARK_REFERENCE = "reference";

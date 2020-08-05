@@ -46,12 +46,13 @@ import java.util.List;
  */
 public final class ReferenceDAO implements IReferenceDAO
 {
+	
     // Constants
-    private static final String SQL_QUERY_SELECT = "SELECT id_reference, name, description FROM referencelist_reference WHERE id_reference = ?";
-    private static final String SQL_QUERY_INSERT = "INSERT INTO referencelist_reference ( name, description ) VALUES ( ?, ? ) ";
+    private static final String SQL_QUERY_SELECT = "SELECT id_reference, name, description, idparentitem FROM referencelist_reference WHERE id_reference = ?";
+    private static final String SQL_QUERY_INSERT = "INSERT INTO referencelist_reference ( name, description, idparentitem ) VALUES ( ?, ?, ? ) ";
     private static final String SQL_QUERY_DELETE = "DELETE FROM referencelist_reference WHERE id_reference = ? ";
-    private static final String SQL_QUERY_UPDATE = "UPDATE referencelist_reference SET name = ?, description = ? WHERE id_reference = ?";
-    private static final String SQL_QUERY_SELECTALL = "SELECT id_reference, name, description FROM referencelist_reference";
+    private static final String SQL_QUERY_UPDATE = "UPDATE referencelist_reference SET name = ?, description = ?, idparentitem = ? WHERE id_reference = ?";
+    private static final String SQL_QUERY_SELECTALL = "SELECT id_reference, name, description, idparentitem FROM referencelist_reference";
     private static final String SQL_QUERY_SELECTALL_ID = "SELECT id_reference FROM referencelist_reference";
     private static final String SQL_QUERY_SELECT_ID = "SELECT id_reference FROM referencelist_reference WHERE name = ?";
 
@@ -66,6 +67,7 @@ public final class ReferenceDAO implements IReferenceDAO
 	        int nIndex = 1;
 	        daoUtil.setString( nIndex++, reference.getName( ) );
 	        daoUtil.setString( nIndex++, reference.getDescription( ) );
+	        daoUtil.setInt( nIndex++, reference.getIdParentItem( ) );
 	
 	        daoUtil.executeUpdate( );
 	        if ( daoUtil.nextGeneratedKey( ) )
@@ -96,6 +98,7 @@ public final class ReferenceDAO implements IReferenceDAO
 	            reference.setId( daoUtil.getInt( nIndex++ ) );
 	            reference.setName( daoUtil.getString( nIndex++ ) );
 	            reference.setDescription( daoUtil.getString( nIndex++ ) );
+	            reference.setIdParentItem(daoUtil.getInt( nIndex++ ));
 	        }
     	}
       
@@ -155,6 +158,7 @@ public final class ReferenceDAO implements IReferenceDAO
 	        // daoUtil.setInt( nIndex++ , reference.getId( ) );
 	        daoUtil.setString( nIndex++, reference.getName( ) );
 	        daoUtil.setString( nIndex++, reference.getDescription( ) );
+	        daoUtil.setInt( nIndex++, reference.getIdParentItem( ) );
 	        daoUtil.setInt( nIndex, reference.getId( ) );
 	
 	        daoUtil.executeUpdate( );
@@ -176,12 +180,16 @@ public final class ReferenceDAO implements IReferenceDAO
 	        while ( daoUtil.next( ) )
 	        {
 	            Reference reference = new Reference( );
+	            ReferenceItem parentItem = null;
+	            Reference parentReference = null;
+	            
 	            int nIndex = 1;
 	
 	            reference.setId( daoUtil.getInt( nIndex++ ) );
 	            reference.setName( daoUtil.getString( nIndex++ ) );
 	            reference.setDescription( daoUtil.getString( nIndex++ ) );
-	
+	            reference.setIdParentItem(daoUtil.getInt( nIndex++ ));
+	            
 	            referenceList.add( reference );
 	        }
         }
