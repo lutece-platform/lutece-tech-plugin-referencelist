@@ -8,6 +8,7 @@ CREATE TABLE referencelist_reference (
 id_reference int AUTO_INCREMENT ,
 name long varchar NOT NULL,
 description long varchar NOT NULL,
+idparentitem int, 
 PRIMARY KEY (id_reference)
 );
 
@@ -18,8 +19,8 @@ PRIMARY KEY (id_reference)
 DROP TABLE IF EXISTS referencelist_item;
 CREATE TABLE referencelist_item (
 id_reference_item int AUTO_INCREMENT,
-name long varchar NOT NULL,
 code long varchar NOT NULL,
+name long varchar NOT NULL,
 idreference int default '0' NOT NULL,
 PRIMARY KEY (id_reference_item)
 );

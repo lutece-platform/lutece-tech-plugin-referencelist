@@ -18,3 +18,5 @@ CREATE TABLE referencelist_translation (
 	id_reference_item int NOT NULL,
 	PRIMARY KEY (id_translation)
 );
+
+ALTER TABLE referencelist_reference ADD COLUMN idparentitem int;
