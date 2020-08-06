@@ -1,4 +1,4 @@
-
+<#assign references = [ {"code":"","name":" "}, {"code":"1","name":"Reference1"}, {"code":"2","name":"Reference2"} ]> 
 <@box>
 	<@boxHeader title='#i18n{referencelist.reference.create.title}' />
 	<@boxBody>
@@ -11,10 +11,18 @@
 		<@formGroup labelKey='#i18n{referencelist.reference.labelDescription}' helpKey='#i18n{referencelist.reference.labelDescription.help}' mandatory=true>
 			<@input type='text' name='description' value='${reference.description!\'\'}' />
 		</@formGroup>
-		<@formGroup labelKey="#i18n{referencelist.reference.labelParentItem}" helpKey='#i18n{referencelist.reference.labelParentItem.help}' mandatory=false>
-			<@input type='text' name='idParentItem' value='' />
+		<@formGroup labelKey="Reference" mandatory=false>
+			<@select name="idReference" items=references />
+		</@formGroup>
+		<@formGroup id="form-group-parent-item" labelKey="Reference Item" mandatory=false>
+			<@select name="idParentItem" items=[] />
 		</@formGroup>
 		<@actionButtons button1Name="action_createReference" url2="jsp/admin/plugins/referencelist/ManageReferences.jsp"/>
-  </@tform>
+  	</@tform>
 	</@boxBody>
 </@box>
+
+<script src="js/reference.js"></script>	
+<script>
+itemFormGroup.style.display = "none";
+</script>

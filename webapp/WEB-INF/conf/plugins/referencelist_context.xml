@@ -8,4 +8,5 @@
     <bean id="referencelist.referenceItemDAO" class="fr.paris.lutece.plugins.referencelist.business.ReferenceItemDAO" />
 	<bean id="referencelist.translationItemDAO" class="fr.paris.lutece.plugins.referencelist.business.TranslationItemDAO" />
 
+	<bean id="exampleesa.projectRest" class="fr.paris.lutece.plugins.referencelist.web.rs.ProjectRest" />
 </beans>
