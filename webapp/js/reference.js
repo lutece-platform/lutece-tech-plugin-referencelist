@@ -1,5 +1,9 @@
-
-document.getElementById("idReference").onchange = loadByAjax( "rest/example/api/items", displaySelect );
+/**
+ * Create / Update a Reference - Parent Item Management :
+ *
+ * Loads the ReferenceItem combo box when the selected reference change  
+ */
+document.getElementById("idReference").onchange = loadByAjax( "rest/referenceitems/list/reference/", displaySelect );
 
 var itemFormGroup = document.getElementById("form-group-parent-item");
 
@@ -11,24 +15,27 @@ function loadByAjax(url, callback) {
 	
 	return function(ev)
 	{
-		if (ev.target.value == "")
+		idReference = ev.target.value
+		
+		if (idReference == "")
 		{
 			itemFormGroup.style.display = "none";
 			clearSelect();
-			return;
-		}	
+		}
+		else 	
+		{
+			xmlhttp = new XMLHttpRequest();
 		
-		var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+			    if (this.readyState == 4 && this.status == 200) {
+			        response = JSON.parse(this.responseText);
+			        callback(response.result);
+			    }
+			};
 		
-		xmlhttp.onreadystatechange = function() {
-		    if (this.readyState == 4 && this.status == 200) {
-		        response = JSON.parse(this.responseText);
-		        callback(response.result);
-		    }
-		};
-		
-		xmlhttp.open("GET", url, true);
-		xmlhttp.send();
+			xmlhttp.open("GET", url + idReference, true);
+			xmlhttp.send();
+		}
 	}
 }
 
@@ -36,8 +43,10 @@ function loadByAjax(url, callback) {
 function displaySelect(items) {
 	
 	clearSelect();
-	
-    for(i = 0; i < items.length; i++) {
+
+	parentItemSelect.options[0] = new Option ( "", "" );
+
+    for(i = 1; i < items.length; i++) {
     	parentItemSelect.options[i] = new Option ( items[i].name, items[i].id );
     }
     
