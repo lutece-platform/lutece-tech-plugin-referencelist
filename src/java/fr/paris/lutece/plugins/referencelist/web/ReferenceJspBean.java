@@ -210,7 +210,13 @@ public class ReferenceJspBean extends AbstractReferenceListManageJspBean
         if ( _reference.getIdParentItem( ) > 0 )
         {
             model.put( MARK_ID_PARENT_ITEM, _reference.getIdParentItem( ) );
-            model.put( MARK_ID_MASTER_REFERENCE, ReferenceItemHome.findByPrimaryKey( _reference.getIdParentItem( ) ).getIdreference( ) );
+            
+            ReferenceItem item = ReferenceItemHome.findByPrimaryKey( _reference.getIdParentItem( ) );
+            
+            if ( item != null )
+            {
+            	model.put( MARK_ID_MASTER_REFERENCE, item.getIdreference( ) );
+            }
         }
 
         return getPage( PROPERTY_PAGE_TITLE_MODIFY_REFERENCE, TEMPLATE_MODIFY_REFERENCE, model );

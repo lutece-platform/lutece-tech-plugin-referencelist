@@ -27,8 +27,8 @@
 	              ${reference.description}
 	          	</td>
 	          	<td>
-	          		<#if (reference.idParentItem > 0)>
-  						${reference.idParentItem}
+	          		<#if ((reference.codeParentItem)??)>
+  						${reference.codeParentItem}
 					</#if>
 	          	</td>
 	      		<td>

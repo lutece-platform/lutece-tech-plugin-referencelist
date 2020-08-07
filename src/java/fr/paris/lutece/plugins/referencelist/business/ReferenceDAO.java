@@ -179,8 +179,6 @@ public final class ReferenceDAO implements IReferenceDAO
             while ( daoUtil.next( ) )
             {
                 Reference reference = new Reference( );
-                ReferenceItem parentItem = null;
-                Reference parentReference = null;
 
                 int nIndex = 1;
 
@@ -189,6 +187,13 @@ public final class ReferenceDAO implements IReferenceDAO
                 reference.setDescription( daoUtil.getString( nIndex++ ) );
                 reference.setIdParentItem( daoUtil.getInt( nIndex++ ) );
 
+                if ( reference.getIdParentItem( ) > 0 )
+                {
+                	ReferenceItem item = ReferenceItemHome.findByPrimaryKey( reference.getIdParentItem( ) );
+                	
+                	if (item != null )
+                		reference.setCodeParentItem( item.getCode( ) );
+                }
                 referenceList.add( reference );
             }
         }

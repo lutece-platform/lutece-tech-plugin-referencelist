@@ -62,6 +62,9 @@ public class Reference implements Serializable, RBACResource
     // this reference may be also an item for a parent reference
     private int _nIdParentItem;
 
+    // this reference may be also an item for a parent reference
+    private String _strCodeParentItem = "";
+
     /**
      * Returns the Id
      * 
@@ -144,6 +147,27 @@ public class Reference implements Serializable, RBACResource
     public void setIdParentItem( int nIdParentItem )
     {
         _nIdParentItem = nIdParentItem;
+    }
+
+    /**
+     * Returns the Parent Item Code
+     * 
+     * @return The Parent Item Code
+     */
+    public String getCodeParentItem( )
+    {
+        return _strCodeParentItem;
+    }
+
+    /**
+     * Sets the Code of Parent Item
+     * 
+     * @param nIdParentItem
+     *            The Parent Item Code
+     */
+    public void setCodeParentItem( String strCodeParentItem )
+    {
+        _strCodeParentItem = strCodeParentItem;
     }
 
     @Override
