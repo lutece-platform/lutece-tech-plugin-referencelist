@@ -1,4 +1,3 @@
-<#assign references = [ {"code":"","name":" "}, {"code":"1","name":"Reference1"}, {"code":"2","name":"Reference2"} ]> 
 <@box>
 	<@boxHeader title='#i18n{referencelist.reference.create.title}' />
 	<@boxBody>
@@ -6,15 +5,15 @@
         <@messages errors=errors />
         <input type="hidden" id="id" name="id"/>        
 		<@formGroup labelKey='#i18n{referencelist.reference.labelName}' helpKey='#i18n{referencelist.reference.labelName.help}' mandatory=true>
-			<@input type='text' name='name' value='${reference.name!\'\'}' />
+			<@input type='text' name='name' value='' />
 		</@formGroup>
 		<@formGroup labelKey='#i18n{referencelist.reference.labelDescription}' helpKey='#i18n{referencelist.reference.labelDescription.help}' mandatory=true>
-			<@input type='text' name='description' value='${reference.description!\'\'}' />
+			<@input type='text' name='description' value='' />
 		</@formGroup>
-		<@formGroup labelKey="Reference" mandatory=false>
-			<@select name="idReference" items=references />
+		<@formGroup labelKey="#i18n{referencelist.reference.labelMasterReference}" mandatory=false>
+			<@select name="idMasterReference" items=reference_list />
 		</@formGroup>
-		<@formGroup id="form-group-parent-item" labelKey="Reference Item" mandatory=false>
+		<@formGroup id="form-group-parent-item" labelKey="#i18n{referencelist.reference.labelParentItem}" helpKey="#i18n{referencelist.reference.labelParentItem.help}" mandatory=false>
 			<@select name="idParentItem" items=[] />
 		</@formGroup>
 		<@actionButtons button1Name="action_createReference" url2="jsp/admin/plugins/referencelist/ManageReferences.jsp"/>
@@ -22,7 +21,8 @@
 	</@boxBody>
 </@box>
 
-<script src="js/reference.js"></script>	
 <script>
-itemFormGroup.style.display = "none";
+var idParentItem = 0;
 </script>
+
+<script src="js/plugins/referencelist.js"></script>	

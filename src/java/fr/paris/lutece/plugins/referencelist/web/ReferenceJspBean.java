@@ -35,13 +35,18 @@ package fr.paris.lutece.plugins.referencelist.web;
 
 import fr.paris.lutece.plugins.referencelist.business.Reference;
 import fr.paris.lutece.plugins.referencelist.business.ReferenceHome;
+import fr.paris.lutece.plugins.referencelist.business.ReferenceItem;
+import fr.paris.lutece.plugins.referencelist.business.ReferenceItemHome;
 import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.message.AdminMessage;
 import fr.paris.lutece.portal.service.message.AdminMessageService;
 import fr.paris.lutece.portal.util.mvc.admin.annotations.Controller;
 import fr.paris.lutece.portal.util.mvc.commons.annotations.Action;
 import fr.paris.lutece.portal.util.mvc.commons.annotations.View;
+import fr.paris.lutece.util.ReferenceList;
 import fr.paris.lutece.util.url.UrlItem;
+
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
@@ -65,6 +70,9 @@ public class ReferenceJspBean extends AbstractReferenceListManageJspBean
     // Markers
     private static final String MARK_REFERENCE_LIST = "reference_list";
     private static final String MARK_REFERENCE = "reference";
+    private static final String MARK_ID_MASTER_REFERENCE = "idMasterReference";
+    private static final String MARK_ID_PARENT_ITEM = "idParentItem";
+    
     private static final String JSP_MANAGE_REFERENCES = "jsp/admin/plugins/referencelist/ManageReferences.jsp";
     // Properties
     private static final String MESSAGE_CONFIRM_REMOVE_REFERENCE = "referencelist.message.confirmRemoveReference";
@@ -113,8 +121,12 @@ public class ReferenceJspBean extends AbstractReferenceListManageJspBean
     public String getCreateReference( HttpServletRequest request )
     {
         _reference = ( _reference != null ) ? _reference : new Reference( );
+        
+        
         Map<String, Object> model = getModel( );
         model.put( MARK_REFERENCE, _reference );
+        model.put( MARK_REFERENCE_LIST, buildReferenceComboList( ) );
+        
         return getPage( PROPERTY_PAGE_TITLE_CREATE_REFERENCE, TEMPLATE_CREATE_REFERENCE, model );
     }
 
@@ -194,6 +206,14 @@ public class ReferenceJspBean extends AbstractReferenceListManageJspBean
         }
         Map<String, Object> model = getModel( );
         model.put( MARK_REFERENCE, _reference );
+        model.put( MARK_REFERENCE_LIST, buildReferenceComboList( ) );
+        
+        if ( _reference.getIdParentItem( ) > 0 )
+        {
+        	model.put(MARK_ID_PARENT_ITEM, _reference.getIdParentItem( ) );
+            model.put(MARK_ID_MASTER_REFERENCE, ReferenceItemHome.findByPrimaryKey( _reference.getIdParentItem( ) ).getIdreference( ) );
+        }
+        
         return getPage( PROPERTY_PAGE_TITLE_MODIFY_REFERENCE, TEMPLATE_MODIFY_REFERENCE, model );
     }
 
@@ -216,5 +236,39 @@ public class ReferenceJspBean extends AbstractReferenceListManageJspBean
         ReferenceHome.update( _reference );
         addInfo( INFO_REFERENCE_UPDATED, getLocale( ) );
         return redirectView( request, VIEW_MANAGE_REFERENCES );
+    }
+    
+    /**
+     * Builds the reference combo list for choosing the master reference
+
+     * @return the list of lutece-core ReferenceItems
+     */
+    public ReferenceList buildReferenceComboList( )
+    {
+        ReferenceList selectItems = new ReferenceList( );
+
+        List<Reference> listReferences = ReferenceHome.getReferencesList( );
+        Iterator<Reference> listIterator = listReferences.iterator( );
+
+        fr.paris.lutece.util.ReferenceItem selectItem;
+        Reference reference;
+        
+        selectItem = new fr.paris.lutece.util.ReferenceItem( );
+        selectItem.setCode( "" );
+        selectItem.setName( " " );
+        selectItems.add( selectItem );
+        
+        while ( listIterator.hasNext( ) )
+        {
+            selectItem = new fr.paris.lutece.util.ReferenceItem( );
+
+            reference = listIterator.next( );
+
+            selectItem.setCode( String.valueOf( reference.getId( ) ) );
+            selectItem.setName( reference.getName( ) + " -- " + reference.getDescription());
+            selectItems.add( selectItem );
+        }
+
+        return selectItems;
     }
 }

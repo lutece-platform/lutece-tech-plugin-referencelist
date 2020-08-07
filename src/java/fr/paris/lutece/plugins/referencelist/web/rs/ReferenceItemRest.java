@@ -73,18 +73,9 @@ public class ReferenceItemRest
 		
 		List<ReferenceItem> listItems = ReferenceItemHome.getReferenceItemsList( idReference );
 		
-		if ( listItems.isEmpty() )
-		{
-			builder = Response.status(Response.Status.NO_CONTENT);
+		builder = Response.status(Response.Status.OK);
 			
-			strJsonResponse = JsonUtil.buildJsonResponse(new JsonResponse("{}"));
-		}
-		else 
-		{
-			builder = Response.status(Response.Status.OK);
-			
-			strJsonResponse = JsonUtil.buildJsonResponse(new JsonResponse(listItems));						
-		}
+		strJsonResponse = JsonUtil.buildJsonResponse(new JsonResponse(listItems));						
 		
 		response = builder.entity(strJsonResponse).build();
 		

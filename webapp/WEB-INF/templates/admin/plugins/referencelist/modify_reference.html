@@ -1,5 +1,4 @@
 
-
 <@box>
 	<@boxHeader title='#i18n{referencelist.reference.modify.title}' />
 	<@boxBody>
@@ -12,10 +11,20 @@
 			<@formGroup labelKey='#i18n{referencelist.reference.labelDescription}' helpKey='#i18n{referencelist.reference.labelDescription.help}' mandatory=true>
 				<@input type='text' name='description' value='${reference.description}' />
 			</@formGroup>
-			<@formGroup labelKey="#i18n{referencelist.reference.labelParentItem}" helpKey='#i18n{referencelist.reference.labelParentItem.help}' mandatory=false>
-				<@input type='text' name='idParentItem' value='${reference.idParentItem}' />
+			<@formGroup labelKey="#i18n{referencelist.reference.labelMasterReference}" mandatory=false>
+				<@select name="idMasterReference" items=reference_list default_value="${idMasterReference!''}"/>
+			</@formGroup>
+			<@formGroup id="form-group-parent-item" labelKey="#i18n{referencelist.reference.labelParentItem}" helpKey="#i18n{referencelist.reference.labelParentItem.help}" mandatory=false>
+				<@select name="idParentItem" items=[] />
 			</@formGroup>
         <@actionButtons button1Name="action_modifyReference" url2="jsp/admin/plugins/referencelist/ManageReferences.jsp"/>
     </@tform>
 	</@boxBody>
 </@box>
+
+<script>
+var idParentItem = ${reference.idParentItem};
+</script>
+
+<script src="js/plugins/referencelist.js"></script>	
+
