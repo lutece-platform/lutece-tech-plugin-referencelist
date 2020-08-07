@@ -47,7 +47,7 @@ public final class ReferenceHome
 {
     // Static variable pointed at the DAO instance
     private static IReferenceDAO _dao = SpringContextService.getBean( "referencelist.referenceDAO" );
-    
+
     private static IReferenceItemDAO _itemdao = SpringContextService.getBean( "referencelist.referenceItemDAO" );
 
     private static ITranslationItemDAO _translationDao = SpringContextService.getBean( "referencelist.translationItemDAO" );
@@ -97,10 +97,10 @@ public final class ReferenceHome
      */
     public static void remove( int nKey )
     {
-    	 _translationDao.deleteAllFromReferenceId( nKey, _plugin );
-    	 
-        _itemdao.deleteAll(nKey, _plugin);
-               
+        _translationDao.deleteAllFromReferenceId( nKey, _plugin );
+
+        _itemdao.deleteAll( nKey, _plugin );
+
         _dao.delete( nKey, _plugin );
     }
 

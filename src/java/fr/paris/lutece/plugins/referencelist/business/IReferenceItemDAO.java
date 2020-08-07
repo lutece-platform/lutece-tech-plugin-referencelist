@@ -76,11 +76,11 @@ public interface IReferenceItemDAO
      * Deletes the records associated to a Reference
      * 
      * @param nIdReference
-     *           The Reference identifier of the Reference Items to delete
+     *            The Reference identifier of the Reference Items to delete
      * @param plugin
      */
     void deleteAll( int nIdReference, Plugin plugin );
-    
+
     // /////////////////////////////////////////////////////////////////////////
     // Finders
 

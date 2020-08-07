@@ -116,18 +116,18 @@ public class ReferenceItemPrepareImport
         List<ReferenceItem> list = new ArrayList<>( );
         Reader _reader;
         _reader = new InputStreamReader( fileInputStream );
-        
+
         if ( _reader != null )
         {
             int i = 0;
             Scanner scanner = new Scanner( _reader );
-            
+
             while ( scanner.hasNextLine( ) )
             {
                 i++;
                 String strLine = scanner.nextLine( );
                 String [ ] strFields = strLine.split( CONSTANT_SEPARATOR );
-                
+
                 if ( strFields.length == CONSTANT_FILE_NUMOFCOLS )
                 {
                     if ( isDuplicateName( list, strFields [1] ) )
@@ -137,10 +137,10 @@ public class ReferenceItemPrepareImport
                     else
                     {
                         ReferenceItem referenceItem = new ReferenceItem( );
-                        
+
                         referenceItem.setCode( strFields [0] );
                         referenceItem.setName( strFields [1] );
-                        
+
                         list.add( referenceItem );
                     }
 
@@ -180,25 +180,25 @@ public class ReferenceItemPrepareImport
 
         Reader _reader;
         _reader = new InputStreamReader( fileInputStream );
-        
+
         if ( _reader != null )
         {
             Scanner scanner = new Scanner( _reader );
-            
+
             while ( scanner.hasNextLine( ) )
             {
                 String strLine = scanner.nextLine( );
                 String [ ] strFields = strLine.split( CONSTANT_SEPARATOR );
-                
+
                 if ( strFields.length == CONSTANT_FILE_NUMOFCOLS )
                 {
-                    if ( !isDuplicateName( list, strFields[ 1 ] ) )
+                    if ( !isDuplicateName( list, strFields [1] ) )
                     {
                         ReferenceItem referenceItem = new ReferenceItem( );
-                        
+
                         referenceItem.setCode( strFields [0] );
                         referenceItem.setName( strFields [1] );
-              
+
                         referenceItem.setIdreference( refId );
                         list.add( referenceItem );
                     }

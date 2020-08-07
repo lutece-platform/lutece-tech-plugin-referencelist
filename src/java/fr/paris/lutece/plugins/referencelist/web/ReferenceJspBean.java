@@ -72,7 +72,7 @@ public class ReferenceJspBean extends AbstractReferenceListManageJspBean
     private static final String MARK_REFERENCE = "reference";
     private static final String MARK_ID_MASTER_REFERENCE = "idMasterReference";
     private static final String MARK_ID_PARENT_ITEM = "idParentItem";
-    
+
     private static final String JSP_MANAGE_REFERENCES = "jsp/admin/plugins/referencelist/ManageReferences.jsp";
     // Properties
     private static final String MESSAGE_CONFIRM_REMOVE_REFERENCE = "referencelist.message.confirmRemoveReference";
@@ -121,12 +121,11 @@ public class ReferenceJspBean extends AbstractReferenceListManageJspBean
     public String getCreateReference( HttpServletRequest request )
     {
         _reference = ( _reference != null ) ? _reference : new Reference( );
-        
-        
+
         Map<String, Object> model = getModel( );
         model.put( MARK_REFERENCE, _reference );
         model.put( MARK_REFERENCE_LIST, buildReferenceComboList( ) );
-        
+
         return getPage( PROPERTY_PAGE_TITLE_CREATE_REFERENCE, TEMPLATE_CREATE_REFERENCE, model );
     }
 
@@ -207,13 +206,13 @@ public class ReferenceJspBean extends AbstractReferenceListManageJspBean
         Map<String, Object> model = getModel( );
         model.put( MARK_REFERENCE, _reference );
         model.put( MARK_REFERENCE_LIST, buildReferenceComboList( ) );
-        
+
         if ( _reference.getIdParentItem( ) > 0 )
         {
-        	model.put(MARK_ID_PARENT_ITEM, _reference.getIdParentItem( ) );
-            model.put(MARK_ID_MASTER_REFERENCE, ReferenceItemHome.findByPrimaryKey( _reference.getIdParentItem( ) ).getIdreference( ) );
+            model.put( MARK_ID_PARENT_ITEM, _reference.getIdParentItem( ) );
+            model.put( MARK_ID_MASTER_REFERENCE, ReferenceItemHome.findByPrimaryKey( _reference.getIdParentItem( ) ).getIdreference( ) );
         }
-        
+
         return getPage( PROPERTY_PAGE_TITLE_MODIFY_REFERENCE, TEMPLATE_MODIFY_REFERENCE, model );
     }
 
@@ -237,10 +236,10 @@ public class ReferenceJspBean extends AbstractReferenceListManageJspBean
         addInfo( INFO_REFERENCE_UPDATED, getLocale( ) );
         return redirectView( request, VIEW_MANAGE_REFERENCES );
     }
-    
+
     /**
      * Builds the reference combo list for choosing the master reference
-
+     * 
      * @return the list of lutece-core ReferenceItems
      */
     public ReferenceList buildReferenceComboList( )
@@ -252,12 +251,12 @@ public class ReferenceJspBean extends AbstractReferenceListManageJspBean
 
         fr.paris.lutece.util.ReferenceItem selectItem;
         Reference reference;
-        
+
         selectItem = new fr.paris.lutece.util.ReferenceItem( );
         selectItem.setCode( "" );
         selectItem.setName( " " );
         selectItems.add( selectItem );
-        
+
         while ( listIterator.hasNext( ) )
         {
             selectItem = new fr.paris.lutece.util.ReferenceItem( );
@@ -265,7 +264,7 @@ public class ReferenceJspBean extends AbstractReferenceListManageJspBean
             reference = listIterator.next( );
 
             selectItem.setCode( String.valueOf( reference.getId( ) ) );
-            selectItem.setName( reference.getName( ) + " -- " + reference.getDescription());
+            selectItem.setName( reference.getName( ) + " -- " + reference.getDescription( ) );
             selectItems.add( selectItem );
         }
 

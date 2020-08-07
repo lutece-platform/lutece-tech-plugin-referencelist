@@ -58,10 +58,10 @@ public class Reference implements Serializable, RBACResource
 
     @NotEmpty( message = "#i18n{referencelist.validation.reference.Description.notEmpty}" )
     private String _strDescription;
-    
+
     // this reference may be also an item for a parent reference
     private int _nIdParentItem;
-    
+
     /**
      * Returns the Id
      * 
@@ -125,7 +125,6 @@ public class Reference implements Serializable, RBACResource
         _strDescription = strDescription;
     }
 
-    
     /**
      * Returns the Id Parent Item
      * 
@@ -135,19 +134,18 @@ public class Reference implements Serializable, RBACResource
     {
         return _nIdParentItem;
     }
-    
+
     /**
-     * Sets the Id Parent Item 
+     * Sets the Id Parent Item
      * 
      * @param nIdParentItem
      *            The Id Parent Item
      */
     public void setIdParentItem( int nIdParentItem )
     {
-    	_nIdParentItem = nIdParentItem;
+        _nIdParentItem = nIdParentItem;
     }
-    
-    
+
     @Override
     public String getResourceTypeCode( )
     {

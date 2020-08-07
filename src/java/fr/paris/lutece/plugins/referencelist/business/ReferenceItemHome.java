@@ -48,9 +48,9 @@ public final class ReferenceItemHome
 {
     // Static variable pointed at the DAO instance
     private static IReferenceItemDAO _dao = SpringContextService.getBean( "referencelist.referenceItemDAO" );
-    
+
     private static ITranslationItemDAO _translationDao = SpringContextService.getBean( "referencelist.translationItemDAO" );
-    
+
     private static Plugin _plugin = PluginService.getPlugin( "referencelist" );
 
     /**
@@ -97,7 +97,7 @@ public final class ReferenceItemHome
     public static void remove( int nKey )
     {
         _dao.delete( nKey, _plugin );
-        
+
         _translationDao.deleteAllFromReferenceItemId( nKey, _plugin );
     }
 
@@ -206,7 +206,7 @@ public final class ReferenceItemHome
                         {
                             // candidateItem to update.
                             candidateItem.setId( referenceItem.getId( ) );
-                            
+
                             updateListCandidateReferenceItems.add( candidateItem );
                         }
                     }

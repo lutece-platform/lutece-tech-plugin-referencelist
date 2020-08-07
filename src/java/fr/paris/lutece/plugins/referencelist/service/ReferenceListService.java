@@ -88,7 +88,7 @@ public class ReferenceListService
     }
 
     /**
-     * Returns the list of all References Items of a Reference name with values translated 
+     * Returns the list of all References Items of a Reference name with values translated
      * 
      * @param referenceName
      *            the reference name

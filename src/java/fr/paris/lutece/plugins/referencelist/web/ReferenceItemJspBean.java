@@ -156,7 +156,7 @@ public class ReferenceItemJspBean extends AbstractReferenceListManageJspBean
     public String getImportReferenceItem( HttpServletRequest request )
     {
         _referenceitem = ( _referenceitem != null ) ? _referenceitem : new ReferenceItem( );
-        
+
         _referenceitem.setIdreference( IdReference );
         Map<String, Object> model = getModel( );
         model.put( MARK_REFERENCEITEM, _referenceitem );

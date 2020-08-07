@@ -33,7 +33,6 @@
  */
 package fr.paris.lutece.plugins.referencelist.service;
 
-
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -46,117 +45,115 @@ import fr.paris.lutece.plugins.referencelist.business.TranslationItemHome;
 import fr.paris.lutece.test.LuteceTestCase;
 import fr.paris.lutece.util.ReferenceList;
 
-
 /**
  * This is the business class test for the object ReferenceItem
  */
 public class ReferenceListServiceTest extends LuteceTestCase
 {
-	private String DEFAULT_MISTER = "Mr";
-	private String FR_MISTER = "M.";
-	private String CODE_MISTER = "title.mister";
-	
-	private String DEFAULT_MADAM = "Mrs";
-	private String FR_MADAM = "Mme";
-	private String CODE_MADAM = "title.madam";
-	
-	private String LANG_FR = "fr";
-	
-	private HashMap<String, ReferenceItem> hashReferenceItems = new HashMap<String, ReferenceItem> ( );
-	
-	private HashMap<String, TranslationItem> hashTranslations = new HashMap<String, TranslationItem> ( );
-	
-	/**
-	 * Prepares the reference repo with e reference items in database
-	 * 
-	 * @return the reference id
-	 */
-	private int prepareReferences( )
+    private String DEFAULT_MISTER = "Mr";
+    private String FR_MISTER = "M.";
+    private String CODE_MISTER = "title.mister";
+
+    private String DEFAULT_MADAM = "Mrs";
+    private String FR_MADAM = "Mme";
+    private String CODE_MADAM = "title.madam";
+
+    private String LANG_FR = "fr";
+
+    private HashMap<String, ReferenceItem> hashReferenceItems = new HashMap<String, ReferenceItem>( );
+
+    private HashMap<String, TranslationItem> hashTranslations = new HashMap<String, TranslationItem>( );
+
+    /**
+     * Prepares the reference repo with e reference items in database
+     * 
+     * @return the reference id
+     */
+    private int prepareReferences( )
     {
-    	// Initialize an object
-		Reference reference = new Reference( );
+        // Initialize an object
+        Reference reference = new Reference( );
         reference.setName( "civilites" );
         reference.setDescription( "Liste des civilités" );
         reference = ReferenceHome.create( reference );
-        
+
         ReferenceItem referenceItem = new ReferenceItem( );
         referenceItem.setCode( CODE_MISTER );
         referenceItem.setName( DEFAULT_MISTER );
         referenceItem.setIdreference( reference.getId( ) );
         referenceItem = ReferenceItemHome.create( referenceItem );
-        hashReferenceItems.put(CODE_MISTER, referenceItem);
-        
+        hashReferenceItems.put( CODE_MISTER, referenceItem );
+
         TranslationItem translationItem = new TranslationItem( );
-        translationItem.setIdItem(referenceItem.getId());
-        translationItem.setLang(LANG_FR);
+        translationItem.setIdItem( referenceItem.getId( ) );
+        translationItem.setLang( LANG_FR );
         translationItem.setTranslation( FR_MISTER );
-        hashTranslations.put( CODE_MISTER, translationItem);
-        
+        hashTranslations.put( CODE_MISTER, translationItem );
+
         referenceItem = new ReferenceItem( );
         referenceItem.setCode( CODE_MADAM );
         referenceItem.setName( DEFAULT_MADAM );
         referenceItem.setIdreference( reference.getId( ) );
         referenceItem = ReferenceItemHome.create( referenceItem );
-        hashReferenceItems.put( CODE_MADAM, referenceItem);
-        
+        hashReferenceItems.put( CODE_MADAM, referenceItem );
+
         translationItem = new TranslationItem( );
-        translationItem.setIdItem(referenceItem.getId());
-        translationItem.setLang(LANG_FR);
+        translationItem.setIdItem( referenceItem.getId( ) );
+        translationItem.setLang( LANG_FR );
         translationItem.setTranslation( FR_MADAM );
-        hashTranslations.put( CODE_MADAM, translationItem);
-        
-        return reference.getId();
+        hashTranslations.put( CODE_MADAM, translationItem );
+
+        return reference.getId( );
     }
-	
-	/**
-	 * Adds the translations in database
-	 */
-	private void addTranslations( )
-	{
-		for ( TranslationItem translationItem : hashTranslations.values( ) ) 
-		{
-			TranslationItemHome.create( translationItem );
-		}
-	}
-	
-	
+
+    /**
+     * Adds the translations in database
+     */
+    private void addTranslations( )
+    {
+        for ( TranslationItem translationItem : hashTranslations.values( ) )
+        {
+            TranslationItemHome.create( translationItem );
+        }
+    }
+
     /**
      * tests the service "getReferenceList" that use ReferenceItems and translations
      * 
      */
     public void testBusiness( )
     {
-    	int idReference = prepareReferences( );
-        
-        ReferenceList list = ReferenceListService.getInstance().getReferenceList(idReference, "fr");
-          
-        Iterator < fr.paris.lutece.util.ReferenceItem > it = list.iterator(); 
-        
+        int idReference = prepareReferences( );
+
+        ReferenceList list = ReferenceListService.getInstance( ).getReferenceList( idReference, "fr" );
+
+        Iterator<fr.paris.lutece.util.ReferenceItem> it = list.iterator( );
+
         // tests that the service retrieves the default names
-        while ( it.hasNext( ) ) 
-        { 
-        	fr.paris.lutece.util.ReferenceItem item1 = it.next();
-        	
-        	ReferenceItem item2 = hashReferenceItems.get( item1.getCode( ) );
-        	
-        	assertEquals(item1.getName( ), item2.getName( ) );
-    	}
-        
-        addTranslations();
-        
-        list = ReferenceListService.getInstance().getReferenceList(idReference, "fr");
-         
-        it = list.iterator(); 
-        
+        while ( it.hasNext( ) )
+        {
+            fr.paris.lutece.util.ReferenceItem item1 = it.next( );
+
+            ReferenceItem item2 = hashReferenceItems.get( item1.getCode( ) );
+
+            assertEquals( item1.getName( ), item2.getName( ) );
+        }
+
+        addTranslations( );
+
+        list = ReferenceListService.getInstance( ).getReferenceList( idReference, "fr" );
+
+        it = list.iterator( );
+
         // tests that the service retrieves the translations
-        while ( it.hasNext( ) ) 
-        { 
-        	fr.paris.lutece.util.ReferenceItem item = it.next();
-        	
-        	TranslationItem translation = hashTranslations.get( item.getCode( ) );
-        	
-        	assertEquals(item.getName( ), translation.getTranslation( ) );
-    	}
+        while ( it.hasNext( ) )
+        {
+            fr.paris.lutece.util.ReferenceItem item = it.next( );
+
+            TranslationItem translation = hashTranslations.get( item.getCode( ) );
+
+            assertEquals( item.getName( ), translation.getTranslation( ) );
+        }
     }
 
 }

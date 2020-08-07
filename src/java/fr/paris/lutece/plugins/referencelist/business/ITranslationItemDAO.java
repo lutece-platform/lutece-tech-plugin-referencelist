@@ -40,7 +40,7 @@ import java.util.List;
  * ITranslationItemDAO Interface
  */
 public interface ITranslationItemDAO
-{	
+{
     /**
      * Insert a new record in the table.
      * 
@@ -70,27 +70,27 @@ public interface ITranslationItemDAO
      *            the Plugin
      */
     void delete( int nKey, Plugin plugin );
-    
+
     /**
      * Delete a list of records linked to a Reference
      * 
      * @param nId
-     * 			 The identifier of the Reference
+     *            The identifier of the Reference
      * @param plugin
-     * 			the Plugin
+     *            the Plugin
      */
     void deleteAllFromReferenceId( int nId, Plugin plugin );
-    
+
     /**
      * Delete a list of records linked to a ReferenceItem
      * 
      * @param nId
-     * 			 The identifier of the ReferenceItem
+     *            The identifier of the ReferenceItem
      * @param plugin
-     * 			the Plugin
+     *            the Plugin
      */
     void deleteAllFromReferenceItemId( int nId, Plugin plugin );
-    
+
     // /////////////////////////////////////////////////////////////////////////
     // Finders
 

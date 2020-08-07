@@ -33,7 +33,6 @@
  */
 package fr.paris.lutece.plugins.referencelist.business;
 
-
 /**
  * This is the business class for the object ReferenceItem
  */

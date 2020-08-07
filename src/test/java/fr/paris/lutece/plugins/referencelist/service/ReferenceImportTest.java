@@ -133,7 +133,7 @@ public class ReferenceImportTest extends LuteceTestCase
         assertNotNull( testCSVNumOfCol );
         String testCSVDuplicateInFile = ReferenceItemPrepareImport
                 .isErrorInCSVFile( new ByteArrayInputStream( CSVDuplicateInFile.getBytes( StandardCharsets.UTF_8 ) ) );
-//        assertNotNull( testCSVDuplicateInFile );
+        // assertNotNull( testCSVDuplicateInFile );
 
         /**
          * test findCandidateItems

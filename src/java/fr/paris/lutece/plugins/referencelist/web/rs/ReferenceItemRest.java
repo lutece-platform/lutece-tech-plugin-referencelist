@@ -51,34 +51,37 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 
 /**
  * Rest web service for ReferenceList Plugin "referenceitems/list/reference/{idReference}"
- * @author Emile 
+ * 
+ * @author Emile
  */
-@Path ( RestConstants.BASE_PATH + "referenceitems/list" )
-public class ReferenceItemRest 
+@Path( RestConstants.BASE_PATH + "referenceitems/list" )
+public class ReferenceItemRest
 {
-	
-	/**
-	 * Get Reference Item List 
-	 * @param idReference the Reference Id
-	 * @return the Items List
-	 */
-	@GET
-	@Path ( "reference/{idReference}" )
-	@Produces ( MediaType.APPLICATION_JSON ) 
-	public Response getReferenceItemList(@PathParam ( "idReference" ) Integer idReference)
-	{
-		Response response ; 
-		ResponseBuilder builder;
-		String strJsonResponse;
-		
-		List<ReferenceItem> listItems = ReferenceItemHome.getReferenceItemsList( idReference );
-		
-		builder = Response.status(Response.Status.OK);
-			
-		strJsonResponse = JsonUtil.buildJsonResponse(new JsonResponse(listItems));						
-		
-		response = builder.entity(strJsonResponse).build();
-		
-		return response;
-	}
+
+    /**
+     * Get Reference Item List
+     * 
+     * @param idReference
+     *            the Reference Id
+     * @return the Items List
+     */
+    @GET
+    @Path( "reference/{idReference}" )
+    @Produces( MediaType.APPLICATION_JSON )
+    public Response getReferenceItemList( @PathParam( "idReference" ) Integer idReference )
+    {
+        Response response;
+        ResponseBuilder builder;
+        String strJsonResponse;
+
+        List<ReferenceItem> listItems = ReferenceItemHome.getReferenceItemsList( idReference );
+
+        builder = Response.status( Response.Status.OK );
+
+        strJsonResponse = JsonUtil.buildJsonResponse( new JsonResponse( listItems ) );
+
+        response = builder.entity( strJsonResponse ).build( );
+
+        return response;
+    }
 }

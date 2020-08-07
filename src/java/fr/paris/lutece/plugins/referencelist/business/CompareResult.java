@@ -51,7 +51,7 @@ public class CompareResult
     private static final String INFO_REFERENCEITEM_DUPLICATE_IN_TABLE = "referencelist.info.referenceitem.import.duplicateintable";
     private static final String INFO_REFERENCEITEM_TO_UPDATE = "referencelist.info.referenceitem.import.updated";
     private static final String INFO_REFERENCEITEM_TO_INSERT = "referencelist.info.referenceitem.import.toinsert";
-    
+
     /**
      * 
      * @param insertListCandidateReferenceItems
@@ -114,11 +114,10 @@ public class CompareResult
         int insert = result.get_insertListCandidateReferenceItems( ).size( );
 
         if ( duplicate > 0 )
-            message = message + "<strong>" + duplicate + "</strong> "
-                    + I18nService.getLocalizedString( INFO_REFERENCEITEM_DUPLICATE_IN_TABLE, locale ) + "<br>";
+            message = message + "<strong>" + duplicate + "</strong> " + I18nService.getLocalizedString( INFO_REFERENCEITEM_DUPLICATE_IN_TABLE, locale )
+                    + "<br>";
         if ( update > 0 )
-            message = message + "<strong>" + update + "</strong> " + I18nService.getLocalizedString( INFO_REFERENCEITEM_TO_UPDATE, locale )
-                    + " <br>";
+            message = message + "<strong>" + update + "</strong> " + I18nService.getLocalizedString( INFO_REFERENCEITEM_TO_UPDATE, locale ) + " <br>";
         if ( insert > 0 )
             message = message + "<strong>" + insert + "</strong> " + I18nService.getLocalizedString( INFO_REFERENCEITEM_TO_INSERT, Locale.getDefault( ) );
         return message;
