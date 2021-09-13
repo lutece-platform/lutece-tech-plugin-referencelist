@@ -33,6 +33,7 @@
  */
 package fr.paris.lutece.plugins.referencelist.business;
 
+import fr.paris.lutece.plugins.referencelist.service.ReferenceItemListenerService;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.plugin.PluginService;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
@@ -70,7 +71,7 @@ public final class ReferenceItemHome
     public static ReferenceItem create( ReferenceItem referenceItem )
     {
         _dao.insert( referenceItem, _plugin );
-
+        ReferenceItemListenerService.getInstance( ).fireAddEvent( referenceItem );
         return referenceItem;
     }
 
@@ -84,7 +85,7 @@ public final class ReferenceItemHome
     public static ReferenceItem update( ReferenceItem referenceItem )
     {
         _dao.store( referenceItem, _plugin );
-
+        ReferenceItemListenerService.getInstance( ).fireUpdateEvent( referenceItem );
         return referenceItem;
     }
 
@@ -96,7 +97,9 @@ public final class ReferenceItemHome
      */
     public static void remove( int nKey )
     {
+        ReferenceItem item = findByPrimaryKey( nKey );
         _dao.delete( nKey, _plugin );
+        ReferenceItemListenerService.getInstance( ).fireDeleteEvent( item );
         
         _translationDao.deleteAllFromReferenceItemId( nKey, _plugin );
     }
