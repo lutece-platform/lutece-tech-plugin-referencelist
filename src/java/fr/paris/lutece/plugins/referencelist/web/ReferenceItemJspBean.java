@@ -213,7 +213,7 @@ public class ReferenceItemJspBean extends AbstractReferenceListManageJspBean
 
             // call confirmation
             _compareResult = ReferenceItemHome.compareReferenceItems( candidateItems, refId );
-            String tmpmsg = CompareResult.createMessage( _compareResult, getLocale( ) );
+            String tmpmsg = _compareResult.createMessage( getLocale( ) );
 
             if ( CollectionUtils.isEmpty( _compareResult.getInsertListCandidateReferenceItems( ) )
                     && CollectionUtils.isEmpty( _compareResult.getUpdateListCandidateReferenceItems( ) ) )
@@ -238,7 +238,7 @@ public class ReferenceItemJspBean extends AbstractReferenceListManageJspBean
     public String getConfirmImportReferenceItem( HttpServletRequest request )
     {
 
-        String tmpmsg = CompareResult.createMessage( _compareResult, getLocale( ) );
+        String tmpmsg = _compareResult.createMessage( getLocale( ) );
         Object [ ] messageArgs = {
                 tmpmsg
         };

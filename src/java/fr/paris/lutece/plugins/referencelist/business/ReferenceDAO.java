@@ -164,7 +164,7 @@ public final class ReferenceDAO implements IReferenceDAO
     @Override
     public List<Reference> selectReferencesList( Plugin plugin )
     {
-        List<Reference> referenceList = new ArrayList<Reference>( );
+        List<Reference> referenceList = new ArrayList<>( );
 
         try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL, plugin ) )
         {

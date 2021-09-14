@@ -64,9 +64,9 @@ public class CompareResult
     public CompareResult( List<ReferenceItem> insertListCandidateReferenceItems, List<ReferenceItem> updateListCandidateReferenceItems,
             List<ReferenceItem> duplicateListCandidateReferenceItems )
     {
-        setUpdateListCandidateReferenceItems( updateListCandidateReferenceItems );
-        setDuplicateListCandidateReferenceItems( duplicateListCandidateReferenceItems );
-        setInsertListCandidateReferenceItems( insertListCandidateReferenceItems );
+        _updateListCandidateReferenceItems = updateListCandidateReferenceItems;
+        _duplicateListCandidateReferenceItems = duplicateListCandidateReferenceItems;
+        _insertListCandidateReferenceItems = insertListCandidateReferenceItems;
     }
 
     public String getMessageResult( )
@@ -84,19 +84,9 @@ public class CompareResult
         return _updateListCandidateReferenceItems;
     }
 
-    public void setUpdateListCandidateReferenceItems( List<ReferenceItem> _updateListCandidateReferenceItems )
-    {
-        this._updateListCandidateReferenceItems = _updateListCandidateReferenceItems;
-    }
-
     public List<ReferenceItem> getDuplicateListCandidateReferenceItems( )
     {
         return _duplicateListCandidateReferenceItems;
-    }
-
-    public void setDuplicateListCandidateReferenceItems( List<ReferenceItem> _duplicateListCandidateReferenceItems )
-    {
-        this._duplicateListCandidateReferenceItems = _duplicateListCandidateReferenceItems;
     }
 
     public List<ReferenceItem> getInsertListCandidateReferenceItems( )
@@ -104,17 +94,12 @@ public class CompareResult
         return _insertListCandidateReferenceItems;
     }
 
-    public void setInsertListCandidateReferenceItems( List<ReferenceItem> _insertListCandidateReferenceItems )
-    {
-        this._insertListCandidateReferenceItems = _insertListCandidateReferenceItems;
-    }
-
-    public static String createMessage( CompareResult result, Locale locale )
+    public String createMessage( Locale locale )
     {
         String message = "";
-        int update = result.getUpdateListCandidateReferenceItems( ).size( );
-        int duplicate = result.getDuplicateListCandidateReferenceItems( ).size( );
-        int insert = result.getInsertListCandidateReferenceItems( ).size( );
+        int update = _updateListCandidateReferenceItems.size( );
+        int duplicate = _duplicateListCandidateReferenceItems.size( );
+        int insert = _insertListCandidateReferenceItems.size( );
 
         if ( duplicate > 0 )
         {
