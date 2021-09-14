@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2020, City of Paris
+ * Copyright (c) 2002-2021, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -55,12 +55,11 @@ public final class TranslationItemDAO implements ITranslationItemDAO
 
     private static final String SQL_QUERY_SELECTALL = SQL_QUERY_SELECT + " and i.idreference = ? ORDER BY t.lang, i.name";
     private static final String SQL_QUERY_SELECTONE = SQL_QUERY_SELECT + " and t.id_translation = ?";
-    
-    private static final String SQL_QUERY_DELETE_ALL_FROM_REFERENCE_ITEM_ID= "DELETE FROM referencelist_translation WHERE id_reference_item = ? ";
-    private static final String SQL_QUERY_DELETE_ALL_FROM_REFERENCE_ID= "DELETE FROM referencelist_translation WHERE id_reference_item IN ( " +
-    "SELECT id_reference_item FROM referencelist_item WHERE idreference = ?) AND id_translation > 0";
 
-    
+    private static final String SQL_QUERY_DELETE_ALL_FROM_REFERENCE_ITEM_ID = "DELETE FROM referencelist_translation WHERE id_reference_item = ? ";
+    private static final String SQL_QUERY_DELETE_ALL_FROM_REFERENCE_ID = "DELETE FROM referencelist_translation WHERE id_reference_item IN ( "
+            + "SELECT id_reference_item FROM referencelist_item WHERE idreference = ?) AND id_translation > 0";
+
     /**
      * {@inheritDoc }
      */
@@ -69,19 +68,19 @@ public final class TranslationItemDAO implements ITranslationItemDAO
     {
 
         try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, Statement.RETURN_GENERATED_KEYS, plugin ) )
-		{
-	        int nIndex = 1;
-	
-	        daoUtil.setInt( nIndex++, item.getIdItem( ) );
-	        daoUtil.setString( nIndex++, item.getLang( ) );
-	        daoUtil.setString( nIndex++, item.getTranslation( ) );
-	
-	        daoUtil.executeUpdate( );
-	        if ( daoUtil.nextGeneratedKey( ) )
-	        {
-	        	item.setId( daoUtil.getGeneratedKeyInt( 1 ) );
-	        }
-		}
+        {
+            int nIndex = 1;
+
+            daoUtil.setInt( nIndex++, item.getIdItem( ) );
+            daoUtil.setString( nIndex++, item.getLang( ) );
+            daoUtil.setString( nIndex++, item.getTranslation( ) );
+
+            daoUtil.executeUpdate( );
+            if ( daoUtil.nextGeneratedKey( ) )
+            {
+                item.setId( daoUtil.getGeneratedKeyInt( 1 ) );
+            }
+        }
     }
 
     /**
@@ -94,21 +93,21 @@ public final class TranslationItemDAO implements ITranslationItemDAO
 
         try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTONE, plugin ) )
         {
-	        daoUtil.setInt( 1, nKey );
-	        daoUtil.executeQuery( );
-	
-	        if ( daoUtil.next( ) )
-	        {
-	        	item = new TranslationItem( );
-	        	
-	            int nIndex = 1;
-	
-	            item.setId( daoUtil.getInt( nIndex++ ) );
-	            item.setIdItem( daoUtil.getInt( nIndex++ ) );
-	            item.setName( daoUtil.getString( nIndex++ ) );
-	            item.setLang( daoUtil.getString( nIndex++ ) );
-	            item.setTranslation( daoUtil.getString( nIndex++ ) );
-	        }
+            daoUtil.setInt( 1, nKey );
+            daoUtil.executeQuery( );
+
+            if ( daoUtil.next( ) )
+            {
+                item = new TranslationItem( );
+
+                int nIndex = 1;
+
+                item.setId( daoUtil.getInt( nIndex++ ) );
+                item.setIdItem( daoUtil.getInt( nIndex++ ) );
+                item.setName( daoUtil.getString( nIndex++ ) );
+                item.setLang( daoUtil.getString( nIndex++ ) );
+                item.setTranslation( daoUtil.getString( nIndex++ ) );
+            }
         }
 
         return item;
@@ -121,90 +120,90 @@ public final class TranslationItemDAO implements ITranslationItemDAO
     public void delete( int nKey, Plugin plugin )
     {
         try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, plugin ) )
-		{
-			daoUtil.setInt( 1, nKey );
-			daoUtil.executeUpdate( );
-		}
+        {
+            daoUtil.setInt( 1, nKey );
+            daoUtil.executeUpdate( );
+        }
     }
-    
+
     /**
      * {@inheritDoc }
      */
     @Override
     public void deleteAllFromReferenceId( int nId, Plugin plugin )
-    {        
+    {
         String query = SQL_QUERY_DELETE_ALL_FROM_REFERENCE_ID;
-              
+
         try ( DAOUtil daoUtil = new DAOUtil( query, plugin ) )
-		{
-			daoUtil.setInt( 1, nId );
-			daoUtil.executeUpdate( );
-		}
+        {
+            daoUtil.setInt( 1, nId );
+            daoUtil.executeUpdate( );
+        }
     }
-    
+
     /**
      * {@inheritDoc }
      */
     @Override
     public void deleteAllFromReferenceItemId( int nId, Plugin plugin )
-    {        
+    {
         String query = SQL_QUERY_DELETE_ALL_FROM_REFERENCE_ITEM_ID;
-              
+
         try ( DAOUtil daoUtil = new DAOUtil( query, plugin ) )
-		{
-			daoUtil.setInt( 1, nId );
-			daoUtil.executeUpdate( );
-		}
+        {
+            daoUtil.setInt( 1, nId );
+            daoUtil.executeUpdate( );
+        }
     }
-    
+
     /**
      * {@inheritDoc }
      */
     @Override
     public void store( TranslationItem item, Plugin plugin )
-    {        
+    {
         int nIndex = 1;
-        
+
         try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, plugin ) )
-        { 
-	        daoUtil.setInt( nIndex++, item.getIdItem( ) );
-	        daoUtil.setString( nIndex++, item.getLang( ) );
-	        daoUtil.setString( nIndex++, item.getTranslation( ) );
-	        daoUtil.setInt( nIndex++, item.getId( ) );
-	
-	        daoUtil.executeUpdate( );
+        {
+            daoUtil.setInt( nIndex++, item.getIdItem( ) );
+            daoUtil.setString( nIndex++, item.getLang( ) );
+            daoUtil.setString( nIndex++, item.getTranslation( ) );
+            daoUtil.setInt( nIndex++, item.getId( ) );
+
+            daoUtil.executeUpdate( );
         }
     }
 
     /**
      * {@inheritDoc }
      */
-    @Override 
+    @Override
     public List<TranslationItem> selectTranslationItems( int idReference, Plugin plugin )
     {
-        List<TranslationItem> listTranslationItems = new ArrayList<TranslationItem>( );
+        List<TranslationItem> listTranslationItems = new ArrayList<>( );
 
         try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL, plugin ) )
         {
-	        daoUtil.setInt( 1, idReference );
-	        
-	        daoUtil.executeQuery( );
-	
-	        while ( daoUtil.next( ) )
-	        {
-	            TranslationItem item = new TranslationItem( );
-	            int nIndex = 1;
-	
-	            item.setId( daoUtil.getInt( nIndex++ ) );
-	            item.setIdItem( daoUtil.getInt( nIndex++ ) );
-	            item.setName( daoUtil.getString( nIndex++ ) );
-	            item.setLang( daoUtil.getString( nIndex++ ) );
-	            item.setTranslation( daoUtil.getString( nIndex++ ) );
-	
-	            listTranslationItems.add( item );
-	        }
+            daoUtil.setInt( 1, idReference );
+
+            daoUtil.executeQuery( );
+
+            while ( daoUtil.next( ) )
+            {
+                TranslationItem item = new TranslationItem( );
+                int nIndex = 1;
+
+                item.setId( daoUtil.getInt( nIndex++ ) );
+                item.setIdItem( daoUtil.getInt( nIndex++ ) );
+                item.setName( daoUtil.getString( nIndex++ ) );
+                item.setLang( daoUtil.getString( nIndex++ ) );
+                item.setTranslation( daoUtil.getString( nIndex++ ) );
+
+                listTranslationItems.add( item );
+            }
         }
-        
+
         return listTranslationItems;
     }
 

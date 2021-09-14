@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2020, City of Paris
+ * Copyright (c) 2002-2021, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -33,7 +33,6 @@
  */
 package fr.paris.lutece.plugins.referencelist.web;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -41,7 +40,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.codehaus.plexus.util.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import fr.paris.lutece.plugins.referencelist.business.ReferenceItem;
 import fr.paris.lutece.plugins.referencelist.business.ReferenceItemHome;
@@ -59,6 +58,8 @@ import fr.paris.lutece.util.ReferenceList;
 @Controller( controllerJsp = "ManageTranslations.jsp", controllerPath = "jsp/admin/plugins/referencelist/", right = "REFERENCELIST_MANAGEMENT" )
 public class TranslationItemJspBean extends AbstractReferenceListManageJspBean
 {
+    private static final long serialVersionUID = 701412592951603762L;
+
     // plugin relative path
     public static final String PLUGIN_PATH = "/admin/plugins/referencelist/";
 
@@ -95,7 +96,7 @@ public class TranslationItemJspBean extends AbstractReferenceListManageJspBean
 
     private static final String MARK_SELECTLIST = "referenceitems";
     private static final String MARK_SELECTLANGUAGES = "languages";
-    
+
     private static final String PROPERTY_LANGUAGES = "referencelist.languages";
 
     /**
@@ -198,9 +199,9 @@ public class TranslationItemJspBean extends AbstractReferenceListManageJspBean
     public String doCreateTranslationItem( HttpServletRequest request )
     {
         TranslationItem itemValue = new TranslationItem( );
-        
+
         populate( itemValue, request, request.getLocale( ) );
-        
+
         TranslationItemHome.create( itemValue );
 
         addInfo( PROPERTY_TRANSLATIONITEM_CREATED, getLocale( ) );
@@ -219,34 +220,32 @@ public class TranslationItemJspBean extends AbstractReferenceListManageJspBean
     public String getManageTranslations( HttpServletRequest request )
     {
         HttpSession session = request.getSession( );
-        
+
         int nIdReference = 0;
-        
-        List<TranslationItem> listTranslationItems = new ArrayList<TranslationItem>( );
-        
+
         // setting the session parameter with request parameter if valid
-        if ( request.getParameter( PARAMETER_ID_REFERENCE ) != null && StringUtils.isNumeric( request.getParameter( PARAMETER_ID_REFERENCE ) ))
+        if ( StringUtils.isNumeric( request.getParameter( PARAMETER_ID_REFERENCE ) ) )
         {
             if ( !request.getParameter( PARAMETER_ID_REFERENCE ).equals( session.getAttribute( PARAMETER_ID_REFERENCE ) ) )
             {
-                session.setAttribute( PARAMETER_ID_REFERENCE, request.getParameter( PARAMETER_ID_REFERENCE ) );        
+                session.setAttribute( PARAMETER_ID_REFERENCE, request.getParameter( PARAMETER_ID_REFERENCE ) );
             }
-            
+
             nIdReference = Integer.parseInt( (String) session.getAttribute( PARAMETER_ID_REFERENCE ) );
         }
         // the session attribute is always numeric when set
-        else if ( session.getAttribute( PARAMETER_ID_REFERENCE ) != null)
-        {
-        	nIdReference = Integer.parseInt( (String) session.getAttribute( PARAMETER_ID_REFERENCE ) );
-        }
-        // unknown id Reference
         else
-        {
-        	addError( PROPERTY_NO_REFERENCEID_ERROR_MANAGE, getLocale( ) );
-        }
-    	
-        listTranslationItems = TranslationItemHome.getTranslationItemList( nIdReference );
-        
+            if ( session.getAttribute( PARAMETER_ID_REFERENCE ) != null )
+            {
+                nIdReference = Integer.parseInt( (String) session.getAttribute( PARAMETER_ID_REFERENCE ) );
+            }
+            // unknown id Reference
+            else
+            {
+                addError( PROPERTY_NO_REFERENCEID_ERROR_MANAGE, getLocale( ) );
+            }
+
+        List<TranslationItem> listTranslationItems = TranslationItemHome.getTranslationItemList( nIdReference );
         Map<String, Object> model = getPaginatedListModel( request, MARK_MANAGE, listTranslationItems, JSP_MANAGE );
 
         return getPage( PROPERTY_PAGE_TITLE_MANAGE, TEMPLATE_MANAGE, model );

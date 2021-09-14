@@ -4,8 +4,8 @@
     <@tform name='create_referenceitem' action='jsp/admin/plugins/referencelist/ManageReferenceItems.jsp'>
 
         <@messages errors=errors />
-        <input type="hidden" id="id" name="id"/>
-		<input type='hidden' name='idreference' value='${referenceitem.idreference}'/>
+        <@input type="hidden" id="id" name="id"/>
+		<@input type='hidden' name='idreference' value='${referenceitem.idreference}'/>
 		<@formGroup labelKey='#i18n{referencelist.create_referenceitem.labelCode}' helpKey='#i18n{referencelist.create_referenceitem.labelCode.help}' mandatory=true>
 			<@input type='text' name='code' value='${referenceitem.code!\'\'}' />
 		</@formGroup>

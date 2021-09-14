@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2020, City of Paris
+ * Copyright (c) 2002-2021, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -52,6 +52,8 @@ import javax.servlet.http.HttpServletRequest;
 @Controller( controllerJsp = "ManageReferences.jsp", controllerPath = "jsp/admin/plugins/referencelist/", right = "REFERENCELIST_MANAGEMENT" )
 public class ReferenceJspBean extends AbstractReferenceListManageJspBean
 {
+    private static final long serialVersionUID = -4418326362630859233L;
+
     // Templates
     private static final String TEMPLATE_MANAGE_REFERENCES = "/admin/plugins/referencelist/manage_references.html";
     private static final String TEMPLATE_CREATE_REFERENCE = "/admin/plugins/referencelist/create_reference.html";

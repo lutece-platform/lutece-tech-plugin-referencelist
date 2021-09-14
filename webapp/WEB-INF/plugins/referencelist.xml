@@ -1,21 +1,22 @@
-<?xml version="1.0" encoding="UTF-8"?><plug-in>
+<?xml version="1.0" encoding="UTF-8"?>
+<plug-in>
     <name>referencelist</name>
     <class>fr.paris.lutece.portal.service.plugin.PluginDefaultImplementation</class>
     <version>1.0.2-SNAPSHOT</version>
-    <documentation/>
-    <installation/>
-    <changes/>
-    <user-guide/>
+    <documentation />
+    <installation />
+    <changes />
+    <user-guide />
     <description>referencelist.plugin.description</description>
     <provider>referencelist.plugin.provider</provider>
     <provider-url>https://fr.lutece.paris.fr/</provider-url>
     <icon-url>images/admin/skin/feature_default_icon.png</icon-url>
     <copyright>Mairie de paris</copyright>
     <db-pool-required>1</db-pool-required>
-    
+
     <core-version-dependency>
         <min-core-version>4.1.0</min-core-version>
-        <max-core-version/>	
+        <max-core-version />
     </core-version-dependency>
 
     <!-- Admin features parameters -->
@@ -26,9 +27,9 @@
             <feature-description>referencelist.adminFeature.ReferenceListManage.description</feature-description>
             <feature-level>0</feature-level>
             <feature-url>jsp/admin/plugins/referencelist/ManageReferences.jsp</feature-url>
-            <feature-icon-url/>
-      </admin-feature>
-    </admin-features>    
+            <feature-icon-url />
+        </admin-feature>
+    </admin-features>
 
     <!-- XPages parameters -->
     <applications>
@@ -36,7 +37,7 @@
 
     <!-- Portlet parameters -->
     <portlets>
-   </portlets>
+    </portlets>
 
     <!-- RBAC Resources -->
     <rbac-resource-types>
@@ -46,6 +47,4 @@
             </rbac-resource-type-class>
         </rbac-resource-type>
     </rbac-resource-types>
-
-
 </plug-in>

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2020, City of Paris
+ * Copyright (c) 2002-2021, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,11 +40,11 @@ import fr.paris.lutece.test.LuteceTestCase;
  */
 public class ReferenceItemBusinessTest extends LuteceTestCase
 {
-	public static final String NAME1 = "Name1";
-	public static final String NAME2 = "Name2";
-	public static final String CODE1 = "Code1";
-	public static final String CODE2 = "Code2";
-	public static final int IDREFERENCE1 = 1;
+    public static final String NAME1 = "Name1";
+    public static final String NAME2 = "Name2";
+    public static final String CODE1 = "Code1";
+    public static final String CODE2 = "Code2";
+    public static final int IDREFERENCE1 = 1;
 
     /**
      * test ReferenceItem

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2020, City of Paris
+ * Copyright (c) 2002-2021, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -34,6 +34,8 @@
 package fr.paris.lutece.plugins.referencelist.service;
 
 import java.util.List;
+
+import fr.paris.lutece.api.user.User;
 import fr.paris.lutece.plugins.referencelist.business.CompareResult;
 import fr.paris.lutece.plugins.referencelist.business.Reference;
 import fr.paris.lutece.plugins.referencelist.business.ReferenceItem;
@@ -47,7 +49,7 @@ import fr.paris.lutece.portal.service.rbac.RBACService;
 public final class ReferenceImport
 {
 
-    public ReferenceImport( )
+    private ReferenceImport( )
     {
     }
 
@@ -64,10 +66,11 @@ public final class ReferenceImport
      */
     public static boolean doImportCSV( CompareResult compareResult, int refId, AdminUser adminUser )
     {
-
-        if ( !RBACService.isAuthorized( Reference.RESOURCE_TYPE, String.valueOf( refId ), Reference.PERMISSION_CREATE, adminUser ) )
+        if ( !RBACService.isAuthorized( Reference.RESOURCE_TYPE, String.valueOf( refId ), Reference.PERMISSION_CREATE, (User) adminUser ) )
+        {
             return false;
-        return doImportCSV( compareResult, refId );
+        }
+        return doImportCSV( compareResult );
     }
 
     /**
@@ -75,15 +78,13 @@ public final class ReferenceImport
      * 
      * @param compareResult
      *            Lists to insert or update;
-     * @param refId
-     *            ID of Reference
      * @return a String with the import source result or null if an error occurs during the instantiation of the import source.
      */
-    private static boolean doImportCSV( CompareResult compareResult, int refId )
+    private static boolean doImportCSV( CompareResult compareResult )
     {
 
-        List<ReferenceItem> updateReferenceItems = compareResult.get_updateListCandidateReferenceItems( );
-        List<ReferenceItem> insertReferenceItems = compareResult.get_insertListCandidateReferenceItems( );
+        List<ReferenceItem> updateReferenceItems = compareResult.getUpdateListCandidateReferenceItems( );
+        List<ReferenceItem> insertReferenceItems = compareResult.getInsertListCandidateReferenceItems( );
         // insert
         for ( ReferenceItem candidateItem : insertReferenceItems )
         {

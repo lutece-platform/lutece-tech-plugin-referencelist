@@ -3,7 +3,7 @@
 	<@boxBody>
     <@tform class="form-horizontal" method="post" name="modify_referenceitem" action="jsp/admin/plugins/referencelist/ManageReferenceItems.jsp">
 			<@messages errors=errors />
-			<input type="hidden" id="id" name="id" value="${referenceitem.id}"/>
+			<@input type="hidden" id="id" name="id" value="${referenceitem.id}"/>
 			<@formGroup labelKey='#i18n{referencelist.modify_referenceitem.labelCode}' helpKey='#i18n{referencelist.modify_referenceitem.labelCode.help}' mandatory=true>
 				<@input type='text' name='code' value='${referenceitem.code}' />
 			</@formGroup>

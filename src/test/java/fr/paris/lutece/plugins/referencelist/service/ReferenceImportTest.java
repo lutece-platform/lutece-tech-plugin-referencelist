@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2020, City of Paris
+ * Copyright (c) 2002-2021, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -133,7 +133,7 @@ public class ReferenceImportTest extends LuteceTestCase
         assertNotNull( testCSVNumOfCol );
         String testCSVDuplicateInFile = ReferenceItemPrepareImport
                 .isErrorInCSVFile( new ByteArrayInputStream( CSVDuplicateInFile.getBytes( StandardCharsets.UTF_8 ) ) );
-//        assertNotNull( testCSVDuplicateInFile );
+        // assertNotNull( testCSVDuplicateInFile );
 
         /**
          * test findCandidateItems
@@ -154,7 +154,7 @@ public class ReferenceImportTest extends LuteceTestCase
 
         // insert
         CompareResult compareReferenceItems = ReferenceItemHome.compareReferenceItems( testListInsert, referenceStoredId );
-        List<ReferenceItem> insertReferenceItems = compareReferenceItems.get_insertListCandidateReferenceItems( );
+        List<ReferenceItem> insertReferenceItems = compareReferenceItems.getInsertListCandidateReferenceItems( );
         assertTrue( insertReferenceItems.size( ) == 1 );
 
         // do insert import;
@@ -165,7 +165,7 @@ public class ReferenceImportTest extends LuteceTestCase
         List<ReferenceItem> testListUpdate = ReferenceItemPrepareImport
                 .findCandidateItems( new ByteArrayInputStream( CSVUpdate.getBytes( StandardCharsets.UTF_8 ) ), referenceStoredId );
         CompareResult compareReferenceItems1 = ReferenceItemHome.compareReferenceItems( testListUpdate, referenceStoredId );
-        List<ReferenceItem> updateReferenceItems = compareReferenceItems1.get_updateListCandidateReferenceItems( );
+        List<ReferenceItem> updateReferenceItems = compareReferenceItems1.getUpdateListCandidateReferenceItems( );
         assertTrue( updateReferenceItems.size( ) == 1 );
 
         // do update import;

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2020, City of Paris
+ * Copyright (c) 2002-2021, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,7 +36,7 @@ package fr.paris.lutece.plugins.referencelist.service;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -45,7 +45,6 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
 
 import fr.paris.lutece.plugins.referencelist.business.ReferenceItem;
-import fr.paris.lutece.portal.service.util.AppLogService;
 
 public class ReferenceItemPrepareImport
 {
@@ -59,7 +58,7 @@ public class ReferenceItemPrepareImport
     private static final String CONSTANT_ERROR_INVALID_DUPLICATE = "Duplicate name on line ";
     private static final String CONSTANT_ERROR_INVALID_NUMOFCOLS = "Num of Col is not equal of 2";
 
-    public ReferenceItemPrepareImport( )
+    private ReferenceItemPrepareImport( )
     {
     }
 
@@ -68,13 +67,12 @@ public class ReferenceItemPrepareImport
      * 
      * @param strFileName
      *            The filename
-     * @param FileSize
+     * @param fileSize
      *            The size of file
      * @return false if FileName || FileExtention || FileSize doesnt match to constraints.
      */
-    public static boolean isImportableCSVFile( String strFileName, long FileSize )
+    public static boolean isImportableCSVFile( String strFileName, long fileSize )
     {
-
         String strFileExtention;
 
         // Check File Name
@@ -87,20 +85,20 @@ public class ReferenceItemPrepareImport
             return false;
         }
         // Check File Extention
-        if ( !strFileExtention.toLowerCase( ).equals( CONSTANT_FILE_EXTENTION ) )
+        if ( !strFileExtention.equalsIgnoreCase( CONSTANT_FILE_EXTENTION ) )
         {
             return false;
         }
 
         // Check Empty File
-        if ( FileSize < 6 )
+        if ( fileSize < 6 )
         {
             return false;
         }
 
-        // Ready for Import;
+        // Ready for Import
         return true;
-    };
+    }
 
     /**
      * Check if CSV file contains errors
@@ -111,52 +109,49 @@ public class ReferenceItemPrepareImport
      */
     public static String isErrorInCSVFile( InputStream fileInputStream )
     {
-        String errorsMessages = "";
+        StringBuilder errorsMessages = new StringBuilder( );
 
         List<ReferenceItem> list = new ArrayList<>( );
-        Reader _reader;
-        _reader = new InputStreamReader( fileInputStream );
-        
-        if ( _reader != null )
-        {
-            int i = 0;
-            Scanner scanner = new Scanner( _reader );
-            
-            while ( scanner.hasNextLine( ) )
-            {
-                i++;
-                String strLine = scanner.nextLine( );
-                String [ ] strFields = strLine.split( CONSTANT_SEPARATOR );
-                
-                if ( strFields.length == CONSTANT_FILE_NUMOFCOLS )
-                {
-                    if ( isDuplicateName( list, strFields [1] ) )
-                    {
-                        errorsMessages += CONSTANT_ERROR_INVALID_DUPLICATE + i + "\r\n";
-                    }
-                    else
-                    {
-                        ReferenceItem referenceItem = new ReferenceItem( );
-                        
-                        referenceItem.setCode( strFields [0] );
-                        referenceItem.setName( strFields [1] );
-                        
-                        list.add( referenceItem );
-                    }
+        Reader reader = new InputStreamReader( fileInputStream );
 
+        int i = 0;
+        Scanner scanner = new Scanner( reader );
+
+        while ( scanner.hasNextLine( ) )
+        {
+            i++;
+            String strLine = scanner.nextLine( );
+            String [ ] strFields = strLine.split( CONSTANT_SEPARATOR );
+
+            if ( strFields.length == CONSTANT_FILE_NUMOFCOLS )
+            {
+                if ( isDuplicateName( list, strFields [1] ) )
+                {
+                    errorsMessages.append( CONSTANT_ERROR_INVALID_DUPLICATE ).append( i ).append( "\r\n" );
                 }
                 else
                 {
-                    errorsMessages += CONSTANT_ERROR_INVALID_RECORD + i + " : " + CONSTANT_ERROR_INVALID_NUMOFCOLS + " (=" + strFields.length + ")  \r\n";
+                    ReferenceItem referenceItem = new ReferenceItem( );
+
+                    referenceItem.setCode( strFields [0] );
+                    referenceItem.setName( strFields [1] );
+
+                    list.add( referenceItem );
                 }
 
             }
-            scanner.close( );
+            else
+            {
+                errorsMessages.append( CONSTANT_ERROR_INVALID_RECORD ).append( i ).append( " : " ).append( CONSTANT_ERROR_INVALID_NUMOFCOLS ).append( " (=" )
+                        .append( strFields.length ).append( ")  \r\n" );
+            }
+
         }
+        scanner.close( );
 
         if ( errorsMessages.length( ) > 0 )
         {
-            return getHtmlLinkBase64Src( errorsMessages );
+            return getHtmlLinkBase64Src( errorsMessages.toString( ) );
         }
         else
         {
@@ -178,45 +173,37 @@ public class ReferenceItemPrepareImport
     {
         List<ReferenceItem> list = new ArrayList<>( );
 
-        Reader _reader;
-        _reader = new InputStreamReader( fileInputStream );
-        
-        if ( _reader != null )
+        Reader reader = new InputStreamReader( fileInputStream );
+
+        Scanner scanner = new Scanner( reader );
+
+        while ( scanner.hasNextLine( ) )
         {
-            Scanner scanner = new Scanner( _reader );
-            
-            while ( scanner.hasNextLine( ) )
+            String strLine = scanner.nextLine( );
+            String [ ] strFields = strLine.split( CONSTANT_SEPARATOR );
+
+            if ( strFields.length == CONSTANT_FILE_NUMOFCOLS && !isDuplicateName( list, strFields [1] ) )
             {
-                String strLine = scanner.nextLine( );
-                String [ ] strFields = strLine.split( CONSTANT_SEPARATOR );
-                
-                if ( strFields.length == CONSTANT_FILE_NUMOFCOLS )
-                {
-                    if ( !isDuplicateName( list, strFields[ 1 ] ) )
-                    {
-                        ReferenceItem referenceItem = new ReferenceItem( );
-                        
-                        referenceItem.setCode( strFields [0] );
-                        referenceItem.setName( strFields [1] );
-              
-                        referenceItem.setIdreference( refId );
-                        list.add( referenceItem );
-                    }
-                }
+                ReferenceItem referenceItem = new ReferenceItem( );
+
+                referenceItem.setCode( strFields [0] );
+                referenceItem.setName( strFields [1] );
+
+                referenceItem.setIdreference( refId );
+                list.add( referenceItem );
             }
-            scanner.close( );
         }
+        scanner.close( );
         return list;
     }
 
     public static boolean isDuplicateName( List<ReferenceItem> list, String candidateItemName )
     {
-
         boolean checker = false;
 
         for ( ReferenceItem referenceItem : list )
         {
-            // compare names;
+            // compare names
             if ( candidateItemName.equals( referenceItem.getName( ) ) )
             {
                 checker = true;
@@ -242,15 +229,7 @@ public class ReferenceItemPrepareImport
     private static String getHtmlLinkBase64Src( String strFileMessage )
     {
         byte [ ] encodedBytes = Base64.encodeBase64( strFileMessage.getBytes( ) );
-        try
-        {
-            return new String( encodedBytes, "UTF-8" );
-        }
-        catch( UnsupportedEncodingException e )
-        {
-            AppLogService.error( "Unable to convert byte to string for logfile errors" );
-            return null;
-        }
+        return new String( encodedBytes, StandardCharsets.UTF_8 );
     }
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2020, City of Paris
+ * Copyright (c) 2002-2021, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -43,15 +43,18 @@ import fr.paris.lutece.portal.service.i18n.I18nService;
  */
 public class CompareResult
 {
-    List<ReferenceItem> _updateListCandidateReferenceItems;
-    List<ReferenceItem> _duplicateListCandidateReferenceItems;
-    List<ReferenceItem> _insertListCandidateReferenceItems;
-    String messageResult = "";
-
     private static final String INFO_REFERENCEITEM_DUPLICATE_IN_TABLE = "referencelist.info.referenceitem.import.duplicateintable";
     private static final String INFO_REFERENCEITEM_TO_UPDATE = "referencelist.info.referenceitem.import.updated";
     private static final String INFO_REFERENCEITEM_TO_INSERT = "referencelist.info.referenceitem.import.toinsert";
-    
+
+    private static final String TAG_OPEN_STRONG = "<strong>";
+    private static final String TAG_CLOSE_STRONG = "</strong> ";
+
+    private List<ReferenceItem> _updateListCandidateReferenceItems;
+    private List<ReferenceItem> _duplicateListCandidateReferenceItems;
+    private List<ReferenceItem> _insertListCandidateReferenceItems;
+    private String _messageResult = "";
+
     /**
      * 
      * @param insertListCandidateReferenceItems
@@ -61,47 +64,47 @@ public class CompareResult
     public CompareResult( List<ReferenceItem> insertListCandidateReferenceItems, List<ReferenceItem> updateListCandidateReferenceItems,
             List<ReferenceItem> duplicateListCandidateReferenceItems )
     {
-        set_updateListCandidateReferenceItems( updateListCandidateReferenceItems );
-        set_duplicateListCandidateReferenceItems( duplicateListCandidateReferenceItems );
-        set_insertListCandidateReferenceItems( insertListCandidateReferenceItems );
+        setUpdateListCandidateReferenceItems( updateListCandidateReferenceItems );
+        setDuplicateListCandidateReferenceItems( duplicateListCandidateReferenceItems );
+        setInsertListCandidateReferenceItems( insertListCandidateReferenceItems );
     }
 
     public String getMessageResult( )
     {
-        return messageResult;
+        return _messageResult;
     }
 
     public void setMessageResult( String messageResult )
     {
-        this.messageResult = messageResult;
+        this._messageResult = messageResult;
     }
 
-    public List<ReferenceItem> get_updateListCandidateReferenceItems( )
+    public List<ReferenceItem> getUpdateListCandidateReferenceItems( )
     {
         return _updateListCandidateReferenceItems;
     }
 
-    public void set_updateListCandidateReferenceItems( List<ReferenceItem> _updateListCandidateReferenceItems )
+    public void setUpdateListCandidateReferenceItems( List<ReferenceItem> _updateListCandidateReferenceItems )
     {
         this._updateListCandidateReferenceItems = _updateListCandidateReferenceItems;
     }
 
-    public List<ReferenceItem> get_duplicateListCandidateReferenceItems( )
+    public List<ReferenceItem> getDuplicateListCandidateReferenceItems( )
     {
         return _duplicateListCandidateReferenceItems;
     }
 
-    public void set_duplicateListCandidateReferenceItems( List<ReferenceItem> _duplicateListCandidateReferenceItems )
+    public void setDuplicateListCandidateReferenceItems( List<ReferenceItem> _duplicateListCandidateReferenceItems )
     {
         this._duplicateListCandidateReferenceItems = _duplicateListCandidateReferenceItems;
     }
 
-    public List<ReferenceItem> get_insertListCandidateReferenceItems( )
+    public List<ReferenceItem> getInsertListCandidateReferenceItems( )
     {
         return _insertListCandidateReferenceItems;
     }
 
-    public void set_insertListCandidateReferenceItems( List<ReferenceItem> _insertListCandidateReferenceItems )
+    public void setInsertListCandidateReferenceItems( List<ReferenceItem> _insertListCandidateReferenceItems )
     {
         this._insertListCandidateReferenceItems = _insertListCandidateReferenceItems;
     }
@@ -109,18 +112,24 @@ public class CompareResult
     public static String createMessage( CompareResult result, Locale locale )
     {
         String message = "";
-        int update = result.get_updateListCandidateReferenceItems( ).size( );
-        int duplicate = result.get_duplicateListCandidateReferenceItems( ).size( );
-        int insert = result.get_insertListCandidateReferenceItems( ).size( );
+        int update = result.getUpdateListCandidateReferenceItems( ).size( );
+        int duplicate = result.getDuplicateListCandidateReferenceItems( ).size( );
+        int insert = result.getInsertListCandidateReferenceItems( ).size( );
 
         if ( duplicate > 0 )
-            message = message + "<strong>" + duplicate + "</strong> "
-                    + I18nService.getLocalizedString( INFO_REFERENCEITEM_DUPLICATE_IN_TABLE, locale ) + "<br>";
+        {
+            message = message + TAG_OPEN_STRONG + duplicate + TAG_CLOSE_STRONG + I18nService.getLocalizedString( INFO_REFERENCEITEM_DUPLICATE_IN_TABLE, locale )
+                    + "<br>";
+        }
         if ( update > 0 )
-            message = message + "<strong>" + update + "</strong> " + I18nService.getLocalizedString( INFO_REFERENCEITEM_TO_UPDATE, locale )
-                    + " <br>";
+        {
+            message = message + TAG_OPEN_STRONG + update + TAG_CLOSE_STRONG + I18nService.getLocalizedString( INFO_REFERENCEITEM_TO_UPDATE, locale ) + " <br>";
+        }
         if ( insert > 0 )
-            message = message + "<strong>" + insert + "</strong> " + I18nService.getLocalizedString( INFO_REFERENCEITEM_TO_INSERT, Locale.getDefault( ) );
+        {
+            message = message + TAG_OPEN_STRONG + insert + TAG_CLOSE_STRONG
+                    + I18nService.getLocalizedString( INFO_REFERENCEITEM_TO_INSERT, Locale.getDefault( ) );
+        }
         return message;
     }
 }

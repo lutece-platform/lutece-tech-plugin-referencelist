@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2020, City of Paris
+ * Copyright (c) 2002-2021, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,64 +40,64 @@ import fr.paris.lutece.test.LuteceTestCase;
  */
 public class TranslationItemBusinessTest extends LuteceTestCase
 {
-	
-	public static Reference reference;
-	public static ReferenceItem referenceItem;
-	public static TranslationItem translation;
-	
+
+    public static Reference reference;
+    public static ReferenceItem referenceItem;
+    public static TranslationItem translation;
+
     /**
      * test Reference
      */
     public void testBusiness( )
     {
-        prepare();
-        
+        prepare( );
+
         translation = new TranslationItem( );
         translation.setLang( "fr" );
         translation.setTranslation( "M." );
         translation.setIdItem( referenceItem.getId( ) );
-        
+
         // Create test
         TranslationItemHome.create( translation );
-        
+
         TranslationItem translationStored = TranslationItemHome.findByPrimaryKey( translation.getId( ) );
-        assertEquals( translationStored.getLang(), translation.getLang() );
-        assertEquals( translationStored.getTranslation(), translation.getTranslation() );
-        assertEquals( translationStored.getIdItem(), translation.getIdItem() );
-        
+        assertEquals( translationStored.getLang( ), translation.getLang( ) );
+        assertEquals( translationStored.getTranslation( ), translation.getTranslation( ) );
+        assertEquals( translationStored.getIdItem( ), translation.getIdItem( ) );
+
         // Update test
         translation.setLang( "es" );
         translation.setTranslation( "Sr" );
         TranslationItemHome.update( translation );
         translationStored = TranslationItemHome.findByPrimaryKey( translation.getId( ) );
-        assertEquals( translationStored.getLang(), translation.getLang() );
-        assertEquals( translationStored.getTranslation(), translation.getTranslation() );
-        assertEquals( translationStored.getIdItem(), translation.getIdItem() );
-        
+        assertEquals( translationStored.getLang( ), translation.getLang( ) );
+        assertEquals( translationStored.getTranslation( ), translation.getTranslation( ) );
+        assertEquals( translationStored.getIdItem( ), translation.getIdItem( ) );
+
         // List test
-        TranslationItemHome.getTranslationItemList(1);
+        TranslationItemHome.getTranslationItemList( 1 );
 
         // Delete test
         TranslationItemHome.remove( translation.getId( ) );
         translationStored = TranslationItemHome.findByPrimaryKey( translation.getId( ) );
         assertNull( translationStored );
-        
+
     }
-    
+
     public static void prepare( )
     {
-    	// Initialize an object
+        // Initialize an object
         reference = new Reference( );
         reference.setName( "civilites" );
         reference.setDescription( "Liste des civilités" );
         ReferenceHome.create( reference );
-        
+
         referenceItem = new ReferenceItem( );
         referenceItem.setCode( "title.mister" );
         referenceItem.setName( "Mr" );
         referenceItem.setIdreference( reference.getId( ) );
         ReferenceItemHome.create( referenceItem );
-        
+
     }
 
 }

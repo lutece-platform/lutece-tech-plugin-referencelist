@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2020, City of Paris
+ * Copyright (c) 2002-2021, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -49,9 +49,9 @@ public final class ReferenceItemHome
 {
     // Static variable pointed at the DAO instance
     private static IReferenceItemDAO _dao = SpringContextService.getBean( "referencelist.referenceItemDAO" );
-    
+
     private static ITranslationItemDAO _translationDao = SpringContextService.getBean( "referencelist.translationItemDAO" );
-    
+
     private static Plugin _plugin = PluginService.getPlugin( "referencelist" );
 
     /**
@@ -100,7 +100,7 @@ public final class ReferenceItemHome
         ReferenceItem item = findByPrimaryKey( nKey );
         _dao.delete( nKey, _plugin );
         ReferenceItemListenerService.getInstance( ).fireDeleteEvent( item );
-        
+
         _translationDao.deleteAllFromReferenceItemId( nKey, _plugin );
     }
 
@@ -165,13 +165,13 @@ public final class ReferenceItemHome
      * 
      * @param nIdReference
      *            The reference id
-     * @param Itemname
+     * @param itemName
      *            The Itemname of candidateItem
      * @return an instance of ReferenceItem
      */
-    public static ReferenceItem findByReferenceName( int nIdReference, String Itemname )
+    public static ReferenceItem findByReferenceName( int nIdReference, String itemName )
     {
-        return _dao.loadReferenceItemByName( nIdReference, Itemname, _plugin );
+        return _dao.loadReferenceItemByName( nIdReference, itemName, _plugin );
 
     }
 
@@ -182,7 +182,7 @@ public final class ReferenceItemHome
         List<ReferenceItem> currentListCandidateItems = candidateItems;
         List<ReferenceItem> currentListReferenceItems = ReferenceItemHome.getReferenceItemsList( refId );
 
-        // lists to return;
+        // lists to return
         List<ReferenceItem> updateListCandidateReferenceItems = new ArrayList<>( );
         List<ReferenceItem> duplicateListCandidateReferenceItems = new ArrayList<>( );
         List<ReferenceItem> insertListCandidateReferenceItems = new ArrayList<>( );
@@ -191,33 +191,32 @@ public final class ReferenceItemHome
         for ( ReferenceItem candidateItem : currentListCandidateItems )
         {
             boolean founded = false;
-            if ( !currentListReferenceItems.isEmpty( ) )
+            for ( ReferenceItem referenceItem : currentListReferenceItems )
             {
-                for ( ReferenceItem referenceItem : currentListReferenceItems )
+                // compare codes
+                if ( candidateItem.getCode( ).equals( referenceItem.getCode( ) ) )
                 {
-                    // compare codes ;
-                    if ( candidateItem.getCode( ).equals( referenceItem.getCode( ) ) )
+                    founded = true;
+                    // compare values
+                    if ( candidateItem.getName( ).equals( referenceItem.getName( ) ) )
                     {
-                        founded = true;
-                        // compare values;
-                        if ( candidateItem.getName( ).equals( referenceItem.getName( ) ) )
-                        {
-                            // duplicate candidateItem.
-                            duplicateListCandidateReferenceItems.add( candidateItem );
-                        }
-                        else
-                        {
-                            // candidateItem to update.
-                            candidateItem.setId( referenceItem.getId( ) );
-                            
-                            updateListCandidateReferenceItems.add( candidateItem );
-                        }
+                        // duplicate candidateItem.
+                        duplicateListCandidateReferenceItems.add( candidateItem );
+                    }
+                    else
+                    {
+                        // candidateItem to update.
+                        candidateItem.setId( referenceItem.getId( ) );
+
+                        updateListCandidateReferenceItems.add( candidateItem );
                     }
                 }
             }
             // candidateItem to insert.
             if ( !founded )
+            {
                 insertListCandidateReferenceItems.add( candidateItem );
+            }
         }
         return new CompareResult( insertListCandidateReferenceItems, updateListCandidateReferenceItems, duplicateListCandidateReferenceItems );
     }

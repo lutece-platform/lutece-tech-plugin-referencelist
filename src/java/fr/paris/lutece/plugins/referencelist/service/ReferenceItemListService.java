@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2020, City of Paris
+ * Copyright (c) 2002-2021, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -76,8 +76,7 @@ public class ReferenceItemListService
      */
     public List<ReferenceItem> getReferenceItemsList( int idReference )
     {
-        List<ReferenceItem> listReferenceItems = ReferenceItemHome.getReferenceItemsList( idReference );
-        return listReferenceItems;
+        return ReferenceItemHome.getReferenceItemsList( idReference );
     }
 
 }

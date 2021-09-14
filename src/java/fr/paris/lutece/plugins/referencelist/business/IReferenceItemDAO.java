@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2020, City of Paris
+ * Copyright (c) 2002-2021, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -76,11 +76,11 @@ public interface IReferenceItemDAO
      * Deletes the records associated to a Reference
      * 
      * @param nIdReference
-     *           The Reference identifier of the Reference Items to delete
+     *            The Reference identifier of the Reference Items to delete
      * @param plugin
      */
     void deleteAll( int nIdReference, Plugin plugin );
-    
+
     // /////////////////////////////////////////////////////////////////////////
     // Finders
 

@@ -9,30 +9,25 @@
     <@paginationAdmin paginator=paginator combo=1 />
     <div class="clearfix"></div>
     <@table>
-        <tr>
-            <input type="hidden" id="id" name="id"/>
-            <th>#i18n{referencelist.manage_references.columnName}</th>
-            <th>#i18n{referencelist.manage_references.columnDescription}</th>
-            <th>#i18n{portal.util.labelActions}</th>
-        </tr>
+        <@@tr>
+            <@input type="hidden" id="id" name="id"/>
+            <@th>#i18n{referencelist.manage_references.columnName}</@th>
+            <@th>#i18n{referencelist.manage_references.columnDescription}</@th>
+            <@th>#i18n{portal.util.labelActions}</@th>
+        </@@tr>
         <@tableHeadBodySeparator />
         <#list reference_list as reference >
-	     	<tr>
-	     		<input type="hidden" id="id" name="id"/>
-	          	<td>
-	              ${reference.name}
-	          	</td>
-	          	<td>
-	              ${reference.description}
-	          	</td>
-	      		<td>
+	     	<@tr>
+	     		<@input type="hidden" id="id" name="id"/>
+	          	<@td>${reference.name}</@td>
+	          	<@td>${reference.description}</@td>
+	      		<@td>
 					<@aButton href='jsp/admin/plugins/referencelist/ManageReferences.jsp?view=modifyReference&id=${reference.id}' title='#i18n{portal.util.labelModify}' buttonIcon='pencil' />
 		          	<@aButton href='jsp/admin/plugins/referencelist/ManageReferences.jsp?action=confirmRemoveReference&id=${reference.id}' title='#i18n{portal.util.labelDelete}' buttonIcon='trash' color='btn-danger' /> 
 		          	<@aButton href='jsp/admin/plugins/referencelist/ManageReferenceItems.jsp?view=modifyReference&id=${reference.id}' buttonIcon='eye' color='btn-info' title='#i18n{referencelist.manage_reference.referenceitem.title}' />
 		          	<@aButton href='jsp/admin/plugins/referencelist/ManageTranslations.jsp?idReference=${reference.id}' buttonIcon='eye' color='btn-info' title='#i18n{referencelist.manage_reference.translationitem.title}' />
-
-	     		</td>
-   			</tr>
+	     		</@td>
+   			</@tr>
     	</#list>
     </@table>
 

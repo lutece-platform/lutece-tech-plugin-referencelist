@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2020, City of Paris
+ * Copyright (c) 2002-2021, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -63,15 +63,15 @@ public final class ReferenceDAO implements IReferenceDAO
     {
         try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, Statement.RETURN_GENERATED_KEYS, plugin ) )
         {
-	        int nIndex = 1;
-	        daoUtil.setString( nIndex++, reference.getName( ) );
-	        daoUtil.setString( nIndex++, reference.getDescription( ) );
-	
-	        daoUtil.executeUpdate( );
-	        if ( daoUtil.nextGeneratedKey( ) )
-	        {
-	            reference.setId( daoUtil.getGeneratedKeyInt( 1 ) );
-	        }
+            int nIndex = 1;
+            daoUtil.setString( nIndex++, reference.getName( ) );
+            daoUtil.setString( nIndex++, reference.getDescription( ) );
+
+            daoUtil.executeUpdate( );
+            if ( daoUtil.nextGeneratedKey( ) )
+            {
+                reference.setId( daoUtil.getGeneratedKeyInt( 1 ) );
+            }
         }
     }
 
@@ -81,24 +81,24 @@ public final class ReferenceDAO implements IReferenceDAO
     @Override
     public Reference load( int nKey, Plugin plugin )
     {
-    	Reference reference = null;
-    	
-    	try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT, plugin ) )
-    	{
-	        daoUtil.setInt( 1, nKey );
-	        daoUtil.executeQuery( );
-	
-	        if ( daoUtil.next( ) )
-	        {
-	            reference = new Reference( );
-	            int nIndex = 1;
-	
-	            reference.setId( daoUtil.getInt( nIndex++ ) );
-	            reference.setName( daoUtil.getString( nIndex++ ) );
-	            reference.setDescription( daoUtil.getString( nIndex++ ) );
-	        }
-    	}
-      
+        Reference reference = null;
+
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT, plugin ) )
+        {
+            daoUtil.setInt( 1, nKey );
+            daoUtil.executeQuery( );
+
+            if ( daoUtil.next( ) )
+            {
+                reference = new Reference( );
+                int nIndex = 1;
+
+                reference.setId( daoUtil.getInt( nIndex++ ) );
+                reference.setName( daoUtil.getString( nIndex++ ) );
+                reference.setDescription( daoUtil.getString( nIndex++ ) );
+            }
+        }
+
         return reference;
     }
 
@@ -108,21 +108,20 @@ public final class ReferenceDAO implements IReferenceDAO
     @Override
     public int loadByName( String referenceName, Plugin plugin )
     {
-    	int idReference = 0;
-    	
-    	try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_ID, plugin ) )
-    	{
-	        daoUtil.setString( 1, referenceName );
-	        daoUtil.executeQuery( );
-	        
-	
-	        if ( daoUtil.next( ) )
-	        {
-	            int nIndex = 1;
-	            idReference = daoUtil.getInt( nIndex++ );
-	        }
-    	}
-    	
+        int idReference = 0;
+
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_ID, plugin ) )
+        {
+            daoUtil.setString( 1, referenceName );
+            daoUtil.executeQuery( );
+
+            if ( daoUtil.next( ) )
+            {
+                int nIndex = 1;
+                idReference = daoUtil.getInt( nIndex++ );
+            }
+        }
+
         return idReference;
 
     }
@@ -133,12 +132,12 @@ public final class ReferenceDAO implements IReferenceDAO
     @Override
     public void delete( int nKey, Plugin plugin )
     {
-        
-    	try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, plugin ) )
-    	{
-	        daoUtil.setInt( 1, nKey );
-	        daoUtil.executeUpdate( );
-    	}
+
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, plugin ) )
+        {
+            daoUtil.setInt( 1, nKey );
+            daoUtil.executeUpdate( );
+        }
 
     }
 
@@ -148,17 +147,15 @@ public final class ReferenceDAO implements IReferenceDAO
     @Override
     public void store( Reference reference, Plugin plugin )
     {
-    	try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, plugin ) )
-    	{
-	        int nIndex = 1;
-	
-	        // daoUtil.setInt( nIndex++ , reference.getId( ) );
-	        daoUtil.setString( nIndex++, reference.getName( ) );
-	        daoUtil.setString( nIndex++, reference.getDescription( ) );
-	        daoUtil.setInt( nIndex, reference.getId( ) );
-	
-	        daoUtil.executeUpdate( );
-    	}
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, plugin ) )
+        {
+            int nIndex = 1;
+            daoUtil.setString( nIndex++, reference.getName( ) );
+            daoUtil.setString( nIndex++, reference.getDescription( ) );
+            daoUtil.setInt( nIndex, reference.getId( ) );
+
+            daoUtil.executeUpdate( );
+        }
     }
 
     /**
@@ -168,24 +165,24 @@ public final class ReferenceDAO implements IReferenceDAO
     public List<Reference> selectReferencesList( Plugin plugin )
     {
         List<Reference> referenceList = new ArrayList<Reference>( );
-        
+
         try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL, plugin ) )
         {
-        	daoUtil.executeQuery( );
+            daoUtil.executeQuery( );
 
-	        while ( daoUtil.next( ) )
-	        {
-	            Reference reference = new Reference( );
-	            int nIndex = 1;
-	
-	            reference.setId( daoUtil.getInt( nIndex++ ) );
-	            reference.setName( daoUtil.getString( nIndex++ ) );
-	            reference.setDescription( daoUtil.getString( nIndex++ ) );
-	
-	            referenceList.add( reference );
-	        }
+            while ( daoUtil.next( ) )
+            {
+                Reference reference = new Reference( );
+                int nIndex = 1;
+
+                reference.setId( daoUtil.getInt( nIndex++ ) );
+                reference.setName( daoUtil.getString( nIndex++ ) );
+                reference.setDescription( daoUtil.getString( nIndex++ ) );
+
+                referenceList.add( reference );
+            }
         }
-        
+
         return referenceList;
     }
 
@@ -195,18 +192,18 @@ public final class ReferenceDAO implements IReferenceDAO
     @Override
     public List<Integer> selectIdReferencesList( Plugin plugin )
     {
-        List<Integer> referenceList = new ArrayList<Integer>( );
-        
+        List<Integer> referenceList = new ArrayList<>( );
+
         try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL_ID, plugin ) )
         {
-	        daoUtil.executeQuery( );
-	
-	        while ( daoUtil.next( ) )
-	        {
-	            referenceList.add( daoUtil.getInt( 1 ) );
-	        }
+            daoUtil.executeQuery( );
+
+            while ( daoUtil.next( ) )
+            {
+                referenceList.add( daoUtil.getInt( 1 ) );
+            }
         }
-        
+
         return referenceList;
     }
 
@@ -217,17 +214,17 @@ public final class ReferenceDAO implements IReferenceDAO
     public ReferenceList selectReferencesReferenceList( Plugin plugin )
     {
         ReferenceList referenceList = new ReferenceList( );
-        
-        try (  DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL, plugin ) )
+
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL, plugin ) )
         {
-	        daoUtil.executeQuery( );
-	
-	        while ( daoUtil.next( ) )
-	        {
-	            referenceList.addItem( daoUtil.getInt( 1 ), daoUtil.getString( 2 ) );
-	        }
+            daoUtil.executeQuery( );
+
+            while ( daoUtil.next( ) )
+            {
+                referenceList.addItem( daoUtil.getInt( 1 ), daoUtil.getString( 2 ) );
+            }
         }
-        
+
         return referenceList;
     }
 
