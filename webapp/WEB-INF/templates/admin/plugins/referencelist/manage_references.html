@@ -9,12 +9,12 @@
     <@paginationAdmin paginator=paginator combo=1 />
     <div class="clearfix"></div>
     <@table>
-        <@@tr>
+        <@tr>
             <@input type="hidden" id="id" name="id"/>
             <@th>#i18n{referencelist.manage_references.columnName}</@th>
             <@th>#i18n{referencelist.manage_references.columnDescription}</@th>
             <@th>#i18n{portal.util.labelActions}</@th>
-        </@@tr>
+        </@tr>
         <@tableHeadBodySeparator />
         <#list reference_list as reference >
 	     	<@tr>
