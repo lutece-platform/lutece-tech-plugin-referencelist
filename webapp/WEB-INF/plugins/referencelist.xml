@@ -1,12 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<plug-in>
+<?xml version="1.0" encoding="UTF-8"?><plug-in>
     <name>referencelist</name>
     <class>fr.paris.lutece.portal.service.plugin.PluginDefaultImplementation</class>
-    <version>1.0.3-SNAPSHOT</version>
-    <documentation />
-    <installation />
-    <changes />
-    <user-guide />
+    <version>1.1.0</version>
+    <documentation/>
+    <installation/>
+    <changes/>
+    <user-guide/>
     <description>referencelist.plugin.description</description>
     <provider>referencelist.plugin.provider</provider>
     <provider-url>https://fr.lutece.paris.fr/</provider-url>
@@ -16,7 +15,7 @@
 
     <core-version-dependency>
         <min-core-version>4.1.0</min-core-version>
-        <max-core-version />
+        <max-core-version/>
     </core-version-dependency>
 
     <!-- Admin features parameters -->
@@ -27,7 +26,7 @@
             <feature-description>referencelist.adminFeature.ReferenceListManage.description</feature-description>
             <feature-level>0</feature-level>
             <feature-url>jsp/admin/plugins/referencelist/ManageReferences.jsp</feature-url>
-            <feature-icon-url />
+            <feature-icon-url/>
         </admin-feature>
     </admin-features>
 
