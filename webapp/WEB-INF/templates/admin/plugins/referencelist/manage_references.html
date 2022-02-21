@@ -1,13 +1,11 @@
 <@box>
-	<@boxHeader title='#i18n{referencelist.manage_references.title}' boxTools=true>
+	<@boxHeader title='#i18n{referencelist.manage_references.title}' boxTools=true skipHeader=true>
 		<@tform class='form-inline pull-right' name='manage_reference' action='jsp/admin/plugins/referencelist/ManageReferences.jsp'>
 			<@button type='submit' name='view_createReference' buttonIcon='plus' title='#i18n{referencelist.manage_references.buttonAdd}' />
 		</@tform>
 	</@boxHeader>
 	<@boxBody>    
     <@messages infos=infos />
-    <@paginationAdmin paginator=paginator combo=1 />
-    <div class="clearfix"></div>
     <@table>
         <@tr>
             <@input type="hidden" id="id" name="id"/>
@@ -23,15 +21,13 @@
 	          	<@td>${reference.description}</@td>
 	      		<@td>
 					<@aButton href='jsp/admin/plugins/referencelist/ManageReferences.jsp?view=modifyReference&id=${reference.id}' title='#i18n{portal.util.labelModify}' buttonIcon='pencil' />
-		          	<@aButton href='jsp/admin/plugins/referencelist/ManageReferences.jsp?action=confirmRemoveReference&id=${reference.id}' title='#i18n{portal.util.labelDelete}' buttonIcon='trash' color='btn-danger' /> 
-		          	<@aButton href='jsp/admin/plugins/referencelist/ManageReferenceItems.jsp?view=modifyReference&id=${reference.id}' buttonIcon='eye' color='btn-info' title='#i18n{referencelist.manage_reference.referenceitem.title}' />
-		          	<@aButton href='jsp/admin/plugins/referencelist/ManageTranslations.jsp?idReference=${reference.id}' buttonIcon='eye' color='btn-info' title='#i18n{referencelist.manage_reference.translationitem.title}' />
+		          	<@aButton href='jsp/admin/plugins/referencelist/ManageReferences.jsp?action=confirmRemoveReference&id=${reference.id}' title='#i18n{portal.util.labelDelete}' buttonIcon='trash' color='danger' /> 
+		          	<@aButton href='jsp/admin/plugins/referencelist/ManageReferenceItems.jsp?view=modifyReference&id=${reference.id}' buttonIcon='list-ul' color='info' title='#i18n{referencelist.manage_reference.referenceitem.title}' />
+		          	<@aButton href='jsp/admin/plugins/referencelist/ManageTranslations.jsp?idReference=${reference.id}' buttonIcon='language' color='info' title='#i18n{referencelist.manage_reference.translationitem.title}' />
 	     		</@td>
    			</@tr>
     	</#list>
     </@table>
-
-    <@paginationAdmin paginator=paginator />
-
+    <@paginationAdmin paginator=paginator combo=1 />
   </@boxBody>
 </@box>

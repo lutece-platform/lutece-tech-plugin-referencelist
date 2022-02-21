@@ -2,26 +2,21 @@
 	<@boxHeader title='#i18n{referencelist.import_referenceitems.title}' />
 	<@boxBody>
 		<#if import_error_base64?has_content>
-			<div class="alert alert-danger alert-dismissible" role="alert">
-				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-						aria-hidden="true">&times;</span></button>
-				#i18n{referencelist.info.referenceitem.fileErrors}
-				<a download='log.txt'
-					href='data:text/plain;base64,${import_error_base64}'><strong>#i18n{referencelist.info.referenceitem.import.download}</strong></a>
-			</div>
+			<@alert class='danger' title='#i18n{referencelist.info.referenceitem.fileErrors}' dismissible=true >
+				<@aButton href='data:text/plain;base64,${import_error_base64}' color='danger' title='#i18n{referencelist.info.referenceitem.import.download}' params=' download="log.txt"'  />
+			</@alert>
 		</#if>
-
-
-		<@tform name='import_referenceitem' params='enctype="multipart/form-data"'
-			action='jsp/admin/plugins/referencelist/ManageReferenceItems.jsp'>
-
+		<@tform name='import_referenceitem' params='enctype="multipart/form-data"' action='jsp/admin/plugins/referencelist/ManageReferenceItems.jsp'>
 			<@messages errors=errors />
 			<@input type="hidden" id="id" name="id" />
 			<@formGroup labelKey='#i18n{referencelist.import_referenceitems.labelFile}'
 				helpKey='#i18n{referencelist.import_referenceitems.labelFile.help}' mandatory=true>
 				<@input type='file' name='file' />
 			</@formGroup>
-			<@actionButtons button1Name="action_importReferenceItem" url2="jsp/admin/plugins/referencelist/ManageReferenceItems.jsp?id=${referenceitem.idreference}"/>			
+			<@formGroup>
+				<@button type='submit' name='action_importReferenceItem' title='#i18n{portal.util.labelOk}' buttonIcon='check' />
+				<@aButton color='default' href='jsp/admin/plugins/referencelist/ManageReferenceItems.jsp?id=${referenceitem.idreference}' title='#i18n{portal.util.labelBack}' buttonIcon='times' />	
+			</@formGroup>
 		</@tform>
 	</@boxBody>
 </@box>

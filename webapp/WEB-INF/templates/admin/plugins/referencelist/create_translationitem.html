@@ -12,7 +12,10 @@
 			<@formGroup labelKey="#i18n{referencelist.translationitem.labelTranslation}" mandatory=true>
 				<@input type="text" name="translation" value="" />
 			</@formGroup>
-			<@actionButtons button1Name="action_create" url2="jsp/admin/plugins/referencelist/ManageTranslations.jsp"/>
+			<@formGroup>
+				<@buttons name='action_create' title='#i18n{portal.util.labelOk}' buttonIcon='check' />
+				<@aButton href='jsp/admin/plugins/referencelist/ManageTranslations.jsp' color='default' title='#i18n{portal.util.labelBack}' buttonIcon='times' />
+			</@formGroup>
     	</@tform>
 	</@boxBody>
 </@box>

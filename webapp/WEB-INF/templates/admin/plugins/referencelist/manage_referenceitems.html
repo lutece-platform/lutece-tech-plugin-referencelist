@@ -1,5 +1,5 @@
 <@box>
-	<@boxHeader boxTools=true title="#i18n{referencelist.manage_referenceitems.title}">
+	<@boxHeader boxTools=true skipHeader=true title='#i18n{referencelist.manage_referenceitems.title}'>
         <@tform class='form-inline pull-right' name='manage_referenceitem' action='jsp/admin/plugins/referencelist/ManageReferenceItems.jsp'>
         	<@button type='submit' name='view_createReferenceItem' buttonIcon='plus' title='#i18n{referencelist.manage_referenceitems.buttonAdd}' />
         	<@button type='submit' name='view_importReferenceItem' buttonIcon='plus' title='#i18n{referencelist.manage_referenceitems.importAdd}' />
@@ -8,8 +8,6 @@
 	</@boxHeader>
 	<@boxBody>    
     <@messages infos=infos />
-    <@paginationAdmin paginator=paginator combo=1 />
-    <div class="clearfix"></div>
     <@table>
         <@tr>
             <@input type="hidden" id="id" name="id"/>
@@ -27,11 +25,11 @@
 		            <@td>${referenceitem.idreference}</@td>
 			        <@td>
 						<@aButton href='jsp/admin/plugins/referencelist/ManageReferenceItems.jsp?view=modifyReferenceItem&id=${referenceitem.id}' title='#i18n{portal.util.labelModify}' buttonIcon='pencil' />		
-						<@aButton href='jsp/admin/plugins/referencelist/ManageReferenceItems.jsp?action=confirmRemoveReferenceItem&id=${referenceitem.id}' title='#i18n{portal.util.labelDelete}' buttonIcon='trash' color='btn-danger' />
+						<@aButton href='jsp/admin/plugins/referencelist/ManageReferenceItems.jsp?action=confirmRemoveReferenceItem&id=${referenceitem.id}' title='#i18n{portal.util.labelDelete}' buttonIcon='trash' color='danger' />
 			        </@td>
 		        </@tr>
 	        </#list>
 	    </@table>
-    <@paginationAdmin paginator=paginator />
-  </@boxBody>
+		<@paginationAdmin paginator=paginator combo=1 />
+  	</@boxBody>
 </@box>
