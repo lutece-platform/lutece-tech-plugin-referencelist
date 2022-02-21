@@ -12,7 +12,7 @@
 				<@input type='text' name='name' value='${referenceitem.name!\'\'}' />
 			</@formGroup>
 			<@formGroup>
-				<@buttons name='action_createReferenceItem' title='#i18n{portal.util.labelOk}' buttonIcon='check' />
+				<@button type='submit' name='action_createReferenceItem' title='#i18n{portal.util.labelOk}' buttonIcon='check' />
 				<@aButton href='jsp/admin/plugins/referencelist/ManageReferenceItems.jsp?id=${referenceitem.idreference}' color='default' title='#i18n{portal.util.labelBack}' buttonIcon='times' />
 			</@formGroup>			
 		</@tform>
