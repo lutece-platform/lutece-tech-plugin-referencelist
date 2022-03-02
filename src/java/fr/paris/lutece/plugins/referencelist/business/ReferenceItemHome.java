@@ -143,13 +143,13 @@ public final class ReferenceItemHome
      * 
      * @param nIdReference
      *            The reference id
-     * @param Itemname
+     * @param strItemname
      *            The Itemname of candidateItem
      * @return an instance of ReferenceItem
      */
-    public static ReferenceItem findByReferenceName( int nIdReference, String Itemname )
+    public static ReferenceItem findByReferenceName( int nIdReference, String strItemname )
     {
-        return _dao.loadReferenceItemByName( nIdReference, Itemname, _plugin );
+        return _dao.loadReferenceItemByName( nIdReference, strItemname, _plugin );
 
     }
 
@@ -160,7 +160,7 @@ public final class ReferenceItemHome
         List<ReferenceItem> currentListCandidateItems = candidateItems;
         List<ReferenceItem> currentListReferenceItems = ReferenceItemHome.getReferenceItemsList( refId );
 
-        // lists to return;
+        // lists to return
         List<ReferenceItem> updateListCandidateReferenceItems = new ArrayList<>( );
         List<ReferenceItem> duplicateListCandidateReferenceItems = new ArrayList<>( );
         List<ReferenceItem> insertListCandidateReferenceItems = new ArrayList<>( );
@@ -173,11 +173,11 @@ public final class ReferenceItemHome
             {
                 for ( ReferenceItem referenceItem : currentListReferenceItems )
                 {
-                    // compare names;
+                    // compare names
                     if ( candidateItem.getItemName( ).equals( referenceItem.getItemName( ) ) )
                     {
                         founded = true;
-                        // compare values;
+                        // compare values
                         if ( candidateItem.getItemValue( ).equals( referenceItem.getItemValue( ) ) )
                         {
                             // duplicate candidateItem.

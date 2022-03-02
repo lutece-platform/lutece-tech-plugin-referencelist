@@ -59,12 +59,8 @@ public class ReferenceImportTest extends LuteceTestCase {
         private static final String FILE6 = "";
 
         private static final String NAME1 = "Name1";
-        private static final String NAME2 = "Name2";
         private static final String DESCRIPTION1 = "Description1";
-        private static final String DESCRIPTION2 = "Description2";
 
-        private static final long MAX_SIZE = 10000000;
-        private static final long MIN_SIZE = 8;
         private static final long SIZE = 100;
 
         // insert
@@ -105,7 +101,6 @@ public class ReferenceImportTest extends LuteceTestCase {
 
                 // Create Reference for next steps.
                 ReferenceHome.create(reference);
-                Reference referenceStored = ReferenceHome.findByPrimaryKey(reference.getId());
                 // Id
                 int referenceStoredId = reference.getId();
 
@@ -148,12 +143,12 @@ public class ReferenceImportTest extends LuteceTestCase {
                 List<ReferenceItem> testListInsert = ReferenceItemPrepareImport.findCandidateItems(
                                 new ByteArrayInputStream(CSVInsert.getBytes(StandardCharsets.UTF_8)),
                                 referenceStoredId);
-                assertTrue(testListInsert.size() == 1);
+                assertEquals(testListInsert.size( ), 1);
 
                 List<ReferenceItem> testListDuplicate = ReferenceItemPrepareImport.findCandidateItems(
                                 new ByteArrayInputStream(CSVDuplicateInFile.getBytes(StandardCharsets.UTF_8)),
                                 referenceStoredId);
-                assertTrue(testListDuplicate.size() == 1);
+                assertEquals(testListDuplicate.size( ), 1);
 
                 /**
                  * test compareReferenceItems
@@ -165,7 +160,7 @@ public class ReferenceImportTest extends LuteceTestCase {
                                 referenceStoredId);
                 List<ReferenceItem> insertReferenceItems = compareReferenceItems
                                 .get_insertListCandidateReferenceItems();
-                assertTrue(insertReferenceItems.size() == 1);
+                assertEquals(insertReferenceItems.size( ), 1);
 
                 // do insert import;
                 boolean InsertImport = ReferenceImport.doImportCSV(compareReferenceItems, referenceStoredId, adminUser);
@@ -179,7 +174,7 @@ public class ReferenceImportTest extends LuteceTestCase {
                                 referenceStoredId);
                 List<ReferenceItem> updateReferenceItems = compareReferenceItems1
                                 .get_updateListCandidateReferenceItems();
-                assertTrue(updateReferenceItems.size() == 1);
+                assertEquals(updateReferenceItems.size( ), 1);
 
                 // do update import;
                 boolean UpdateImport = ReferenceImport.doImportCSV(compareReferenceItems1, referenceStoredId,

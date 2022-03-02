@@ -36,7 +36,7 @@ package fr.paris.lutece.plugins.referencelist.service;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -45,8 +45,6 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.StringUtils;
 
 import fr.paris.lutece.plugins.referencelist.business.ReferenceItem;
-import fr.paris.lutece.portal.service.message.AdminMessageService;
-import fr.paris.lutece.portal.service.util.AppLogService;
 
 public class ReferenceItemPrepareImport
 {
@@ -69,11 +67,11 @@ public class ReferenceItemPrepareImport
      * 
      * @param strFileName
      *            The filename
-     * @param FileSize
+     * @param lFileSize
      *            The size of file
      * @return false if FileName || FileExtention || FileSize doesnt match to constraints.
      */
-    public static boolean isImportableCSVFile( String strFileName, long FileSize )
+    public static boolean isImportableCSVFile( String strFileName, long lFileSize )
     {
 
         String strFileExtention;
@@ -88,20 +86,14 @@ public class ReferenceItemPrepareImport
             return false;
         }
         // Check File Extention
-        if ( !strFileExtention.toLowerCase( ).equals( CONSTANT_FILE_EXTENTION ) )
+        if ( !strFileExtention.equalsIgnoreCase( CONSTANT_FILE_EXTENTION ) )
         {
             return false;
         }
 
         // Check Empty File
-        if ( FileSize < 6 )
-        {
-            return false;
-        }
-
-        // Ready for Import;
-        return true;
-    };
+        return lFileSize > 6;
+    }
 
     /**
      * Check if CSV file contains errors
@@ -114,12 +106,12 @@ public class ReferenceItemPrepareImport
     {
         StringBuilder errorsMessages = new StringBuilder( );
         List<ReferenceItem> list = new ArrayList<>( );
-        Reader _reader;
-        _reader = new InputStreamReader( fileInputStream );
-        if ( _reader != null )
+        Reader reader;
+        reader = new InputStreamReader( fileInputStream );
+        if ( reader != null )
         {
             int i = 0;
-            Scanner scanner = new Scanner( _reader );
+            Scanner scanner = new Scanner( reader );
             scanner.nextLine( );
             while ( scanner.hasNextLine( ) )
             {
@@ -173,30 +165,23 @@ public class ReferenceItemPrepareImport
     public static List<ReferenceItem> findCandidateItems( InputStream fileInputStream, int refId )
     {
         List<ReferenceItem> list = new ArrayList<>( );
-
-        List<Object> result = new ArrayList<>( );
-        Reader _reader;
-        _reader = new InputStreamReader( fileInputStream );
-        if ( _reader != null )
+        Reader reader;
+        reader = new InputStreamReader( fileInputStream );
+        if ( reader != null )
         {
-            int i = 0;
-            Scanner scanner = new Scanner( _reader );
+            Scanner scanner = new Scanner( reader );
             scanner.nextLine( );
             while ( scanner.hasNextLine( ) )
             {
-                i++;
                 String strLine = scanner.nextLine( );
                 String [ ] strFields = strLine.split( CONSTANT_SEPARATOR );
-                if ( strFields.length == CONSTANT_FILE_NUMOFCOLS )
+                if ( strFields.length == CONSTANT_FILE_NUMOFCOLS && !isDuplicateName( list, strFields [0] ))
                 {
-                    if ( !isDuplicateName( list, strFields [0] ) )
-                    {
-                        ReferenceItem referenceItem = new ReferenceItem( );
-                        referenceItem.setItemName( strFields [0] );
-                        referenceItem.setItemValue( strFields [1] );
-                        referenceItem.setIdreference( refId );
-                        list.add( referenceItem );
-                    }
+                    ReferenceItem referenceItem = new ReferenceItem( );
+                    referenceItem.setItemName( strFields [0] );
+                    referenceItem.setItemValue( strFields [1] );
+                    referenceItem.setIdreference( refId );
+                    list.add( referenceItem );
                 }
             }
             scanner.close( );
@@ -211,7 +196,7 @@ public class ReferenceItemPrepareImport
 
         for ( ReferenceItem referenceItem : list )
         {
-            // compare names;
+            // compare names
             if ( candidateItemName.equals( referenceItem.getItemName( ) ) )
             {
                 checker = true;
@@ -237,15 +222,7 @@ public class ReferenceItemPrepareImport
     private static String getHtmlLinkBase64Src( String strFileMessage )
     {
         byte [ ] encodedBytes = Base64.encodeBase64( strFileMessage.getBytes( ) );
-        try
-        {
-            return new String( encodedBytes, "UTF-8" );
-        }
-        catch( UnsupportedEncodingException e )
-        {
-            AppLogService.error( "Unable to convert byte to string for logfile errors" );
-            return null;
-        }
+        return new String( encodedBytes, StandardCharsets.UTF_8 );
     }
 
 }

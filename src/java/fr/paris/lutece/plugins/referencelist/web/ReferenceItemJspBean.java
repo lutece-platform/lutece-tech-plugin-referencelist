@@ -113,17 +113,15 @@ public class ReferenceItemJspBean extends AbstractReferenceListManageJspBean
     private static final String INFO_REFERENCEITEM_IMPORTED = "referencelist.info.referenceitem.imported";
     private static final String INFO_REFERENCEITEM_NOTIMPORTED = "referencelist.info.referenceitem.notImported";
     private static final String INFO_REFERENCEITEM_FILE_ERROR = "referencelist.info.referenceitem.fileError";
-    private static final String INFO_REFERENCEITEM_FILE_ERRORS = "referencelist.info.referenceitem.fileErrors";
     private static final String INFO_REFERENCEITEM_IMPORT_EMPTY = "referencelist.info.referenceitem.import.empty";
     private static final String INFO_REFERENCEITEM_IMPORT_REFUSED = "referencelist.info.referenceitem.import.refused";
 
     // Session variable to store working values
     private ReferenceItem _referenceitem;
-    private int IdReference;
+    private int _IdReference;
     private static final String PARAMETER_ID_REFERENCE = "id";
-    InputStream csvInputStream;
-    // private String importResult;
-    CompareResult compareResult;
+    InputStream _csvInputStream;
+    CompareResult _compareResult;
 
     /**
      * Build the Manage View
@@ -136,11 +134,11 @@ public class ReferenceItemJspBean extends AbstractReferenceListManageJspBean
     public String getManageReferenceItems( HttpServletRequest request )
     {
         _referenceitem = null;
-        IdReference = Integer.parseInt( request.getParameter( PARAMETER_ID_REFERENCE ) );
+        _IdReference = Integer.parseInt( request.getParameter( PARAMETER_ID_REFERENCE ) );
 
-        List<ReferenceItem> listReferenceItems = ReferenceItemHome.getReferenceItemsList( IdReference );
+        List<ReferenceItem> listReferenceItems = ReferenceItemHome.getReferenceItemsList( _IdReference );
         Map<String, Object> model = getPaginatedListModel( request, MARK_REFERENCEITEM_LIST, listReferenceItems, JSP_MANAGE_REFERENCEITEMS + "?id="
-                + IdReference );
+                + _IdReference );
 
         return getPage( PROPERTY_PAGE_TITLE_MANAGE_REFERENCEITEMS, TEMPLATE_MANAGE_REFERENCEITEMS, model );
     }
@@ -155,8 +153,6 @@ public class ReferenceItemJspBean extends AbstractReferenceListManageJspBean
     @View( VIEW_IMPORT_REFERENCEITEM )
     public String getImportReferenceItem( HttpServletRequest request )
     {
-        // makeitbetter dada = new makeitbetter();
-        // dada.testBusiness();
         return getPage( "PROPERTY_PAGE_TITLE_IMPORT_REFERENCEITEM", TEMPLATE_IMPORT_REFERENCEITEM );
     }
 
@@ -174,7 +170,7 @@ public class ReferenceItemJspBean extends AbstractReferenceListManageJspBean
 
         List<ReferenceItem> candidateItems = new ArrayList<>( );
 
-        int refId = IdReference;
+        int refId = _IdReference;
         if ( request instanceof MultipartHttpServletRequest )
         {
             // Check File
@@ -199,7 +195,7 @@ public class ReferenceItemJspBean extends AbstractReferenceListManageJspBean
         }
 
         // Check if there is candidateitems to import
-        if ( candidateItems.size( ) == 0 )
+        if ( candidateItems.isEmpty( ) )
         {
             addError( INFO_REFERENCEITEM_IMPORT_EMPTY, getLocale( ) );
             return redirectView( request, VIEW_IMPORT_REFERENCEITEM );
@@ -209,10 +205,10 @@ public class ReferenceItemJspBean extends AbstractReferenceListManageJspBean
         {
 
             // call confirmation
-            compareResult = ReferenceItemHome.compareReferenceItems( candidateItems, refId );
-            String tmpmsg = CompareResult.createMessage( compareResult );
+            _compareResult = ReferenceItemHome.compareReferenceItems( candidateItems, refId );
+            String tmpmsg = CompareResult.createMessage( _compareResult );
 
-            if ( compareResult.get_insertListCandidateReferenceItems( ).size( ) == 0 && compareResult.get_updateListCandidateReferenceItems( ).size( ) == 0 )
+            if ( _compareResult.get_insertListCandidateReferenceItems( ).isEmpty( ) && _compareResult.get_updateListCandidateReferenceItems( ).isEmpty( ) )
             {
                 addError( I18nService.getLocalizedString( INFO_REFERENCEITEM_NOTIMPORTED, getLocale( ) ) + tmpmsg );
                 return redirectView( request, VIEW_IMPORT_REFERENCEITEM );
@@ -234,13 +230,13 @@ public class ReferenceItemJspBean extends AbstractReferenceListManageJspBean
     public String getConfirmImportReferenceItem( HttpServletRequest request )
     {
 
-        String tmpmsg = CompareResult.createMessage( compareResult );
+        String tmpmsg = CompareResult.createMessage( _compareResult );
         Object [ ] messageArgs = {
             tmpmsg
         };
 
         UrlItem url = new UrlItem( getActionUrl( ACTION_DO_IMPORT_REFERENCEITEM ) );
-        url.addParameter( PARAMETER_ID_REFERENCEITEM, IdReference );
+        url.addParameter( PARAMETER_ID_REFERENCEITEM, _IdReference );
 
         String strMessageUrl = AdminMessageService.getMessageUrl( request, MESSAGE_CONFIRM_IMPORT_REFERENCEITEM, messageArgs, url.getUrl( ),
                 AdminMessage.TYPE_CONFIRMATION );
@@ -260,7 +256,7 @@ public class ReferenceItemJspBean extends AbstractReferenceListManageJspBean
     public String doImportReferenceItem( HttpServletRequest request )
     {
 
-        boolean doImportCSV = ReferenceImport.doImportCSV( compareResult, IdReference, getUser( ) );
+        boolean doImportCSV = ReferenceImport.doImportCSV( _compareResult, _IdReference, getUser( ) );
 
         if ( !doImportCSV )
         {
@@ -273,7 +269,7 @@ public class ReferenceItemJspBean extends AbstractReferenceListManageJspBean
         {
             // import success
             addInfo( INFO_REFERENCEITEM_IMPORTED, getLocale( ) );
-            return redirect( request, VIEW_MANAGE_REFERENCEITEMS, PARAMETER_ID_REFERENCE, IdReference );
+            return redirect( request, VIEW_MANAGE_REFERENCEITEMS, PARAMETER_ID_REFERENCE, _IdReference );
         }
 
     }
@@ -290,7 +286,7 @@ public class ReferenceItemJspBean extends AbstractReferenceListManageJspBean
     {
 
         _referenceitem = ( _referenceitem != null ) ? _referenceitem : new ReferenceItem( );
-        _referenceitem.setIdreference( IdReference );
+        _referenceitem.setIdreference( _IdReference );
         Map<String, Object> model = getModel( );
         model.put( MARK_REFERENCEITEM, _referenceitem );
         return getPage( PROPERTY_PAGE_TITLE_CREATE_REFERENCEITEM, TEMPLATE_CREATE_REFERENCEITEM, model );
@@ -307,7 +303,7 @@ public class ReferenceItemJspBean extends AbstractReferenceListManageJspBean
     public String doCreateReferenceItem( HttpServletRequest request )
     {
         populate( _referenceitem, request, request.getLocale( ) );
-        IdReference = _referenceitem.getIdreference( );
+        _IdReference = _referenceitem.getIdreference( );
         // Check constraints
         if ( !validateBean( _referenceitem, VALIDATION_ATTRIBUTES_PREFIX ) )
         {
@@ -317,8 +313,7 @@ public class ReferenceItemJspBean extends AbstractReferenceListManageJspBean
         ReferenceItemHome.create( _referenceitem );
         addInfo( INFO_REFERENCEITEM_CREATED, getLocale( ) );
 
-        return redirect( request, VIEW_MANAGE_REFERENCEITEMS, PARAMETER_ID_REFERENCE, IdReference );
-        // return redirectView( request, VIEW_MANAGE_REFERENCEITEMS );
+        return redirect( request, VIEW_MANAGE_REFERENCEITEMS, PARAMETER_ID_REFERENCE, _IdReference );
     }
 
     /**
@@ -355,8 +350,7 @@ public class ReferenceItemJspBean extends AbstractReferenceListManageJspBean
         ReferenceItemHome.remove( nId );
         addInfo( INFO_REFERENCEITEM_REMOVED, getLocale( ) );
 
-        return redirect( request, VIEW_MANAGE_REFERENCEITEMS, PARAMETER_ID_REFERENCE, IdReference );
-        // return redirectView( request, VIEW_MANAGE_REFERENCEITEMS );
+        return redirect( request, VIEW_MANAGE_REFERENCEITEMS, PARAMETER_ID_REFERENCE, _IdReference );
     }
 
     /**
@@ -393,7 +387,7 @@ public class ReferenceItemJspBean extends AbstractReferenceListManageJspBean
     public String doModifyReferenceItem( HttpServletRequest request )
     {
         populate( _referenceitem, request, request.getLocale( ) );
-        IdReference = _referenceitem.getIdreference( );
+        _IdReference = _referenceitem.getIdreference( );
         // Check constraints
         if ( !validateBean( _referenceitem, VALIDATION_ATTRIBUTES_PREFIX ) )
         {
@@ -402,7 +396,6 @@ public class ReferenceItemJspBean extends AbstractReferenceListManageJspBean
 
         ReferenceItemHome.update( _referenceitem );
         addInfo( INFO_REFERENCEITEM_UPDATED, getLocale( ) );
-        return redirect( request, VIEW_MANAGE_REFERENCEITEMS, PARAMETER_ID_REFERENCE, IdReference );
-        // return redirectView( request, VIEW_MANAGE_REFERENCEITEMS );
+        return redirect( request, VIEW_MANAGE_REFERENCEITEMS, PARAMETER_ID_REFERENCE, _IdReference );
     }
 }
