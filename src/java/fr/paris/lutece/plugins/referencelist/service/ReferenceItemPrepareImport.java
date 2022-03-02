@@ -42,7 +42,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import fr.paris.lutece.plugins.referencelist.business.ReferenceItem;
 import fr.paris.lutece.portal.service.message.AdminMessageService;
