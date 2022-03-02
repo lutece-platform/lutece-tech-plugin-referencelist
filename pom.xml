@@ -3,12 +3,12 @@
     <parent>
         <artifactId>lutece-global-pom</artifactId>
         <groupId>fr.paris.lutece.tools</groupId>
-        <version>4.0.5</version>
+        <version>5.2.1</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>fr.paris.lutece.plugins</groupId>
-        <artifactId>plugin-referencelist</artifactId>
+    <artifactId>plugin-referencelist</artifactId>
     <packaging>lutece-plugin</packaging>
     <version>1.0.2-SNAPSHOT</version>
 
@@ -38,7 +38,7 @@
         <dependency>
             <groupId>fr.paris.lutece</groupId>
             <artifactId>lutece-core</artifactId>
-            <version>[4.9.9,)</version>
+            <version>[7.0.4,)</version>
             <type>lutece-core</type>
         </dependency>
     </dependencies>
