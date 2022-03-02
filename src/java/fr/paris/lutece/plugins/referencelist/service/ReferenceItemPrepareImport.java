@@ -91,13 +91,8 @@ public class ReferenceItemPrepareImport
         }
 
         // Check Empty File
-        if ( fileSize < 6 )
-        {
-            return false;
-        }
+        return fileSize > 6;
 
-        // Ready for Import
-        return true;
     }
 
     /**
