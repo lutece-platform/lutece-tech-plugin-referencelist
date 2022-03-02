@@ -141,11 +141,11 @@ public class ReferenceImportTest extends LuteceTestCase
          */
         List<ReferenceItem> testListInsert = ReferenceItemPrepareImport
                 .findCandidateItems( new ByteArrayInputStream( CSVInsert.getBytes( StandardCharsets.UTF_8 ) ), referenceStoredId );
-        assertTrue( testListInsert.size( ) == 1 );
+        assertEquals( testListInsert.size( ), 1 );
 
         List<ReferenceItem> testListDuplicate = ReferenceItemPrepareImport
                 .findCandidateItems( new ByteArrayInputStream( CSVDuplicateInFile.getBytes( StandardCharsets.UTF_8 ) ), referenceStoredId );
-        assertTrue( testListDuplicate.size( ) == 1 );
+        assertEquals( testListDuplicate.size( ), 1 );
 
         /**
          * test compareReferenceItems
@@ -155,7 +155,7 @@ public class ReferenceImportTest extends LuteceTestCase
         // insert
         CompareResult compareReferenceItems = ReferenceItemHome.compareReferenceItems( testListInsert, referenceStoredId );
         List<ReferenceItem> insertReferenceItems = compareReferenceItems.getInsertListCandidateReferenceItems( );
-        assertTrue( insertReferenceItems.size( ) == 1 );
+        assertEquals( insertReferenceItems.size( ), 1 );
 
         // do insert import;
         boolean InsertImport = ReferenceImport.doImportCSV( compareReferenceItems, referenceStoredId, adminUser );
@@ -166,7 +166,7 @@ public class ReferenceImportTest extends LuteceTestCase
                 .findCandidateItems( new ByteArrayInputStream( CSVUpdate.getBytes( StandardCharsets.UTF_8 ) ), referenceStoredId );
         CompareResult compareReferenceItems1 = ReferenceItemHome.compareReferenceItems( testListUpdate, referenceStoredId );
         List<ReferenceItem> updateReferenceItems = compareReferenceItems1.getUpdateListCandidateReferenceItems( );
-        assertTrue( updateReferenceItems.size( ) == 1 );
+        assertEquals( updateReferenceItems.size( ), 1 );
 
         // do update import;
         boolean UpdateImport = ReferenceImport.doImportCSV( compareReferenceItems1, referenceStoredId, adminUser );
