@@ -112,8 +112,7 @@ public class ReferenceItemPrepareImport
      */
     public static String isErrorInCSVFile( InputStream fileInputStream )
     {
-        String errorsMessages = "";
-        int errorsCount = 0;
+        StringBuilder errorsMessages = new StringBuilder( );
         List<ReferenceItem> list = new ArrayList<>( );
         Reader _reader;
         _reader = new InputStreamReader( fileInputStream );
@@ -131,8 +130,7 @@ public class ReferenceItemPrepareImport
                 {
                     if ( isDuplicateName( list, strFields [0] ) )
                     {
-                        errorsMessages += CONSTANT_ERROR_INVALID_DUPLICATE + i + "\r\n";
-                        errorsCount++;
+                        errorsMessages.append( CONSTANT_ERROR_INVALID_DUPLICATE ).append( i ).append( "\r\n" );
                     }
                     else
                     {
@@ -142,12 +140,10 @@ public class ReferenceItemPrepareImport
                         referenceItem.setIdreference( 1 );
                         list.add( referenceItem );
                     }
-
                 }
                 else
                 {
-                    errorsMessages += CONSTANT_ERROR_INVALID_RECORD + i + " : " + CONSTANT_ERROR_INVALID_NUMOFCOLS + " (=" + strFields.length + ")  \r\n";
-                    errorsCount++;
+                    errorsMessages.append( CONSTANT_ERROR_INVALID_RECORD ).append( i ).append( ":" ).append( CONSTANT_ERROR_INVALID_NUMOFCOLS ).append( " (=" ).append( strFields.length ).append( ")  \r\n" );
                 }
 
             }
@@ -156,7 +152,7 @@ public class ReferenceItemPrepareImport
 
         if ( errorsMessages.length( ) > 0 )
         {
-            return getHtmlLinkBase64Src( errorsMessages );
+            return getHtmlLinkBase64Src( errorsMessages.toString( ) );
         }
         else
         {
