@@ -116,6 +116,13 @@ public interface IReferenceItemDAO
      * @return The list which contains the data of all the referenceItem objects
      */
     List<ReferenceItem> selectReferenceItemsList( int nIdReference, Plugin plugin );
+   
+    /**
+     * Load the data of all the referenceItem objects and returns them as a list
+     * @param plugin the plugin
+     * @return The list which contains the data of all the referenceItem objects
+     */
+    List<ReferenceItem> selectAllReferenceItems( Plugin plugin );
 
     /**
      * Load the translated referenceItem objects and returns them as a list

@@ -39,7 +39,9 @@ import fr.paris.lutece.util.sql.DAOUtil;
 import java.sql.Statement;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * This class provides Data Access methods for ReferenceItem objects
@@ -262,6 +264,33 @@ public final class ReferenceItemDAO implements IReferenceItemDAO
             }
         }
 
+        return referenceItemList;
+    }
+    /**
+     * {@inheritDoc }
+     */
+    @Override
+    public List<ReferenceItem> selectAllReferenceItems( Plugin plugin )
+    {
+        List<ReferenceItem> referenceItemList = new ArrayList<>( );
+
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL, plugin ) )
+        {
+            daoUtil.executeQuery( );
+
+            while ( daoUtil.next( ) )
+            {
+                ReferenceItem referenceItem = new ReferenceItem( );
+                int nIndex = 1;
+                referenceItem.setId( daoUtil.getInt( nIndex++ ) );
+                referenceItem.setName( daoUtil.getString( nIndex++ ) );
+                referenceItem.setCode( daoUtil.getString( nIndex++ ) );
+                referenceItem.setIdreference( daoUtil.getInt( nIndex++ ) );
+
+                referenceItemList.add( referenceItem );
+            }
+        }
+        
         return referenceItemList;
     }
 

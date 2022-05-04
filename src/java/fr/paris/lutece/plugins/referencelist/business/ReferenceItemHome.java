@@ -125,6 +125,14 @@ public final class ReferenceItemHome
     {
         return _dao.selectReferenceItemsList( nIdReference, _plugin );
     }
+    /**
+     * Load the data of all the referenceItem objects and returns them as a list
+     * @return The list which contains the data of all the referenceItem objects
+     */
+    public static List<ReferenceItem> getAllReferenceItems(  )
+    {
+    	 return _dao.selectAllReferenceItems( _plugin );
+    }
 
     /**
      * Load the data of all the referenceItem objects and returns them as a list

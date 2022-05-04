@@ -78,5 +78,14 @@ public class ReferenceItemListService
     {
         return ReferenceItemHome.getReferenceItemsList( idReference );
     }
+    /**
+     * Returns the list of all ReferenceItems
+     * 
+     * @return the list of all ReferenceItems
+     */
+    public List<ReferenceItem> getAllReferenceItems( )
+    {
+        return ReferenceItemHome.getAllReferenceItems(  );
+    }
 
 }
