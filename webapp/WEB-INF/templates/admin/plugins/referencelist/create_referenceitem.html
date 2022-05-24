@@ -3,8 +3,8 @@
 	<@boxBody>
 		<@tform name='create_referenceitem' action='jsp/admin/plugins/referencelist/ManageReferenceItems.jsp'>
 			<@messages errors=errors />
-			<@input type="hidden" id="id" name="id"/>
-			<@input type='hidden' name='idreference' value='${referenceitem.idreference}'/>
+			<@input type='hidden' id='id' name='id' />
+			<@input type='hidden' name='idreference' value='${referenceitem.idreference}' />
 			<@formGroup labelKey='#i18n{referencelist.create_referenceitem.labelCode}' helpKey='#i18n{referencelist.create_referenceitem.labelCode.help}' mandatory=true>
 				<@input type='text' name='code' value='${referenceitem.code!\'\'}' />
 			</@formGroup>
@@ -12,7 +12,7 @@
 				<@input type='text' name='name' value='${referenceitem.name!\'\'}' />
 			</@formGroup>
 			<@formGroup>
-				<@button type='submit' name='action_createReferenceItem' title='#i18n{portal.util.labelOk}' buttonIcon='check' />
+				<@button type='submit' name='action_createReferenceItem' title='#i18n{portal.util.labelOk}' buttonIcon='save' />
 				<@aButton href='jsp/admin/plugins/referencelist/ManageReferenceItems.jsp?id=${referenceitem.idreference}' color='default' title='#i18n{portal.util.labelBack}' buttonIcon='times' />
 			</@formGroup>			
 		</@tform>

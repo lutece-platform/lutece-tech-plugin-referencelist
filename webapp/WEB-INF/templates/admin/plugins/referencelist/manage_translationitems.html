@@ -1,7 +1,7 @@
 <@box>
-	<@boxHeader boxTools=true title="#i18n{referencelist.translationitem.manage.title}" skipHeader=true>
-		<@tform class="form-inline pull-right" name="manage_reference" action="jsp/admin/plugins/referencelist/ManageTranslations.jsp">
-			<@button type="submit" name="view_create" buttonIcon="plus" title="#i18n{referencelist.translationitem.manage.buttonAdd}" />
+	<@boxHeader title='#i18n{referencelist.translationitem.manage.title}'>
+		<@tform name='manage_reference' action='jsp/admin/plugins/referencelist/ManageTranslations.jsp'>
+			<@button type='submit' name='view_create' buttonIcon='plus-circle' title='#i18n{referencelist.translationitem.manage.buttonAdd}' size='sm' hideTitle=['xs','sm'] />
 		</@tform>
 	</@boxHeader>
 	<@boxBody>    
@@ -21,8 +21,8 @@
 					<@td>${translationitem.translation}</@td>
 					<@td>${translationitem.lang}</@td>
 					<@td>
-						<@aButton href="jsp/admin/plugins/referencelist/ManageTranslations.jsp?view=modify&id=${translationitem.id}" title="#i18n{portal.util.labelModify}" buttonIcon="pencil" />
-						<@aButton href="jsp/admin/plugins/referencelist/ManageTranslations.jsp?action=remove&id=${translationitem.id}" title="#i18n{portal.util.labelDelete}" buttonIcon="trash" color="danger" /> 
+						<@aButton href='jsp/admin/plugins/referencelist/ManageTranslations.jsp?view=modify&id=${translationitem.id}' title='#i18n{portal.util.labelModify}' buttonIcon='pencil' size='sm' hideTitle=['all'] />
+						<@aButton href='jsp/admin/plugins/referencelist/ManageTranslations.jsp?action=remove&id=${translationitem.id}' title='#i18n{portal.util.labelDelete}' buttonIcon='trash' color='danger' size='sm' hideTitle=['all'] /> 
 					</@td>
 				</@tr>
 			</#list>
