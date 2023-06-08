@@ -10,16 +10,16 @@
         <section name="Plugin referencelist">
             
             <subsection name="Introduction">
-                <p>Le plugin <b>referencelist</b> permet d'apporter des données référentielles à n'importe quel site basé sur LUTECE</p>
+                <p><b>referencelist</b> permet d'apporter des données référentielles à n'importe quel site basé sur LUTECE</p>
 
-				<p>Il apporte un menu dans le Back Office LUTECE permettant de gérer des listes de données en "clé/valeurs" comme dans un fichier properties</p>
+				<p>Il apporte un menu dans le Back Office LUTECE permettant de gérer des listes de données en "clé/valeurs" comme dans un fichier properties </p>
 
 				<p>Ces listes peuvent être utilisées par un autre plugin pour alimenter par exemple des listes "select" ("combo lists"), sans avoir à relivrer le site.</p>
             </subsection>
             <subsection name="Configuration">
                 <p>Activer le plugin <b>referencelist</b> à travers le Back Office LUTECE.</p>
-                <p>Créer un référentiel avec sa liste d'options ("civilite.monsieur" avec "M.", "civilite.madame" et "Mme",...). </p>
-                <p>Chaque option peut avoir sa traduction dans plusieurs langues (gestion de listes multilingues)</p>
+                <p>Create one or more references (ex : "title") with their items ("title.mister" with "Mr", "title.madam" with "Mrs",...). </p>
+                <p>Each item can also have its translated values.</p>
             </subsection>
             <subsection name="Usage">
             
@@ -42,4 +42,3 @@
         </section>
     </body>
 </document>
-
