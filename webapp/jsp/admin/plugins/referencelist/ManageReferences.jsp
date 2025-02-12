@@ -1,9 +1,9 @@
-<jsp:useBean id="referencelistmanageReference" scope="session" class="fr.paris.lutece.plugins.referencelist.web.ReferenceJspBean" />
-<% String strContent = referencelistmanageReference.processController ( request , response ); %>
-
 <%@ page errorPage="../../ErrorPage.jsp" %>
+
+${ pageContext.setAttribute( 'strContent', referenceJspBean.processController( pageContext.request , pageContext.response ) ) }
+
 <jsp:include page="../../AdminHeader.jsp" />
 
-<%= strContent %>
+${ pageContext.getAttribute( 'strContent' ) }
 
 <%@ include file="../../AdminFooter.jsp" %>

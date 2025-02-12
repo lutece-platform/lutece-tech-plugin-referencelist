@@ -33,12 +33,20 @@
  */
 package fr.paris.lutece.plugins.referencelist.web;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.fileupload2.core.DiskFileItem;
+import org.apache.commons.fileupload2.core.FileItem;
+
 import fr.paris.lutece.plugins.referencelist.business.CompareResult;
 import fr.paris.lutece.plugins.referencelist.business.ReferenceItem;
 import fr.paris.lutece.plugins.referencelist.business.ReferenceItemHome;
 import fr.paris.lutece.plugins.referencelist.service.ReferenceImport;
 import fr.paris.lutece.plugins.referencelist.service.ReferenceItemPrepareImport;
-
 import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.message.AdminMessage;
 import fr.paris.lutece.portal.service.message.AdminMessageService;
@@ -47,19 +55,15 @@ import fr.paris.lutece.portal.util.mvc.commons.annotations.Action;
 import fr.paris.lutece.portal.util.mvc.commons.annotations.View;
 import fr.paris.lutece.portal.web.upload.MultipartHttpServletRequest;
 import fr.paris.lutece.util.url.UrlItem;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.fileupload.FileItem;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.enterprise.context.SessionScoped;
+import jakarta.inject.Named;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * This class provides the user interface to manage ReferenceItem features ( manage, create, modify, remove )
  */
+@SessionScoped
+@Named
 @Controller( controllerJsp = "ManageReferenceItems.jsp", controllerPath = "jsp/admin/plugins/referencelist/", right = "REFERENCELIST_MANAGEMENT" )
 public class ReferenceItemJspBean extends AbstractReferenceListManageJspBean
 {
@@ -181,7 +185,7 @@ public class ReferenceItemJspBean extends AbstractReferenceListManageJspBean
         if ( request instanceof MultipartHttpServletRequest )
         {
             // Check File
-            FileItem csvFile = ( (MultipartHttpServletRequest) request ).getFile( "file" );
+            FileItem<DiskFileItem> csvFile = ( (MultipartHttpServletRequest) request ).getFile( "file" );
             if ( !ReferenceItemPrepareImport.isImportableCSVFile( csvFile.getName( ), csvFile.getSize( ) ) )
             {
                 addError( INFO_REFERENCEITEM_FILE_ERROR, getLocale( ) );
@@ -331,7 +335,7 @@ public class ReferenceItemJspBean extends AbstractReferenceListManageJspBean
      *            The Http request
      * @return the html code to confirm
      */
-    @Action( ACTION_CONFIRM_REMOVE_REFERENCEITEM )
+    @Action( value = ACTION_CONFIRM_REMOVE_REFERENCEITEM, securityTokenAction = ACTION_REMOVE_REFERENCEITEM )
     public String getConfirmRemoveReferenceItem( HttpServletRequest request )
     {
         int nId = Integer.parseInt( request.getParameter( PARAMETER_ID_REFERENCEITEM ) );

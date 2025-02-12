@@ -33,7 +33,7 @@
  */
 package fr.paris.lutece.plugins.referencelist.business;
 
-import javax.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotEmpty;
 import fr.paris.lutece.portal.service.rbac.RBACResource;
 import java.io.Serializable;
 

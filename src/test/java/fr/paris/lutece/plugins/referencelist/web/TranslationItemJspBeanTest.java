@@ -33,6 +33,8 @@
  */
 package fr.paris.lutece.plugins.referencelist.web;
 
+import java.util.List;
+
 import fr.paris.lutece.plugins.referencelist.business.Reference;
 import fr.paris.lutece.plugins.referencelist.business.ReferenceHome;
 import fr.paris.lutece.plugins.referencelist.business.ReferenceItem;
@@ -40,19 +42,15 @@ import fr.paris.lutece.plugins.referencelist.business.ReferenceItemHome;
 import fr.paris.lutece.plugins.referencelist.business.TranslationItem;
 import fr.paris.lutece.plugins.referencelist.business.TranslationItemBusinessTest;
 import fr.paris.lutece.plugins.referencelist.business.TranslationItemHome;
-
-import java.util.List;
-
-import javax.servlet.http.HttpSession;
-
-import fr.paris.lutece.test.LuteceTestCase;
-import fr.paris.lutece.portal.service.security.SecurityTokenService;
-import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.mock.web.MockHttpServletResponse;
 import fr.paris.lutece.portal.business.user.AdminUser;
 import fr.paris.lutece.portal.service.admin.AccessDeniedException;
 import fr.paris.lutece.portal.service.admin.AdminAuthenticationService;
+import fr.paris.lutece.portal.service.security.ISecurityTokenService;
 import fr.paris.lutece.portal.service.security.UserNotSignedException;
+import fr.paris.lutece.test.LuteceTestCase;
+import fr.paris.lutece.test.mocks.MockHttpServletRequest;
+import fr.paris.lutece.test.mocks.MockHttpServletResponse;
+import jakarta.enterprise.inject.spi.CDI;
 
 /**
  * This is the jsp class test for the object TranslationItem
@@ -94,7 +92,6 @@ public class TranslationItemJspBeanTest extends LuteceTestCase
 
         request.addParameter( TranslationItemJspBean.PARAMETER_ID_REFERENCE, String.valueOf( idReference ) );
         html = jspbean.getManageTranslations( request );
-        HttpSession session = request.getSession( );
         assertNotNull( html );
 
         // display TranslationItem creation JSP
@@ -103,13 +100,12 @@ public class TranslationItemJspBeanTest extends LuteceTestCase
 
         // action create Project
         request = new MockHttpServletRequest( );
-        request.setSession( session );
 
         request.addParameter( "idItem", String.valueOf( idItem ) );
         request.addParameter( "lang", "fr" );
         request.addParameter( "translation", "M." );
         request.addParameter( "action", TranslationItemJspBean.ACTION_CREATE );
-        request.addParameter( "token", SecurityTokenService.getInstance( ).getToken( request, TranslationItemJspBean.ACTION_CREATE ) );
+        request.addParameter( "token", CDI.current( ).select( ISecurityTokenService.class ).get( ).getToken( request, TranslationItemJspBean.ACTION_CREATE ) );
         request.setMethod( "POST" );
 
         response = new MockHttpServletResponse( );
@@ -138,7 +134,7 @@ public class TranslationItemJspBeanTest extends LuteceTestCase
 
         // display modify TranslationItem JSP
         request = new MockHttpServletRequest( );
-        request.setSession( session );
+        request.getSession( ).setAttribute( TranslationItemJspBean.PARAMETER_ID_REFERENCE, String.valueOf( idReference ) );
         request.addParameter( "id", String.valueOf( listItems.get( 0 ).getId( ) ) );
 
         html = jspbean.getModifyTranslationItem( request );
@@ -146,13 +142,11 @@ public class TranslationItemJspBeanTest extends LuteceTestCase
 
         // action modify TranslationItem
         request = new MockHttpServletRequest( );
-        request.setSession( session );
         response = new MockHttpServletResponse( );
         request.addParameter( "idItem", String.valueOf( idItem ) );
         request.addParameter( "lang", "es" );
         request.addParameter( "translation", "Sr" );
         request.addParameter( "action", TranslationItemJspBean.ACTION_MODIFY );
-        // request.addParameter( "token", SecurityTokenService.getInstance( ).getToken( request, TranslationItemJspBean.ACTION_MODIFY ));
 
         try
         {
@@ -173,11 +167,10 @@ public class TranslationItemJspBeanTest extends LuteceTestCase
 
         // action remove TranslationItem
         request = new MockHttpServletRequest( );
-        request.setSession( session );
         response = new MockHttpServletResponse( );
         request.addParameter( "id", String.valueOf( listItems.get( 0 ).getId( ) ) );
         request.addParameter( "action", TranslationItemJspBean.ACTION_REMOVE );
-        request.addParameter( "token", SecurityTokenService.getInstance( ).getToken( request, TranslationItemJspBean.ACTION_REMOVE ) );
+        request.addParameter( "token", CDI.current( ).select( ISecurityTokenService.class ).get().getToken( request, TranslationItemJspBean.ACTION_REMOVE ) );
         request.setMethod( "POST" );
 
         try

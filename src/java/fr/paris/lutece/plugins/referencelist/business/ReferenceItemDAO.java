@@ -33,19 +33,19 @@
  */
 package fr.paris.lutece.plugins.referencelist.business;
 
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.util.ReferenceList;
 import fr.paris.lutece.util.sql.DAOUtil;
-import java.sql.Statement;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import jakarta.enterprise.context.ApplicationScoped;
 
 /**
  * This class provides Data Access methods for ReferenceItem objects
  */
+@ApplicationScoped
 public final class ReferenceItemDAO implements IReferenceItemDAO
 {
     // Constants

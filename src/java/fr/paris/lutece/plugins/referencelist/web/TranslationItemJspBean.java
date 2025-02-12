@@ -37,9 +37,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import org.apache.commons.lang3.StringUtils;
 
 import fr.paris.lutece.plugins.referencelist.business.ReferenceItem;
@@ -51,10 +48,16 @@ import fr.paris.lutece.portal.util.mvc.admin.annotations.Controller;
 import fr.paris.lutece.portal.util.mvc.commons.annotations.Action;
 import fr.paris.lutece.portal.util.mvc.commons.annotations.View;
 import fr.paris.lutece.util.ReferenceList;
+import jakarta.enterprise.context.SessionScoped;
+import jakarta.inject.Named;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 /**
  * This class provides the user interface to manage translation items ( list, create, modify, remove )
  */
+@SessionScoped
+@Named
 @Controller( controllerJsp = "ManageTranslations.jsp", controllerPath = "jsp/admin/plugins/referencelist/", right = "REFERENCELIST_MANAGEMENT" )
 public class TranslationItemJspBean extends AbstractReferenceListManageJspBean
 {

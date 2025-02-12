@@ -33,14 +33,14 @@
  */
 package fr.paris.lutece.plugins.referencelist.business;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import fr.paris.lutece.plugins.referencelist.service.ReferenceItemListenerService;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.plugin.PluginService;
-import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.util.ReferenceList;
-
-import java.util.ArrayList;
-import java.util.List;
+import jakarta.enterprise.inject.spi.CDI;
 
 /**
  * This class provides instances management methods (create, find, ...) for ReferenceItem objects
@@ -48,9 +48,9 @@ import java.util.List;
 public final class ReferenceItemHome
 {
     // Static variable pointed at the DAO instance
-    private static IReferenceItemDAO _dao = SpringContextService.getBean( "referencelist.referenceItemDAO" );
+    private static IReferenceItemDAO _dao = CDI.current( ).select( IReferenceItemDAO.class ).get( );
 
-    private static ITranslationItemDAO _translationDao = SpringContextService.getBean( "referencelist.translationItemDAO" );
+    private static ITranslationItemDAO _translationDao = CDI.current( ).select( ITranslationItemDAO.class ).get( );
 
     private static Plugin _plugin = PluginService.getPlugin( "referencelist" );
 
