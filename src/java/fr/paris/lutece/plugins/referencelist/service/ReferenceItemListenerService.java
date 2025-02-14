@@ -36,7 +36,7 @@ package fr.paris.lutece.plugins.referencelist.service;
 import java.util.List;
 
 import fr.paris.lutece.plugins.referencelist.business.ReferenceItem;
-import fr.paris.lutece.portal.service.spring.SpringContextService;
+import jakarta.enterprise.inject.spi.CDI;
 
 /**
  * Service that calls the {@link IReferenceItemListener}
@@ -62,7 +62,7 @@ public class ReferenceItemListenerService
     public void fireAddEvent( ReferenceItem item )
     {
         new Thread( ( ) -> {
-            List<IReferenceItemListener> listeners = SpringContextService.getBeansOfType( IReferenceItemListener.class );
+            List<IReferenceItemListener> listeners = CDI.current( ).select( IReferenceItemListener.class ).stream( ).toList( );
             for ( IReferenceItemListener listener : listeners )
             {
                 listener.addReferenceItem( item );
@@ -78,7 +78,7 @@ public class ReferenceItemListenerService
     public void fireDeleteEvent( ReferenceItem item )
     {
         new Thread( ( ) -> {
-            List<IReferenceItemListener> listeners = SpringContextService.getBeansOfType( IReferenceItemListener.class );
+            List<IReferenceItemListener> listeners = CDI.current( ).select( IReferenceItemListener.class ).stream( ).toList( );
             for ( IReferenceItemListener listener : listeners )
             {
                 listener.removeReferenceItem( item );
@@ -94,7 +94,7 @@ public class ReferenceItemListenerService
     public void fireUpdateEvent( ReferenceItem item )
     {
         new Thread( ( ) -> {
-            List<IReferenceItemListener> listeners = SpringContextService.getBeansOfType( IReferenceItemListener.class );
+            List<IReferenceItemListener> listeners = CDI.current( ).select( IReferenceItemListener.class ).stream( ).toList( );
             for ( IReferenceItemListener listener : listeners )
             {
                 listener.updateReferenceItem( item );

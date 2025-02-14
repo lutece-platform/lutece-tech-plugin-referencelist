@@ -33,6 +33,9 @@
  */
 package fr.paris.lutece.plugins.referencelist.web;
 
+import java.util.List;
+import java.util.Map;
+
 import fr.paris.lutece.plugins.referencelist.business.Reference;
 import fr.paris.lutece.plugins.referencelist.business.ReferenceHome;
 import fr.paris.lutece.portal.service.i18n.I18nService;
@@ -42,13 +45,15 @@ import fr.paris.lutece.portal.util.mvc.admin.annotations.Controller;
 import fr.paris.lutece.portal.util.mvc.commons.annotations.Action;
 import fr.paris.lutece.portal.util.mvc.commons.annotations.View;
 import fr.paris.lutece.util.url.UrlItem;
-import java.util.List;
-import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.enterprise.context.SessionScoped;
+import jakarta.inject.Named;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * This class provides the user interface to manage Reference features ( manage, create, modify, remove )
  */
+@SessionScoped
+@Named
 @Controller( controllerJsp = "ManageReferences.jsp", controllerPath = "jsp/admin/plugins/referencelist/", right = "REFERENCELIST_MANAGEMENT" )
 public class ReferenceJspBean extends AbstractReferenceListManageJspBean
 {
@@ -153,7 +158,7 @@ public class ReferenceJspBean extends AbstractReferenceListManageJspBean
      *            The Http request
      * @return the html code to confirm
      */
-    @Action( ACTION_CONFIRM_REMOVE_REFERENCE )
+    @Action( value = ACTION_CONFIRM_REMOVE_REFERENCE, securityTokenAction = ACTION_REMOVE_REFERENCE )
     public String getConfirmRemoveReference( HttpServletRequest request )
     {
         int nId = Integer.parseInt( request.getParameter( PARAMETER_ID_REFERENCE ) );
