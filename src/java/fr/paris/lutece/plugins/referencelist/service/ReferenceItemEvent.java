@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2021, City of Paris
+ * Copyright (c) 2002-2025, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -33,61 +33,30 @@
  */
 package fr.paris.lutece.plugins.referencelist.service;
 
-
 import fr.paris.lutece.plugins.referencelist.business.ReferenceItem;
-import fr.paris.lutece.portal.service.event.EventAction;
-import fr.paris.lutece.portal.service.event.Type.TypeQualifier;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.event.Event;
-import jakarta.inject.Inject;
 
-/**
- * Service that notify listeners when a {@link ReferenceItem} is created/updated/deleted
- */
-@ApplicationScoped
-public class ReferenceItemListenerService
+public class ReferenceItemEvent 
 {
-
-    ReferenceItemListenerService( )
-    {
-    }
-
-    @Inject
-    private Event<ReferenceItemEvent> _referenceItemEvent;
+    private ReferenceItem _referenceItem;
 
     /**
-     * Called when a {@link ReferenceItem} is added
+     * Creates a new instance of ReferenceItemEvent
      * 
      * @param item
+     *            The reference item
      */
-    public void fireAddEvent( ReferenceItem item )
+    public ReferenceItemEvent( ReferenceItem item )
     {
-    	ReferenceItemEvent refItemEvent = new ReferenceItemEvent( item );
-    	
-    	_referenceItemEvent.select( ReferenceItemEvent.class, new TypeQualifier( EventAction.CREATE ) ).fireAsync( refItemEvent );
+    	_referenceItem = item;
     }
 
-    /**
-     * Called when a {@link ReferenceItem} is deleted
-     * 
-     * @param item
+	/**
+     * Returns the ReferenceItem
+     *
+     * @return The ReferenceItem
      */
-    public void fireDeleteEvent( ReferenceItem item )
+    public ReferenceItem getReferenceItem( )
     {
-    	ReferenceItemEvent refItemEvent = new ReferenceItemEvent( item );
-    	
-    	_referenceItemEvent.select( ReferenceItemEvent.class, new TypeQualifier( EventAction.REMOVE ) ).fireAsync( refItemEvent );
-    }
-
-    /**
-     * Called when a {@link ReferenceItem} is updated
-     * 
-     * @param item
-     */
-    public void fireUpdateEvent( ReferenceItem item )
-    {
-    	ReferenceItemEvent refItemEvent = new ReferenceItemEvent( item );
-    	
-    	_referenceItemEvent.select( ReferenceItemEvent.class, new TypeQualifier( EventAction.UPDATE ) ).fireAsync( refItemEvent );
+        return _referenceItem;
     }
 }

@@ -38,6 +38,7 @@ import fr.paris.lutece.plugins.referencelist.business.ReferenceItem;
 /**
  * Listener for ReferenceItem events
  */
+@Deprecated( forRemoval = true )
 public interface IReferenceItemListener
 {
     /**
