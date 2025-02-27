@@ -52,6 +52,8 @@ public final class ReferenceItemHome
 
     private static ITranslationItemDAO _translationDao = CDI.current( ).select( ITranslationItemDAO.class ).get( );
 
+    private static ReferenceItemListenerService _refItemListenerService = CDI.current( ).select( ReferenceItemListenerService.class ).get( );
+
     private static Plugin _plugin = PluginService.getPlugin( "referencelist" );
 
     /**
@@ -71,7 +73,7 @@ public final class ReferenceItemHome
     public static ReferenceItem create( ReferenceItem referenceItem )
     {
         _dao.insert( referenceItem, _plugin );
-        ReferenceItemListenerService.getInstance( ).fireAddEvent( referenceItem );
+        _refItemListenerService.fireAddEvent( referenceItem );
         return referenceItem;
     }
 
@@ -85,7 +87,7 @@ public final class ReferenceItemHome
     public static ReferenceItem update( ReferenceItem referenceItem )
     {
         _dao.store( referenceItem, _plugin );
-        ReferenceItemListenerService.getInstance( ).fireUpdateEvent( referenceItem );
+        _refItemListenerService.fireUpdateEvent( referenceItem );
         return referenceItem;
     }
 
@@ -99,7 +101,7 @@ public final class ReferenceItemHome
     {
         ReferenceItem item = findByPrimaryKey( nKey );
         _dao.delete( nKey, _plugin );
-        ReferenceItemListenerService.getInstance( ).fireDeleteEvent( item );
+        _refItemListenerService.fireDeleteEvent( item );
 
         _translationDao.deleteAllFromReferenceItemId( nKey, _plugin );
     }

@@ -45,12 +45,10 @@ import fr.paris.lutece.plugins.referencelist.business.TranslationItemHome;
 import fr.paris.lutece.portal.business.user.AdminUser;
 import fr.paris.lutece.portal.service.admin.AccessDeniedException;
 import fr.paris.lutece.portal.service.admin.AdminAuthenticationService;
-import fr.paris.lutece.portal.service.security.ISecurityTokenService;
 import fr.paris.lutece.portal.service.security.UserNotSignedException;
 import fr.paris.lutece.test.LuteceTestCase;
 import fr.paris.lutece.test.mocks.MockHttpServletRequest;
 import fr.paris.lutece.test.mocks.MockHttpServletResponse;
-import jakarta.enterprise.inject.spi.CDI;
 
 /**
  * This is the jsp class test for the object TranslationItem
@@ -105,7 +103,6 @@ public class TranslationItemJspBeanTest extends LuteceTestCase
         request.addParameter( "lang", "fr" );
         request.addParameter( "translation", "M." );
         request.addParameter( "action", TranslationItemJspBean.ACTION_CREATE );
-        request.addParameter( "token", CDI.current( ).select( ISecurityTokenService.class ).get( ).getToken( request, TranslationItemJspBean.ACTION_CREATE ) );
         request.setMethod( "POST" );
 
         response = new MockHttpServletResponse( );
@@ -170,7 +167,6 @@ public class TranslationItemJspBeanTest extends LuteceTestCase
         response = new MockHttpServletResponse( );
         request.addParameter( "id", String.valueOf( listItems.get( 0 ).getId( ) ) );
         request.addParameter( "action", TranslationItemJspBean.ACTION_REMOVE );
-        request.addParameter( "token", CDI.current( ).select( ISecurityTokenService.class ).get().getToken( request, TranslationItemJspBean.ACTION_REMOVE ) );
         request.setMethod( "POST" );
 
         try
