@@ -39,8 +39,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.fileupload2.core.DiskFileItem;
-import org.apache.commons.fileupload2.core.FileItem;
 
 import fr.paris.lutece.plugins.referencelist.business.CompareResult;
 import fr.paris.lutece.plugins.referencelist.business.ReferenceItem;
@@ -50,6 +48,7 @@ import fr.paris.lutece.plugins.referencelist.service.ReferenceItemPrepareImport;
 import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.message.AdminMessage;
 import fr.paris.lutece.portal.service.message.AdminMessageService;
+import fr.paris.lutece.portal.service.upload.MultipartItem;
 import fr.paris.lutece.portal.util.mvc.admin.annotations.Controller;
 import fr.paris.lutece.portal.util.mvc.commons.annotations.Action;
 import fr.paris.lutece.portal.util.mvc.commons.annotations.View;
@@ -100,6 +99,7 @@ public class ReferenceItemJspBean extends AbstractReferenceListManageJspBean
     private static final String VIEW_CREATE_REFERENCEITEM = "createReferenceItem";
     private static final String VIEW_IMPORT_REFERENCEITEM = "importReferenceItem";
     private static final String VIEW_MODIFY_REFERENCEITEM = "modifyReferenceItem";
+    private static final String VIEW_CONFIRM_IMPORT_REFERENCEITEM = "confirmImportReferenceItem";
 
     // Actions
     private static final String ACTION_CHECK_IMPORT_REFERENCEITEM = "importReferenceItem";
@@ -107,7 +107,6 @@ public class ReferenceItemJspBean extends AbstractReferenceListManageJspBean
     private static final String ACTION_MODIFY_REFERENCEITEM = "modifyReferenceItem";
     private static final String ACTION_REMOVE_REFERENCEITEM = "removeReferenceItem";
     private static final String ACTION_CONFIRM_REMOVE_REFERENCEITEM = "confirmRemoveReferenceItem";
-    private static final String ACTION_CONFIRM_IMPORT_REFERENCEITEM = "confirmImportReferenceItem";
     private static final String ACTION_DO_IMPORT_REFERENCEITEM = "doImportReferenceItem";
 
     // Infos
@@ -185,7 +184,7 @@ public class ReferenceItemJspBean extends AbstractReferenceListManageJspBean
         if ( request instanceof MultipartHttpServletRequest )
         {
             // Check File
-            FileItem<DiskFileItem> csvFile = ( (MultipartHttpServletRequest) request ).getFile( "file" );
+            MultipartItem csvFile = ( (MultipartHttpServletRequest) request ).getFile( "file" );
             if ( !ReferenceItemPrepareImport.isImportableCSVFile( csvFile.getName( ), csvFile.getSize( ) ) )
             {
                 addError( INFO_REFERENCEITEM_FILE_ERROR, getLocale( ) );
@@ -226,7 +225,7 @@ public class ReferenceItemJspBean extends AbstractReferenceListManageJspBean
                 return redirectView( request, VIEW_IMPORT_REFERENCEITEM );
             }
 
-            return getConfirmImportReferenceItem( request );
+            return redirectView( request, VIEW_CONFIRM_IMPORT_REFERENCEITEM );
         }
 
     }
@@ -238,7 +237,7 @@ public class ReferenceItemJspBean extends AbstractReferenceListManageJspBean
      *            The Http request
      * @return the html code to confirm
      */
-    @Action( ACTION_CONFIRM_IMPORT_REFERENCEITEM )
+    @View( value = VIEW_CONFIRM_IMPORT_REFERENCEITEM, securityTokenAction = ACTION_DO_IMPORT_REFERENCEITEM )
     public String getConfirmImportReferenceItem( HttpServletRequest request )
     {
 
