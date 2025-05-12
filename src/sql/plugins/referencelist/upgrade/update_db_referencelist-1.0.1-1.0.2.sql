@@ -1,3 +1,6 @@
+--liquibase formatted sql
+--changeset referencelist:update_db_referencelist-1.0.1-1.0.2.sql
+--preconditions onFail:MARK_RAN onError:WARN
 --
 -- Refactor table referencelist_item
 --
