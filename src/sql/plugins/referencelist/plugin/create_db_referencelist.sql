@@ -1,3 +1,6 @@
+--liquibase formatted sql
+--changeset referencelist:create_db_referencelist.sql
+--preconditions onFail:MARK_RAN onError:WARN
 
 --
 -- Structure for table referencelist_reference

@@ -1,3 +1,6 @@
+--liquibase formatted sql
+--changeset referencelist:init_core_referencelist.sql
+--preconditions onFail:MARK_RAN onError:WARN
 
 --
 -- Data for table core_admin_right
