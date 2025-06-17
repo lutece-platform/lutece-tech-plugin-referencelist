@@ -48,18 +48,15 @@
 		    <scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.glassfish.jaxb</groupId>
-	        <artifactId>jaxb-runtime</artifactId>
-	        <version>4.0.5</version>
-	        <scope>test</scope>  
+		    <groupId>org.glassfish.jaxb</groupId>
+	            <artifactId>jaxb-runtime</artifactId>
+	            <scope>test</scope>  
 		</dependency>
 
     </dependencies>
 
     <properties>
         <componentName>referencelist</componentName>
-        <jiraProjectName>REFERENCELIST</jiraProjectName>
-        <jiraComponentId />
     </properties>
 
     <scm>
