@@ -33,13 +33,17 @@
  */
 package fr.paris.lutece.plugins.referencelist.business;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * This is the business class for the object ReferenceItem
  */
-public class ReferenceItem extends fr.paris.lutece.util.ReferenceItem
+public class ReferenceItem extends fr.paris.lutece.util.ReferenceItem implements Serializable
 {
+    @Serial
+    private static final long serialVersionUID = 1L;
 
-    // Variables declarations
     private int _nId;
 
     private int _nIdreference;

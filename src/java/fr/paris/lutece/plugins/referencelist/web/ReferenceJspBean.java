@@ -45,16 +45,16 @@ import fr.paris.lutece.portal.util.mvc.admin.annotations.Controller;
 import fr.paris.lutece.portal.util.mvc.commons.annotations.Action;
 import fr.paris.lutece.portal.util.mvc.commons.annotations.View;
 import fr.paris.lutece.util.url.UrlItem;
-import jakarta.enterprise.context.SessionScoped;
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Named;
 import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * This class provides the user interface to manage Reference features ( manage, create, modify, remove )
  */
-@SessionScoped
+@RequestScoped
 @Named
-@Controller( controllerJsp = "ManageReferences.jsp", controllerPath = "jsp/admin/plugins/referencelist/", right = "REFERENCELIST_MANAGEMENT" )
+@Controller( controllerJsp = "ManageReferences.jsp", controllerPath = "jsp/admin/plugins/referencelist/", right = "REFERENCELIST_MANAGEMENT", securityTokenEnabled = true )
 public class ReferenceJspBean extends AbstractReferenceListManageJspBean
 {
     private static final long serialVersionUID = -4418326362630859233L;
@@ -90,8 +90,6 @@ public class ReferenceJspBean extends AbstractReferenceListManageJspBean
     private static final String INFO_REFERENCE_CREATED = "referencelist.info.reference.created";
     private static final String INFO_REFERENCE_UPDATED = "referencelist.info.reference.updated";
     private static final String INFO_REFERENCE_REMOVED = "referencelist.info.reference.removed";
-    // Session variable to store working values
-    private Reference _reference;
 
     /**
      * Build the Manage View
@@ -103,7 +101,6 @@ public class ReferenceJspBean extends AbstractReferenceListManageJspBean
     @View( value = VIEW_MANAGE_REFERENCES, defaultView = true )
     public String getManageReferences( HttpServletRequest request )
     {
-        _reference = null;
         List<Reference> listReferences = ReferenceHome.getReferencesList( );
         Map<String, Object> model = getPaginatedListModel( request, MARK_REFERENCE_LIST, listReferences, JSP_MANAGE_REFERENCES );
         return getPage( PROPERTY_PAGE_TITLE_MANAGE_REFERENCES, TEMPLATE_MANAGE_REFERENCES, model );
@@ -119,9 +116,8 @@ public class ReferenceJspBean extends AbstractReferenceListManageJspBean
     @View( VIEW_CREATE_REFERENCE )
     public String getCreateReference( HttpServletRequest request )
     {
-        _reference = ( _reference != null ) ? _reference : new Reference( );
         Map<String, Object> model = getModel( );
-        model.put( MARK_REFERENCE, _reference );
+        model.put( MARK_REFERENCE, new Reference( ) );
         return getPage( PROPERTY_PAGE_TITLE_CREATE_REFERENCE, TEMPLATE_CREATE_REFERENCE, model );
     }
 
@@ -135,16 +131,17 @@ public class ReferenceJspBean extends AbstractReferenceListManageJspBean
     @Action( ACTION_CREATE_REFERENCE )
     public String doCreateReference( HttpServletRequest request )
     {
-        populate( _reference, request, request.getLocale( ) );
+        Reference reference = new Reference( );
+        populate( reference, request, request.getLocale( ) );
 
         // Check form constraints
-        if ( !validateBean( _reference, VALIDATION_ATTRIBUTES_PREFIX ) )
+        if ( !validateBean( reference, VALIDATION_ATTRIBUTES_PREFIX ) )
         {
             return redirectView( request, VIEW_CREATE_REFERENCE );
         }
 
         // Create Reference.
-        ReferenceHome.create( _reference );
+        ReferenceHome.create( reference );
 
         // redirect to manage & add import result for users
         addInfo( I18nService.getLocalizedString( INFO_REFERENCE_CREATED, getLocale( ) ) );
@@ -195,12 +192,9 @@ public class ReferenceJspBean extends AbstractReferenceListManageJspBean
     public String getModifyReference( HttpServletRequest request )
     {
         int nId = Integer.parseInt( request.getParameter( PARAMETER_ID_REFERENCE ) );
-        if ( _reference == null || ( _reference.getId( ) != nId ) )
-        {
-            _reference = ReferenceHome.findByPrimaryKey( nId );
-        }
+        Reference reference =  ReferenceHome.findByPrimaryKey( nId );
         Map<String, Object> model = getModel( );
-        model.put( MARK_REFERENCE, _reference );
+        model.put( MARK_REFERENCE, reference );
         return getPage( PROPERTY_PAGE_TITLE_MODIFY_REFERENCE, TEMPLATE_MODIFY_REFERENCE, model );
     }
 
@@ -214,13 +208,14 @@ public class ReferenceJspBean extends AbstractReferenceListManageJspBean
     @Action( ACTION_MODIFY_REFERENCE )
     public String doModifyReference( HttpServletRequest request )
     {
-        populate( _reference, request, request.getLocale( ) );
+        Reference reference = new Reference( );
+        populate( reference, request, request.getLocale( ) );
         // Check constraints
-        if ( !validateBean( _reference, VALIDATION_ATTRIBUTES_PREFIX ) )
+        if ( !validateBean( reference, VALIDATION_ATTRIBUTES_PREFIX ) )
         {
-            return redirect( request, VIEW_MODIFY_REFERENCE, PARAMETER_ID_REFERENCE, _reference.getId( ) );
+            return redirect( request, VIEW_MODIFY_REFERENCE, PARAMETER_ID_REFERENCE, reference.getId( ) );
         }
-        ReferenceHome.update( _reference );
+        ReferenceHome.update( reference );
         addInfo( INFO_REFERENCE_UPDATED, getLocale( ) );
         return redirectView( request, VIEW_MANAGE_REFERENCES );
     }
