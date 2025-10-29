@@ -49,6 +49,7 @@ import fr.paris.lutece.portal.service.security.UserNotSignedException;
 import fr.paris.lutece.test.LuteceTestCase;
 import fr.paris.lutece.test.mocks.MockHttpServletRequest;
 import fr.paris.lutece.test.mocks.MockHttpServletResponse;
+import org.junit.jupiter.api.Test;
 
 /**
  * This is the jsp class test for the object TranslationItem
@@ -60,7 +61,8 @@ public class TranslationItemJspBeanTest extends LuteceTestCase
     private int idItem;
     private String badIdReference = "XXX";
 
-    public void testJspBeans( ) throws AccessDeniedException
+    @Test
+    void testJspBeans( ) throws AccessDeniedException
     {
         prepare( );
 

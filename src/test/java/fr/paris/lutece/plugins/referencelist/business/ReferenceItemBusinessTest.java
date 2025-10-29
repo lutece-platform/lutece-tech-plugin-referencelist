@@ -34,6 +34,7 @@
 package fr.paris.lutece.plugins.referencelist.business;
 
 import fr.paris.lutece.test.LuteceTestCase;
+import org.junit.jupiter.api.Test;
 
 /**
  * This is the business class test for the object ReferenceItem
@@ -49,7 +50,8 @@ public class ReferenceItemBusinessTest extends LuteceTestCase
     /**
      * test ReferenceItem
      */
-    public void testBusiness( )
+    @Test
+    void testBusiness( )
     {
         // Initialize an object
         ReferenceItem referenceItem = new ReferenceItem( );

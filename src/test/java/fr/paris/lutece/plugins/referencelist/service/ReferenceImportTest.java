@@ -45,6 +45,7 @@ import fr.paris.lutece.plugins.referencelist.business.ReferenceItemHome;
 import fr.paris.lutece.test.LuteceTestCase;
 import fr.paris.lutece.portal.business.user.AdminUser;
 import fr.paris.lutece.portal.business.user.AdminUserHome;
+import org.junit.jupiter.api.Test;
 
 /**
  * This is the business class test for the object ReferenceItem
@@ -91,7 +92,8 @@ public class ReferenceImportTest extends LuteceTestCase
      * test isImportable
      * 
      */
-    public void testBusiness( )
+    @Test
+    void testBusiness( )
     {
 
         // Initialize a reference
