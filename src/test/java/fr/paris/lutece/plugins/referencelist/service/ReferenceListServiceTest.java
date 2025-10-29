@@ -44,6 +44,7 @@ import fr.paris.lutece.plugins.referencelist.business.TranslationItem;
 import fr.paris.lutece.plugins.referencelist.business.TranslationItemHome;
 import fr.paris.lutece.test.LuteceTestCase;
 import fr.paris.lutece.util.ReferenceList;
+import org.junit.jupiter.api.Test;
 
 /**
  * This is the business class test for the object ReferenceItem
@@ -121,7 +122,8 @@ public class ReferenceListServiceTest extends LuteceTestCase
      * tests the service "getReferenceList" that use ReferenceItems and translations
      * 
      */
-    public void testBusiness( )
+    @Test
+    void testBusiness( )
     {
         int idReference = prepareReferences( );
 
