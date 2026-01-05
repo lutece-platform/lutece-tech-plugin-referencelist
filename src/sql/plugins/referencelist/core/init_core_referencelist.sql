@@ -7,7 +7,7 @@
 --
 DELETE FROM core_admin_right WHERE id_right = 'REFERENCELIST_MANAGEMENT';
 INSERT INTO core_admin_right (id_right,name,level_right,admin_url,description,is_updatable,plugin_name,id_feature_group,icon_url,documentation_url, id_order ) VALUES 
-('REFERENCELIST_MANAGEMENT','referencelist.adminFeature.ReferenceListManage.name',1,'jsp/admin/plugins/referencelist/ManageReferences.jsp','referencelist.adminFeature.ReferenceListManage.description',0,'referencelist',NULL,NULL,NULL,4);
+('REFERENCELIST_MANAGEMENT','referencelist.adminFeature.ReferenceListManage.name',1,'jsp/admin/plugins/referencelist/ManageReferences.jsp','referencelist.adminFeature.ReferenceListManage.description',0,'referencelist',NULL,'ti ti-list-details',NULL,4);
 
 --
 -- Data for table core_user_right
