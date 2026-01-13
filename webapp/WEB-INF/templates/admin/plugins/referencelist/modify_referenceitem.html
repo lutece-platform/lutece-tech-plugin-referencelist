@@ -1,6 +1,7 @@
-<@box>
-	<@boxHeader title='#i18n{referencelist.modify_referenceitem.title}' />
-	<@boxBody>
+<@pageContainer>
+    <@pageColumn>
+        <@pageHeader title='#i18n{referencelist.modify_referenceitem.title}' />
+		<@div id='update-reference-item'>
     	<@tform method='post' name='modify_referenceitem' action='jsp/admin/plugins/referencelist/ManageReferenceItems.jsp'>
 			<@messages errors=errors />
 			<@input type='hidden' id='id' name='id' value='${referenceitem.id}'/>
@@ -11,9 +12,10 @@
 				<@input type='text' name='name' value='${referenceitem.name}' />
 			</@formGroup>
 			<@formGroup>
-				<@button type='submit' name='action_modifyReferenceItem' title='#i18n{portal.util.labelOk}' buttonIcon='save' />
-				<@aButton href='jsp/admin/plugins/referencelist/ManageReferenceItems.jsp?id=${referenceitem.idreference}' color='default' title='#i18n{portal.util.labelBack}' buttonIcon='times' />
+				<@button type='submit' name='action_modifyReferenceItem' title='#i18n{portal.util.labelOk}' buttonIcon='check' />
+				<@aButton href='jsp/admin/plugins/referencelist/ManageReferenceItems.jsp?id=${referenceitem.idreference}' color='secondary' title='#i18n{portal.util.labelBack}' buttonIcon='x' />
 			</@formGroup>
     	</@tform>
-	</@boxBody>
-</@box>
+		</@div>
+	</@pageColumn>
+</@pageContainer>

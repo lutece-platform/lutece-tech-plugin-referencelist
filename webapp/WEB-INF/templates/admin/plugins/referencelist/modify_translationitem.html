@@ -1,7 +1,8 @@
-<@box>
-	<@boxHeader title='#i18n{referencelist.translationitem.modify.title}' />
-	<@boxBody>
-    	<@tform action='jsp/admin/plugins/referencelist/ManageTranslations.jsp'>
+<@pageContainer>
+    <@pageColumn>
+        <@pageHeader title='#i18n{referencelist.translationitem.modify.title}' />
+		<@div id='update-translation-item'>
+		<@tform action='jsp/admin/plugins/referencelist/ManageTranslations.jsp'>
     		<@messages errors=errors />
     		<@input type='hidden' name='id' value='${translationitem.id}' />
 			<@formGroup labelKey='#i18n{referencelist.translationitem.labelName}' mandatory=true>
@@ -14,9 +15,10 @@
 				<@input type='text' name='translation' value=translationitem.translation />
 			</@formGroup>
 			<@formGroup>
-				<@button type='submit' name='action_modify' title='#i18n{portal.util.labelOk}' buttonIcon='save' />
-				<@aButton href='jsp/admin/plugins/referencelist/ManageTranslations.jsp' color='default' title='#i18n{portal.util.labelBack}' buttonIcon='times' />
+				<@button type='submit' name='action_modify' title='#i18n{portal.util.labelOk}' buttonIcon='check' />
+				<@aButton href='jsp/admin/plugins/referencelist/ManageTranslations.jsp' color='secondary' title='#i18n{portal.util.labelBack}' buttonIcon='x' />
 			</@formGroup>
 	    </@tform>
-	</@boxBody>
-</@box>
+		</@div>
+	</@pageColumn>
+</@pageContainer>

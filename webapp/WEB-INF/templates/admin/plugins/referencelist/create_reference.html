@@ -1,7 +1,7 @@
-
-<@box>
-	<@boxHeader title='#i18n{referencelist.create_reference.title}' />
-	<@boxBody>
+<@pageContainer>
+    <@pageColumn>
+        <@pageHeader title='#i18n{referencelist.create_reference.title}' />
+		<@div id='create-reference'>
 		<@tform name='create_reference' params='enctype="multipart/form-data"' action='jsp/admin/plugins/referencelist/ManageReferences.jsp'>
 			<@messages errors=errors />
 			<@input type="hidden" id="id" name="id"/>
@@ -12,9 +12,10 @@
 				<@input type='text' name='description' value='${reference.description!\'\'}' />
 			</@formGroup>
 			<@formGroup>
-				<@button type='submit' name='action_createReference' title='#i18n{portal.util.labelOk}' buttonIcon='save' />
-				<@aButton href='jsp/admin/plugins/referencelist/ManageReferences.jsp' color='default' title='#i18n{portal.util.labelBack}' buttonIcon='times' />
+				<@button type='submit' name='action_createReference' title='#i18n{portal.util.labelOk}' buttonIcon='check' />
+				<@aButton href='jsp/admin/plugins/referencelist/ManageReferences.jsp' color='secondary' title='#i18n{portal.util.labelBack}' buttonIcon='x' />
 			</@formGroup>
 		</@tform>
-	</@boxBody>
-</@box>
+		</@div>
+	</@pageColumn>
+</@pageContainer>

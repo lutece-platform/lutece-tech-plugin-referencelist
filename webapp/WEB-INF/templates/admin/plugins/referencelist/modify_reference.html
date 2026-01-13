@@ -1,7 +1,8 @@
-<@box>
-	<@boxHeader title='#i18n{referencelist.modify_reference.title}' />
-	<@boxBody>
-    	<@tform method='post' name='modify_reference' action='jsp/admin/plugins/referencelist/ManageReferences.jsp'>
+<@pageContainer>
+    <@pageColumn>
+        <@pageHeader title='#i18n{referencelist.modify_reference.title}' />
+		<@div id='update-reference'>
+		<@tform method='post' name='modify_reference' action='jsp/admin/plugins/referencelist/ManageReferences.jsp' >
 			<@messages errors=errors />
 			<@input type='hidden' id='id' name='id' value='${reference.id}' />
 			<@formGroup labelKey='#i18n{referencelist.modify_reference.labelName}' helpKey='#i18n{referencelist.modify_reference.labelName.help}' mandatory=true>
@@ -11,9 +12,10 @@
 				<@input type='text' name='description' value='${reference.description}' />
 			</@formGroup>
 			<@formGroup>
-				<@button  type='submit' name='action_modifyReference' title='#i18n{portal.util.labelOk}' buttonIcon='save' />
-				<@aButton href='jsp/admin/plugins/referencelist/ManageReferences.jsp' color='default' title='#i18n{portal.util.labelBack}' buttonIcon='times' />
+				<@button  type='submit' name='action_modifyReference' title='#i18n{portal.util.labelOk}' buttonIcon='check' />
+				<@aButton href='jsp/admin/plugins/referencelist/ManageReferences.jsp' color='secondary' title='#i18n{portal.util.labelBack}' buttonIcon='x' />
 			</@formGroup>
     	</@tform>
-	</@boxBody>
-</@box>
+		</@div>
+	</@pageColumn>
+</@pageContainer>
