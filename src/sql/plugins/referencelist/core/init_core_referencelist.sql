@@ -15,7 +15,7 @@ INSERT INTO core_admin_right (id_right,name,level_right,admin_url,description,is
 DELETE FROM core_user_right WHERE id_right = 'REFERENCELIST_MANAGEMENT';
 INSERT INTO core_user_right (id_right,id_user) VALUES ('REFERENCELIST_MANAGEMENT',1);
 
-INSERT INTO core_admin_role_resource VALUES (165,'CREATE_REFERENCE_IMPORT', 'REFERENCE_IMPORT', '*', '*');
+INSERT INTO core_admin_role_resource (role_key,resource_type,resource_id,permission) VALUES ('CREATE_REFERENCE_IMPORT', 'REFERENCE_IMPORT', '*', '*');
 
 
 --
