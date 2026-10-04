@@ -46,9 +46,11 @@ import fr.paris.lutece.portal.business.user.AdminUser;
 import fr.paris.lutece.portal.service.admin.AccessDeniedException;
 import fr.paris.lutece.portal.service.admin.AdminAuthenticationService;
 import fr.paris.lutece.portal.service.security.UserNotSignedException;
+import fr.paris.lutece.portal.web.cdi.mvc.Models;
 import fr.paris.lutece.test.LuteceTestCase;
 import fr.paris.lutece.test.mocks.MockHttpServletRequest;
 import fr.paris.lutece.test.mocks.MockHttpServletResponse;
+import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -60,6 +62,9 @@ public class TranslationItemJspBeanTest extends LuteceTestCase
     private int idReference;
     private int idItem;
     private String badIdReference = "XXX";
+
+    @Inject
+    private Models _models;
 
     @Test
     void testJspBeans( ) throws AccessDeniedException
@@ -75,7 +80,7 @@ public class TranslationItemJspBeanTest extends LuteceTestCase
         jspbean = new TranslationItemJspBean( );
         request = new MockHttpServletRequest( );
 
-        html = jspbean.getManageTranslations( request );
+        html = jspbean.getManageTranslations( request, _models );
         assertNotNull( html );
 
         // display TranslationItem management JSP with bad reference id
@@ -83,7 +88,7 @@ public class TranslationItemJspBeanTest extends LuteceTestCase
         request = new MockHttpServletRequest( );
 
         request.addParameter( TranslationItemJspBean.PARAMETER_ID_REFERENCE, badIdReference );
-        html = jspbean.getManageTranslations( request );
+        html = jspbean.getManageTranslations( request, _models );
         assertNotNull( html );
 
         // display TranslationItem management JSP
@@ -91,11 +96,11 @@ public class TranslationItemJspBeanTest extends LuteceTestCase
         request = new MockHttpServletRequest( );
 
         request.addParameter( TranslationItemJspBean.PARAMETER_ID_REFERENCE, String.valueOf( idReference ) );
-        html = jspbean.getManageTranslations( request );
+        html = jspbean.getManageTranslations( request, _models );
         assertNotNull( html );
 
         // display TranslationItem creation JSP
-        html = jspbean.getCreateTranslationItem( request );
+        html = jspbean.getCreateTranslationItem( request, _models );
         assertNotNull( html );
 
         // action create Project
@@ -136,7 +141,7 @@ public class TranslationItemJspBeanTest extends LuteceTestCase
         request.getSession( ).setAttribute( TranslationItemJspBean.PARAMETER_ID_REFERENCE, String.valueOf( idReference ) );
         request.addParameter( "id", String.valueOf( listItems.get( 0 ).getId( ) ) );
 
-        html = jspbean.getModifyTranslationItem( request );
+        html = jspbean.getModifyTranslationItem( request, _models );
         assertNotNull( html );
 
         // action modify TranslationItem

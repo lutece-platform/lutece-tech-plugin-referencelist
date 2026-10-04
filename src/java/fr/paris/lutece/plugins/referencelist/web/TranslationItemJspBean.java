@@ -35,7 +35,6 @@ package fr.paris.lutece.plugins.referencelist.web;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import jakarta.enterprise.context.RequestScoped;
 import org.apache.commons.lang3.StringUtils;
@@ -48,6 +47,7 @@ import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.util.mvc.admin.annotations.Controller;
 import fr.paris.lutece.portal.util.mvc.commons.annotations.Action;
 import fr.paris.lutece.portal.util.mvc.commons.annotations.View;
+import fr.paris.lutece.portal.web.cdi.mvc.Models;
 import fr.paris.lutece.util.ReferenceList;
 import jakarta.inject.Named;
 import jakarta.servlet.http.HttpServletRequest;
@@ -126,10 +126,12 @@ public class TranslationItemJspBean extends AbstractReferenceListManageJspBean
      *
      * @param request
      *            The Http request
+     * @param model
+     *            The model
      * @return The HTML form to update info
      */
     @View( VIEW_MODIFY )
-    public String getModifyTranslationItem( HttpServletRequest request )
+    public String getModifyTranslationItem( HttpServletRequest request, Models model )
     {
         int nId = Integer.parseInt( request.getParameter( "id" ) );
 
@@ -139,13 +141,11 @@ public class TranslationItemJspBean extends AbstractReferenceListManageJspBean
 
         ReferenceList referenceitems = buildReferenceItemComboList( nIdReference );
 
-        Map<String, Object> model = getModel( );
-
         model.put( MARK_MODIFY, translationItem );
         model.put( MARK_SELECTLIST, referenceitems );
         model.put( MARK_SELECTLANGUAGES, buildLanguagesComboList( ) );
 
-        return getPage( PROPERTY_PAGE_TITLE_MODIFY, TEMPLATE_MODIFY, model );
+        return getPage( PROPERTY_PAGE_TITLE_MODIFY, TEMPLATE_MODIFY );
     }
 
     /**
@@ -174,21 +174,21 @@ public class TranslationItemJspBean extends AbstractReferenceListManageJspBean
      *
      * @param request
      *            The Http request
+     * @param model
+     *            The model
      * @return the html code of the reference item value form
      */
     @View( VIEW_CREATE )
-    public String getCreateTranslationItem( HttpServletRequest request )
+    public String getCreateTranslationItem( HttpServletRequest request, Models model )
     {
         int nIdReference = Integer.parseInt( (String) request.getSession( ).getAttribute( PARAMETER_ID_REFERENCE ) );
 
         ReferenceList referenceitems = buildReferenceItemComboList( nIdReference );
 
-        Map<String, Object> model = getModel( );
-
         model.put( MARK_SELECTLIST, referenceitems );
         model.put( MARK_SELECTLANGUAGES, buildLanguagesComboList( ) );
 
-        return getPage( PROPERTY_PAGE_TITLE_CREATE, TEMPLATE_CREATE, model );
+        return getPage( PROPERTY_PAGE_TITLE_CREATE, TEMPLATE_CREATE );
     }
 
     /**
@@ -217,10 +217,12 @@ public class TranslationItemJspBean extends AbstractReferenceListManageJspBean
      * 
      * @param request
      *            The HTTP request
+     * @param model
+     *            The model
      * @return The page
      */
     @View( value = VIEW_MANAGE, defaultView = true )
-    public String getManageTranslations( HttpServletRequest request )
+    public String getManageTranslations( HttpServletRequest request, Models model )
     {
         HttpSession session = request.getSession( );
 
@@ -249,9 +251,9 @@ public class TranslationItemJspBean extends AbstractReferenceListManageJspBean
             }
 
         List<TranslationItem> listTranslationItems = TranslationItemHome.getTranslationItemList( nIdReference );
-        Map<String, Object> model = getPaginatedListModel( request, MARK_MANAGE, listTranslationItems, JSP_MANAGE );
+        fillPaginatedListModel( model, request, MARK_MANAGE, listTranslationItems, JSP_MANAGE );
 
-        return getPage( PROPERTY_PAGE_TITLE_MANAGE, TEMPLATE_MANAGE, model );
+        return getPage( PROPERTY_PAGE_TITLE_MANAGE, TEMPLATE_MANAGE );
     }
 
     /**
