@@ -1,7 +1,7 @@
 <@pageContainer>
     <@pageColumn>
         <@pageHeader title='#i18n{referencelist.translationitem.manage.title}'>
-			<@offcanvas targetUrl='jsp/admin/plugins/referencelist/ManageTranslations.jsp?view_create=' targetElement='#create-translation-item' redirectForm=false id='translationitem_create' title='#i18n{referencelist.translationitem.manage.buttonAdd}' btnTitle='#i18n{referencelist.translationitem.manage.buttonAdd}' btnIcon='plus' position='end' />
+			<@aButton href='jsp/admin/plugins/referencelist/ManageTranslations.jsp?view=create' title='#i18n{referencelist.translationitem.manage.buttonAdd}' buttonIcon='plus' />
 		</@pageHeader>
 		<#if translationitems_list?size gt 0 >
 			<@messages infos=infos />
@@ -12,7 +12,7 @@
 					<@manageFeatureItem>
 						<@manageFeatureItemColumn auto=true>${translationitem.name} - ${translationitem.translation} - ${translationitem.lang}</@manageFeatureItemColumn>
 						<@manageFeatureItemColumn align='end'>
-							<@offcanvas targetUrl='jsp/admin/plugins/referencelist/ManageTranslations.jsp?view=modify&id=${translationitem.id}' targetElement='#update-translation-item' redirectForm=false id='translationitem${translationitem.id}_update' title='#i18n{portal.util.labelModify}' btnTitle='#i18n{portal.util.labelModify}' btnIcon='pencil' position='end' />
+							<@aButton href='jsp/admin/plugins/referencelist/ManageTranslations.jsp?view=modify&id=${translationitem.id}' title='#i18n{portal.util.labelModify}' buttonIcon='pencil' hideTitle=['xs','sm'] />
 							<@aButton href='jsp/admin/plugins/referencelist/ManageTranslations.jsp?action=remove&id=${translationitem.id}' title='#i18n{portal.util.labelDelete}' buttonIcon='trash' color='danger' hideTitle=['xs','sm'] /> 
 						</@manageFeatureItemColumn>
 					</@manageFeatureItem>
