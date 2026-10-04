@@ -21,5 +21,5 @@ INSERT INTO core_admin_role_resource (role_key,resource_type,resource_id,permiss
 --
 -- Data for table core_admin_role
 --
-INSERT INTO core_admin_role VALUES ('CREATE_REFERENCE_IMPORT','Import csv file');
-INSERT INTO core_user_role VALUES ('CREATE_REFERENCE_IMPORT',1);
+INSERT INTO core_admin_role (role_key,role_description) VALUES ('CREATE_REFERENCE_IMPORT','Import csv file');
+INSERT INTO core_user_role (role_key,id_user) VALUES ('CREATE_REFERENCE_IMPORT',1);
