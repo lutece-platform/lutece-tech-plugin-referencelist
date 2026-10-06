@@ -198,6 +198,27 @@ public class TranslationItemJspBeanTest extends LuteceTestCase
     }
 
     /**
+     * Opens the creation view without reference id in session: redirects instead of failing
+     *
+     * @throws AccessDeniedException
+     *             if access is denied
+     * @throws UserNotSignedException
+     *             if no user is signed in
+     */
+    @Test
+    void testCreateViewWithoutReferenceId( ) throws AccessDeniedException, UserNotSignedException
+    {
+        MockHttpServletRequest request = new MockHttpServletRequest( );
+        MockHttpServletResponse response = new MockHttpServletResponse( );
+        request.addParameter( "view", "create" );
+        AdminUser adminUser = new AdminUser( );
+        adminUser.setAccessCode( "admin" );
+        AdminAuthenticationService.getInstance( ).registerUser( request, adminUser );
+
+        assertNull( new TranslationItemJspBean( ).processController( request, response ) );
+    }
+
+    /**
      * Test preparation
      */
     private void prepare( )

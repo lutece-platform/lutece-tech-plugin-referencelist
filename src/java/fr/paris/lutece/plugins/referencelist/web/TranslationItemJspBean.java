@@ -44,6 +44,8 @@ import fr.paris.lutece.plugins.referencelist.business.ReferenceItemHome;
 import fr.paris.lutece.plugins.referencelist.business.TranslationItem;
 import fr.paris.lutece.plugins.referencelist.business.TranslationItemHome;
 import fr.paris.lutece.portal.service.i18n.I18nService;
+import fr.paris.lutece.portal.service.message.AdminMessage;
+import fr.paris.lutece.portal.service.message.AdminMessageService;
 import fr.paris.lutece.portal.util.mvc.admin.annotations.Controller;
 import fr.paris.lutece.portal.util.mvc.commons.annotations.Action;
 import fr.paris.lutece.portal.util.mvc.commons.annotations.View;
@@ -68,6 +70,7 @@ public class TranslationItemJspBean extends AbstractReferenceListManageJspBean
 
     // JSP
     private static final String JSP_MANAGE = "jsp/" + PLUGIN_PATH + "ManageTranslations.jsp";
+    private static final String JSP_MANAGE_REFERENCES = "jsp" + PLUGIN_PATH + "ManageReferences.jsp";
 
     /* List View */
     private static final String VIEW_MANAGE = "manage";
@@ -133,9 +136,15 @@ public class TranslationItemJspBean extends AbstractReferenceListManageJspBean
     @View( VIEW_MODIFY )
     public String getModifyTranslationItem( HttpServletRequest request, Models model )
     {
+        String strIdReference = getSessionIdReference( request );
+        if ( strIdReference == null )
+        {
+            return redirect( request, AdminMessageService.getMessageUrl( request, PROPERTY_NO_REFERENCEID_ERROR_MANAGE, JSP_MANAGE_REFERENCES, AdminMessage.TYPE_STOP ) );
+        }
+
         int nId = Integer.parseInt( request.getParameter( "id" ) );
 
-        int nIdReference = Integer.parseInt( (String) request.getSession( ).getAttribute( PARAMETER_ID_REFERENCE ) );
+        int nIdReference = Integer.parseInt( strIdReference );
 
         TranslationItem translationItem = TranslationItemHome.findByPrimaryKey( nId );
 
@@ -181,7 +190,13 @@ public class TranslationItemJspBean extends AbstractReferenceListManageJspBean
     @View( VIEW_CREATE )
     public String getCreateTranslationItem( HttpServletRequest request, Models model )
     {
-        int nIdReference = Integer.parseInt( (String) request.getSession( ).getAttribute( PARAMETER_ID_REFERENCE ) );
+        String strIdReference = getSessionIdReference( request );
+        if ( strIdReference == null )
+        {
+            return redirect( request, AdminMessageService.getMessageUrl( request, PROPERTY_NO_REFERENCEID_ERROR_MANAGE, JSP_MANAGE_REFERENCES, AdminMessage.TYPE_STOP ) );
+        }
+
+        int nIdReference = Integer.parseInt( strIdReference );
 
         ReferenceList referenceitems = buildReferenceItemComboList( nIdReference );
 
@@ -254,6 +269,20 @@ public class TranslationItemJspBean extends AbstractReferenceListManageJspBean
         fillPaginatedListModel( model, request, MARK_MANAGE, listTranslationItems, JSP_MANAGE );
 
         return getPage( PROPERTY_PAGE_TITLE_MANAGE, TEMPLATE_MANAGE );
+    }
+
+    /**
+     * Returns the reference id kept in session
+     *
+     * @param request
+     *            The HTTP request
+     * @return the numeric reference id, or null when absent or invalid
+     */
+    private String getSessionIdReference( HttpServletRequest request )
+    {
+        Object idReference = request.getSession( ).getAttribute( PARAMETER_ID_REFERENCE );
+
+        return ( idReference instanceof String strIdReference && StringUtils.isNumeric( strIdReference ) ) ? strIdReference : null;
     }
 
     /**
