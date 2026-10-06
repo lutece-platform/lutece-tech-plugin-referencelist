@@ -1,7 +1,7 @@
 <@pageContainer>
     <@pageColumn>
         <@pageHeader  title='#i18n{referencelist.manage_references.title}'>
-		<@offcanvas targetUrl='jsp/admin/plugins/referencelist/ManageReferences.jsp?view_createReference=' targetElement='#create-reference' redirectForm=false id='reference_create' title='#i18n{referencelist.manage_references.buttonAdd}' btnTitle='#i18n{referencelist.manage_references.buttonAdd}' btnIcon='pencil' position='end' />
+		<@aButton href='jsp/admin/plugins/referencelist/ManageReferences.jsp?view=createReference' title='#i18n{referencelist.manage_references.buttonAdd}' buttonIcon='pencil' />
 	</@pageHeader>
 	<#if reference_list?size gt 0 >
 		<@messages infos=infos />
@@ -10,7 +10,7 @@
 			<@manageFeatureItem>
 				<@manageFeatureItemColumn auto=true>${reference.name} - ${reference.description}</@manageFeatureItemColumn>
 				<@manageFeatureItemColumn align='end'>
-					<@offcanvas targetUrl='jsp/admin/plugins/referencelist/ManageReferences.jsp?view=modifyReference&id=${reference.id}' targetElement='#update-reference' redirectForm=false id='reference${reference.id}_update' title='#i18n{portal.util.labelModify}' btnTitle='#i18n{portal.util.labelModify}' btnIcon='pencil' position='end' />
+					<@aButton href='jsp/admin/plugins/referencelist/ManageReferences.jsp?view=modifyReference&id=${reference.id}' title='#i18n{portal.util.labelModify}' buttonIcon='pencil' hideTitle=['xs'] />
 					<@aButton href='jsp/admin/plugins/referencelist/ManageReferences.jsp?action=confirmRemoveReference&id=${reference.id}' title='#i18n{portal.util.labelDelete}' buttonIcon='trash' color='danger' hideTitle=['xs'] /> 
 					<@aButton href='jsp/admin/plugins/referencelist/ManageReferenceItems.jsp?view=modifyReference&id=${reference.id}' buttonIcon='list' color='info' title='#i18n{referencelist.manage_reference.referenceitem.title}' class='ms-1' hideTitle=['xs'] />
 					<@aButton href='jsp/admin/plugins/referencelist/ManageTranslations.jsp?idReference=${reference.id}' buttonIcon='language' color='info' title='#i18n{referencelist.manage_reference.translationitem.title}' hideTitle=['xs'] />
