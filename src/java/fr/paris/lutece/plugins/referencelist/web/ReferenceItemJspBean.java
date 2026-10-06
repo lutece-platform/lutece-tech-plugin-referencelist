@@ -63,7 +63,7 @@ import jakarta.servlet.http.HttpServletRequest;
  */
 @SessionScoped
 @Named
-@Controller( controllerJsp = "ManageReferenceItems.jsp", controllerPath = "jsp/admin/plugins/referencelist/", right = "REFERENCELIST_MANAGEMENT" )
+@Controller( controllerJsp = "ManageReferenceItems.jsp", controllerPath = "jsp/admin/plugins/referencelist/", right = "REFERENCELIST_MANAGEMENT", securityTokenEnabled = true )
 public class ReferenceItemJspBean extends AbstractReferenceListManageJspBean
 {
     private static final long serialVersionUID = -1372012949835763462L;

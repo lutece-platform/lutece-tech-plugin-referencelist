@@ -60,7 +60,7 @@ import jakarta.servlet.http.HttpSession;
  */
 @RequestScoped
 @Named
-@Controller( controllerJsp = "ManageTranslations.jsp", controllerPath = "jsp/admin/plugins/referencelist/", right = "REFERENCELIST_MANAGEMENT" )
+@Controller( controllerJsp = "ManageTranslations.jsp", controllerPath = "jsp/admin/plugins/referencelist/", right = "REFERENCELIST_MANAGEMENT", securityTokenEnabled = true )
 public class TranslationItemJspBean extends AbstractReferenceListManageJspBean
 {
     private static final long serialVersionUID = 701412592951603762L;
