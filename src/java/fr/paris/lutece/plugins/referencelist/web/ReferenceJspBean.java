@@ -34,7 +34,6 @@
 package fr.paris.lutece.plugins.referencelist.web;
 
 import java.util.List;
-import java.util.Map;
 
 import fr.paris.lutece.plugins.referencelist.business.Reference;
 import fr.paris.lutece.plugins.referencelist.business.ReferenceHome;
@@ -44,6 +43,7 @@ import fr.paris.lutece.portal.service.message.AdminMessageService;
 import fr.paris.lutece.portal.util.mvc.admin.annotations.Controller;
 import fr.paris.lutece.portal.util.mvc.commons.annotations.Action;
 import fr.paris.lutece.portal.util.mvc.commons.annotations.View;
+import fr.paris.lutece.portal.web.cdi.mvc.Models;
 import fr.paris.lutece.util.url.UrlItem;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Named;
@@ -96,14 +96,16 @@ public class ReferenceJspBean extends AbstractReferenceListManageJspBean
      * 
      * @param request
      *            The HTTP request
+     * @param model
+     *            The model
      * @return The page
      */
     @View( value = VIEW_MANAGE_REFERENCES, defaultView = true )
-    public String getManageReferences( HttpServletRequest request )
+    public String getManageReferences( HttpServletRequest request, Models model )
     {
         List<Reference> listReferences = ReferenceHome.getReferencesList( );
-        Map<String, Object> model = getPaginatedListModel( request, MARK_REFERENCE_LIST, listReferences, JSP_MANAGE_REFERENCES );
-        return getPage( PROPERTY_PAGE_TITLE_MANAGE_REFERENCES, TEMPLATE_MANAGE_REFERENCES, model );
+        fillPaginatedListModel( model, request, MARK_REFERENCE_LIST, listReferences, JSP_MANAGE_REFERENCES );
+        return getPage( PROPERTY_PAGE_TITLE_MANAGE_REFERENCES, TEMPLATE_MANAGE_REFERENCES );
     }
 
     /**
@@ -111,14 +113,15 @@ public class ReferenceJspBean extends AbstractReferenceListManageJspBean
      *
      * @param request
      *            The Http request
+     * @param model
+     *            The model
      * @return the html code of the reference form
      */
     @View( VIEW_CREATE_REFERENCE )
-    public String getCreateReference( HttpServletRequest request )
+    public String getCreateReference( HttpServletRequest request, Models model )
     {
-        Map<String, Object> model = getModel( );
         model.put( MARK_REFERENCE, new Reference( ) );
-        return getPage( PROPERTY_PAGE_TITLE_CREATE_REFERENCE, TEMPLATE_CREATE_REFERENCE, model );
+        return getPage( PROPERTY_PAGE_TITLE_CREATE_REFERENCE, TEMPLATE_CREATE_REFERENCE );
     }
 
     /**
@@ -186,16 +189,17 @@ public class ReferenceJspBean extends AbstractReferenceListManageJspBean
      *
      * @param request
      *            The Http request
+     * @param model
+     *            The model
      * @return The HTML form to update info
      */
     @View( VIEW_MODIFY_REFERENCE )
-    public String getModifyReference( HttpServletRequest request )
+    public String getModifyReference( HttpServletRequest request, Models model )
     {
         int nId = Integer.parseInt( request.getParameter( PARAMETER_ID_REFERENCE ) );
         Reference reference =  ReferenceHome.findByPrimaryKey( nId );
-        Map<String, Object> model = getModel( );
         model.put( MARK_REFERENCE, reference );
-        return getPage( PROPERTY_PAGE_TITLE_MODIFY_REFERENCE, TEMPLATE_MODIFY_REFERENCE, model );
+        return getPage( PROPERTY_PAGE_TITLE_MODIFY_REFERENCE, TEMPLATE_MODIFY_REFERENCE );
     }
 
     /**

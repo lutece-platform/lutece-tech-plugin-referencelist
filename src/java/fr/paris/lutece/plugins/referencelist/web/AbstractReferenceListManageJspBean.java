@@ -35,12 +35,12 @@ package fr.paris.lutece.plugins.referencelist.web;
 
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
 import fr.paris.lutece.portal.util.mvc.admin.MVCAdminJspBean;
+import fr.paris.lutece.portal.web.cdi.mvc.Models;
 import fr.paris.lutece.portal.web.util.LocalizedPaginator;
 import fr.paris.lutece.util.html.AbstractPaginator;
 import fr.paris.lutece.util.url.UrlItem;
 
 import java.util.List;
-import java.util.Map;
 import jakarta.servlet.http.HttpServletRequest;
 
 /**
@@ -68,8 +68,10 @@ public abstract class AbstractReferenceListManageJspBean extends MVCAdminJspBean
     private int _nItemsPerPage;
 
     /**
-     * Return a model that contains the list and paginator infos
+     * Fill the model with the list and paginator infos
      * 
+     * @param model
+     *            The model
      * @param request
      *            The HTTP request
      * @param strBookmark
@@ -78,9 +80,8 @@ public abstract class AbstractReferenceListManageJspBean extends MVCAdminJspBean
      *            The list of item
      * @param strManageJsp
      *            The JSP
-     * @return The model
      */
-    protected <T> Map<String, Object> getPaginatedListModel( HttpServletRequest request, String strBookmark, List<T> list, String strManageJsp )
+    protected <T> void fillPaginatedListModel( Models model, HttpServletRequest request, String strBookmark, List<T> list, String strManageJsp )
     {
         _strCurrentPageIndex = AbstractPaginator.getPageIndex( request, AbstractPaginator.PARAMETER_PAGE_INDEX, _strCurrentPageIndex );
         int defaultItemsPerPage = AppPropertiesService.getPropertyInt( PROPERTY_DEFAULT_LIST_ITEM_PER_PAGE, 50 );
@@ -92,12 +93,8 @@ public abstract class AbstractReferenceListManageJspBean extends MVCAdminJspBean
         // PAGINATOR
         LocalizedPaginator<T> paginator = new LocalizedPaginator<>( list, _nItemsPerPage, strUrl, PARAMETER_PAGE_INDEX, _strCurrentPageIndex, getLocale( ) );
 
-        Map<String, Object> model = getModel( );
-
         model.put( MARK_NB_ITEMS_PER_PAGE, String.valueOf( _nItemsPerPage ) );
         model.put( MARK_PAGINATOR, paginator );
         model.put( strBookmark, paginator.getPageItems( ) );
-
-        return model;
     }
 }

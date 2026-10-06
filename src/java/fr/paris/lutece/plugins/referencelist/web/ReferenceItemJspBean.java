@@ -36,7 +36,6 @@ package fr.paris.lutece.plugins.referencelist.web;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
 
@@ -52,6 +51,7 @@ import fr.paris.lutece.portal.service.upload.MultipartItem;
 import fr.paris.lutece.portal.util.mvc.admin.annotations.Controller;
 import fr.paris.lutece.portal.util.mvc.commons.annotations.Action;
 import fr.paris.lutece.portal.util.mvc.commons.annotations.View;
+import fr.paris.lutece.portal.web.cdi.mvc.Models;
 import fr.paris.lutece.portal.web.upload.MultipartHttpServletRequest;
 import fr.paris.lutece.util.url.UrlItem;
 import jakarta.enterprise.context.SessionScoped;
@@ -130,21 +130,23 @@ public class ReferenceItemJspBean extends AbstractReferenceListManageJspBean
      * 
      * @param request
      *            The HTTP request
+     * @param model
+     *            The model
      * @return The page
      */
     @View( value = VIEW_MANAGE_REFERENCEITEMS, defaultView = true )
-    public String getManageReferenceItems( HttpServletRequest request )
+    public String getManageReferenceItems( HttpServletRequest request, Models model )
     {
         _referenceitem = null;
         _idReference = Integer.parseInt( request.getParameter( PARAMETER_ID_REFERENCE ) );
 
         List<ReferenceItem> listReferenceItems = ReferenceItemHome.getReferenceItemsList( _idReference );
-        Map<String, Object> model = getPaginatedListModel( request, MARK_REFERENCEITEM_LIST, listReferenceItems,
+        fillPaginatedListModel( model, request, MARK_REFERENCEITEM_LIST, listReferenceItems,
                 JSP_MANAGE_REFERENCEITEMS + "?idReference=" + _idReference );
 
         model.put( PARAMETER_ID_REFERENCE, _idReference );
 
-        return getPage( PROPERTY_PAGE_TITLE_MANAGE_REFERENCEITEMS, TEMPLATE_MANAGE_REFERENCEITEMS, model );
+        return getPage( PROPERTY_PAGE_TITLE_MANAGE_REFERENCEITEMS, TEMPLATE_MANAGE_REFERENCEITEMS );
     }
 
     /**
@@ -152,18 +154,19 @@ public class ReferenceItemJspBean extends AbstractReferenceListManageJspBean
      *
      * @param request
      *            The Http request
+     * @param model
+     *            The model
      * @return the html code of the referenceitem form
      */
     @View( VIEW_IMPORT_REFERENCEITEM )
-    public String getImportReferenceItem( HttpServletRequest request )
+    public String getImportReferenceItem( HttpServletRequest request, Models model )
     {
         _referenceitem = ( _referenceitem != null ) ? _referenceitem : new ReferenceItem( );
 
         _referenceitem.setIdreference( _idReference );
-        Map<String, Object> model = getModel( );
         model.put( MARK_REFERENCEITEM, _referenceitem );
 
-        return getPage( PROPERTY_PAGE_TITLE_IMPORT_REFERENCEITEM, TEMPLATE_IMPORT_REFERENCEITEM, model );
+        return getPage( PROPERTY_PAGE_TITLE_IMPORT_REFERENCEITEM, TEMPLATE_IMPORT_REFERENCEITEM );
     }
 
     /**
@@ -171,11 +174,13 @@ public class ReferenceItemJspBean extends AbstractReferenceListManageJspBean
      *
      * @param request
      *            The Http Request
+     * @param model
+     *            The model
      * @return The Jsp URL of the process result
      * @throws IOException
      */
     @Action( ACTION_CHECK_IMPORT_REFERENCEITEM )
-    public String checkImportReferenceItem( HttpServletRequest request ) throws IOException
+    public String checkImportReferenceItem( HttpServletRequest request, Models model ) throws IOException
     {
 
         List<ReferenceItem> candidateItems = new ArrayList<>( );
@@ -194,9 +199,8 @@ public class ReferenceItemJspBean extends AbstractReferenceListManageJspBean
             String errorsMessage = ReferenceItemPrepareImport.isErrorInCSVFile( csvFile.getInputStream( ) );
             if ( errorsMessage != null )
             {
-                Map<String, Object> model = getModel( );
                 model.put( MARK_IMPORT_ERROR_BASE64, errorsMessage );
-                return getPage( "PROPERTY_PAGE_TITLE_IMPORT_REFERENCEITEM", TEMPLATE_IMPORT_REFERENCEITEM, model );
+                return getPage( "PROPERTY_PAGE_TITLE_IMPORT_REFERENCEITEM", TEMPLATE_IMPORT_REFERENCEITEM );
             }
 
             // CandidateItems to Import
@@ -290,17 +294,18 @@ public class ReferenceItemJspBean extends AbstractReferenceListManageJspBean
      *
      * @param request
      *            The Http request
+     * @param model
+     *            The model
      * @return the html code of the referenceitem form
      */
     @View( VIEW_CREATE_REFERENCEITEM )
-    public String getCreateReferenceItem( HttpServletRequest request )
+    public String getCreateReferenceItem( HttpServletRequest request, Models model )
     {
 
         _referenceitem = ( _referenceitem != null ) ? _referenceitem : new ReferenceItem( );
         _referenceitem.setIdreference( _idReference );
-        Map<String, Object> model = getModel( );
         model.put( MARK_REFERENCEITEM, _referenceitem );
-        return getPage( PROPERTY_PAGE_TITLE_CREATE_REFERENCEITEM, TEMPLATE_CREATE_REFERENCEITEM, model );
+        return getPage( PROPERTY_PAGE_TITLE_CREATE_REFERENCEITEM, TEMPLATE_CREATE_REFERENCEITEM );
     }
 
     /**
@@ -370,10 +375,12 @@ public class ReferenceItemJspBean extends AbstractReferenceListManageJspBean
      *
      * @param request
      *            The Http request
+     * @param model
+     *            The model
      * @return The HTML form to update info
      */
     @View( VIEW_MODIFY_REFERENCEITEM )
-    public String getModifyReferenceItem( HttpServletRequest request )
+    public String getModifyReferenceItem( HttpServletRequest request, Models model )
     {
         int nId = Integer.parseInt( request.getParameter( PARAMETER_ID_REFERENCEITEM ) );
 
@@ -382,10 +389,9 @@ public class ReferenceItemJspBean extends AbstractReferenceListManageJspBean
             _referenceitem = ReferenceItemHome.findByPrimaryKey( nId );
         }
 
-        Map<String, Object> model = getModel( );
         model.put( MARK_REFERENCEITEM, _referenceitem );
 
-        return getPage( PROPERTY_PAGE_TITLE_MODIFY_REFERENCEITEM, TEMPLATE_MODIFY_REFERENCEITEM, model );
+        return getPage( PROPERTY_PAGE_TITLE_MODIFY_REFERENCEITEM, TEMPLATE_MODIFY_REFERENCEITEM );
     }
 
     /**
