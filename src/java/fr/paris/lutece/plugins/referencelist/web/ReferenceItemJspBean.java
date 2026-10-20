@@ -47,6 +47,7 @@ import fr.paris.lutece.plugins.referencelist.service.ReferenceItemPrepareImport;
 import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.message.AdminMessage;
 import fr.paris.lutece.portal.service.message.AdminMessageService;
+import fr.paris.lutece.portal.service.message.MessageHtml;
 import fr.paris.lutece.portal.service.upload.MultipartItem;
 import fr.paris.lutece.portal.util.mvc.admin.annotations.Controller;
 import fr.paris.lutece.portal.util.mvc.commons.annotations.Action;
@@ -220,12 +221,12 @@ public class ReferenceItemJspBean extends AbstractReferenceListManageJspBean
 
             // call confirmation
             _compareResult = ReferenceItemHome.compareReferenceItems( candidateItems, refId );
-            String tmpmsg = _compareResult.createMessage( getLocale( ) );
+            String tmpmsg = _compareResult.createText( getLocale( ) );
 
             if ( CollectionUtils.isEmpty( _compareResult.getInsertListCandidateReferenceItems( ) )
                     && CollectionUtils.isEmpty( _compareResult.getUpdateListCandidateReferenceItems( ) ) )
             {
-                addError( I18nService.getLocalizedString( INFO_REFERENCEITEM_NOTIMPORTED, getLocale( ) ) + tmpmsg );
+                addError( I18nService.getLocalizedString( INFO_REFERENCEITEM_NOTIMPORTED, getLocale( ) ) + " " + tmpmsg );
                 return redirectView( request, VIEW_IMPORT_REFERENCEITEM );
             }
 
@@ -245,7 +246,7 @@ public class ReferenceItemJspBean extends AbstractReferenceListManageJspBean
     public String getConfirmImportReferenceItem( HttpServletRequest request )
     {
 
-        String tmpmsg = _compareResult.createMessage( getLocale( ) );
+        MessageHtml tmpmsg = _compareResult.createMessage( getLocale( ) );
         Object [ ] messageArgs = {
                 tmpmsg
         };
