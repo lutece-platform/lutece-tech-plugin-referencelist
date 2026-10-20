@@ -4,7 +4,7 @@
 		<@div id='import-reference-item'>
 		<#if import_error_base64?has_content>
 			<@alert class='danger' title='#i18n{referencelist.info.referenceitem.fileErrors}' dismissible=true >
-				<@aButton href='data:text/plain;base64,${import_error_base64}' color='danger' title='#i18n{referencelist.info.referenceitem.import.download}' params=' download="reference_import_log.txt"'  />
+				<@aButton href='data:text/plain;base64,${import_error_base64}' color='danger' title='#i18n{referencelist.info.referenceitem.import.download}' params={"download": "reference_import_log.txt"}  />
 			</@alert>
 		</#if>
 		<@tform name='import_referenceitem' enctype='multipart/form-data' action='jsp/admin/plugins/referencelist/ManageReferenceItems.jsp'>

@@ -37,6 +37,7 @@ import java.util.List;
 import java.util.Locale;
 
 import fr.paris.lutece.portal.service.i18n.I18nService;
+import fr.paris.lutece.portal.service.message.MessageHtml;
 
 /**
  * This class provides instances management methods (create, find, ...) for Result of ReferenceItemPrepareImport
@@ -49,6 +50,7 @@ public class CompareResult
 
     private static final String TAG_OPEN_STRONG = "<strong>";
     private static final String TAG_CLOSE_STRONG = "</strong> ";
+    private static final String TAG_BREAK = "<br>";
 
     private List<ReferenceItem> _updateListCandidateReferenceItems;
     private List<ReferenceItem> _duplicateListCandidateReferenceItems;
@@ -94,27 +96,79 @@ public class CompareResult
         return _insertListCandidateReferenceItems;
     }
 
-    public String createMessage( Locale locale )
+    /**
+     * Builds the summary of the comparison shown in the confirmation message: the counts in bold, one line each.
+     *
+     * @param locale
+     *            the locale of the labels
+     * @return the summary, as HTML for an argument of an admin message
+     */
+    public MessageHtml createMessage( Locale locale )
     {
-        String message = "";
-        int update = _updateListCandidateReferenceItems.size( );
-        int duplicate = _duplicateListCandidateReferenceItems.size( );
-        int insert = _insertListCandidateReferenceItems.size( );
+        return MessageHtml.of( buildMessage( locale, TAG_OPEN_STRONG, TAG_CLOSE_STRONG, TAG_BREAK ) );
+    }
 
-        if ( duplicate > 0 )
+    /**
+     * Builds the summary of the comparison as plain text, for an error message of the page.
+     *
+     * @param locale
+     *            the locale of the labels
+     * @return the summary, as text
+     */
+    public String createText( Locale locale )
+    {
+        return buildMessage( locale, "", " ", " " ).trim( );
+    }
+
+    /**
+     * Builds the summary of the comparison: each non-zero count followed by its label.
+     *
+     * @param locale
+     *            the locale of the labels
+     * @param strOpen
+     *            written before each count
+     * @param strClose
+     *            written after each count
+     * @param strBreak
+     *            written between two lines
+     * @return the summary
+     */
+    private String buildMessage( Locale locale, String strOpen, String strClose, String strBreak )
+    {
+        StringBuilder sbMessage = new StringBuilder( );
+        appendLine( sbMessage, _duplicateListCandidateReferenceItems.size( ), INFO_REFERENCEITEM_DUPLICATE_IN_TABLE, locale, strOpen, strClose, strBreak );
+        appendLine( sbMessage, _updateListCandidateReferenceItems.size( ), INFO_REFERENCEITEM_TO_UPDATE, locale, strOpen, strClose, strBreak );
+        appendLine( sbMessage, _insertListCandidateReferenceItems.size( ), INFO_REFERENCEITEM_TO_INSERT, locale, strOpen, strClose, strBreak );
+        return sbMessage.toString( );
+    }
+
+    /**
+     * Appends a line of the summary when its count is not zero.
+     *
+     * @param sbMessage
+     *            the summary
+     * @param nCount
+     *            the count
+     * @param strLabelKey
+     *            the key of the label
+     * @param locale
+     *            the locale of the label
+     * @param strOpen
+     *            written before the count
+     * @param strClose
+     *            written after the count
+     * @param strBreak
+     *            written before the line when it is not the first one
+     */
+    private static void appendLine( StringBuilder sbMessage, int nCount, String strLabelKey, Locale locale, String strOpen, String strClose, String strBreak )
+    {
+        if ( nCount > 0 )
         {
-            message = message + TAG_OPEN_STRONG + duplicate + TAG_CLOSE_STRONG + I18nService.getLocalizedString( INFO_REFERENCEITEM_DUPLICATE_IN_TABLE, locale )
-                    + "<br>";
+            if ( sbMessage.length( ) > 0 )
+            {
+                sbMessage.append( strBreak );
+            }
+            sbMessage.append( strOpen ).append( nCount ).append( strClose ).append( I18nService.getLocalizedString( strLabelKey, locale ) );
         }
-        if ( update > 0 )
-        {
-            message = message + TAG_OPEN_STRONG + update + TAG_CLOSE_STRONG + I18nService.getLocalizedString( INFO_REFERENCEITEM_TO_UPDATE, locale ) + " <br>";
-        }
-        if ( insert > 0 )
-        {
-            message = message + TAG_OPEN_STRONG + insert + TAG_CLOSE_STRONG
-                    + I18nService.getLocalizedString( INFO_REFERENCEITEM_TO_INSERT, Locale.getDefault( ) );
-        }
-        return message;
     }
 }

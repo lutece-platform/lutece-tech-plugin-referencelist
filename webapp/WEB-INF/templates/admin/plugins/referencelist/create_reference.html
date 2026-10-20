@@ -2,7 +2,7 @@
     <@pageColumn>
         <@pageHeader title='#i18n{referencelist.create_reference.title}' />
 		<@div id='create-reference'>
-		<@tform name='create_reference' params='enctype="multipart/form-data"' action='jsp/admin/plugins/referencelist/ManageReferences.jsp'>
+		<@tform name='create_reference' params={"enctype": "multipart/form-data"} action='jsp/admin/plugins/referencelist/ManageReferences.jsp'>
 			<@messages errors=errors />
 			<@input type="hidden" id="id" name="id"/>
 			<@formGroup labelKey='#i18n{referencelist.create_reference.labelName}' helpKey='#i18n{referencelist.create_reference.labelName.help}' mandatory=true>
