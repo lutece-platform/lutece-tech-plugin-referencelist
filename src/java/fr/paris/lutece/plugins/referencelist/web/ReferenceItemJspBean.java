@@ -339,7 +339,7 @@ public class ReferenceItemJspBean extends AbstractReferenceListManageJspBean
      *            The Http request
      * @return the html code to confirm
      */
-    @Action( value = ACTION_CONFIRM_REMOVE_REFERENCEITEM, securityTokenAction = ACTION_REMOVE_REFERENCEITEM )
+    @Action( value = ACTION_CONFIRM_REMOVE_REFERENCEITEM, securityTokenAction = ACTION_REMOVE_REFERENCEITEM, securityTokenDisabled = true )
     public String getConfirmRemoveReferenceItem( HttpServletRequest request )
     {
         int nId = Integer.parseInt( request.getParameter( PARAMETER_ID_REFERENCEITEM ) );

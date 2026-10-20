@@ -51,6 +51,7 @@ import fr.paris.lutece.portal.util.mvc.commons.annotations.Action;
 import fr.paris.lutece.portal.util.mvc.commons.annotations.View;
 import fr.paris.lutece.portal.web.cdi.mvc.Models;
 import fr.paris.lutece.util.ReferenceList;
+import fr.paris.lutece.util.url.UrlItem;
 import jakarta.inject.Named;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -96,6 +97,8 @@ public class TranslationItemJspBean extends AbstractReferenceListManageJspBean
 
     /* Removal */
     public static final String ACTION_REMOVE = "remove";
+    private static final String ACTION_CONFIRM_REMOVE = "confirmRemove";
+    private static final String MESSAGE_CONFIRM_REMOVE = "referencelist.message.confirmRemoveTranslationItem";
     private static final String PROPERTY_TRANSLATIONITEM_REMOVED = "referencelist.info.translationitem.removed";
 
     public static final String PARAMETER_ID_REFERENCE = "idReference";
@@ -104,6 +107,25 @@ public class TranslationItemJspBean extends AbstractReferenceListManageJspBean
     private static final String MARK_SELECTLANGUAGES = "languages";
 
     private static final String PROPERTY_LANGUAGES = "referencelist.languages";
+
+    /**
+     * Manages the removal form of a translationitem whose identifier is in the http request
+     *
+     * @param request
+     *            The Http request
+     * @return the html code to confirm
+     */
+    @Action( value = ACTION_CONFIRM_REMOVE, securityTokenAction = ACTION_REMOVE, securityTokenDisabled = true )
+    public String getConfirmRemoveTranslationItem( HttpServletRequest request )
+    {
+        int nId = Integer.parseInt( request.getParameter( "id" ) );
+        UrlItem url = new UrlItem( getActionUrl( ACTION_REMOVE ) );
+        url.addParameter( "id", nId );
+
+        String strMessageUrl = AdminMessageService.getMessageUrl( request, MESSAGE_CONFIRM_REMOVE, url.getUrl( ), AdminMessage.TYPE_CONFIRMATION );
+
+        return redirect( request, strMessageUrl );
+    }
 
     /**
      * Handles the removal form of a translationitem

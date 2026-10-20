@@ -158,7 +158,7 @@ public class ReferenceJspBean extends AbstractReferenceListManageJspBean
      *            The Http request
      * @return the html code to confirm
      */
-    @Action( value = ACTION_CONFIRM_REMOVE_REFERENCE, securityTokenAction = ACTION_REMOVE_REFERENCE )
+    @Action( value = ACTION_CONFIRM_REMOVE_REFERENCE, securityTokenAction = ACTION_REMOVE_REFERENCE, securityTokenDisabled = true )
     public String getConfirmRemoveReference( HttpServletRequest request )
     {
         int nId = Integer.parseInt( request.getParameter( PARAMETER_ID_REFERENCE ) );
