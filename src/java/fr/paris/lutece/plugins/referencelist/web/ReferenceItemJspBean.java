@@ -100,13 +100,13 @@ public class ReferenceItemJspBean extends AbstractReferenceListManageJspBean
     private static final String VIEW_IMPORT_REFERENCEITEM = "importReferenceItem";
     private static final String VIEW_MODIFY_REFERENCEITEM = "modifyReferenceItem";
     private static final String VIEW_CONFIRM_IMPORT_REFERENCEITEM = "confirmImportReferenceItem";
+    private static final String VIEW_CONFIRM_REMOVE_REFERENCEITEM = "confirmRemoveReferenceItem";
 
     // Actions
     private static final String ACTION_CHECK_IMPORT_REFERENCEITEM = "importReferenceItem";
     private static final String ACTION_CREATE_REFERENCEITEM = "createReferenceItem";
     private static final String ACTION_MODIFY_REFERENCEITEM = "modifyReferenceItem";
     private static final String ACTION_REMOVE_REFERENCEITEM = "removeReferenceItem";
-    private static final String ACTION_CONFIRM_REMOVE_REFERENCEITEM = "confirmRemoveReferenceItem";
     private static final String ACTION_DO_IMPORT_REFERENCEITEM = "doImportReferenceItem";
 
     // Infos
@@ -339,7 +339,7 @@ public class ReferenceItemJspBean extends AbstractReferenceListManageJspBean
      *            The Http request
      * @return the html code to confirm
      */
-    @Action( value = ACTION_CONFIRM_REMOVE_REFERENCEITEM, securityTokenAction = ACTION_REMOVE_REFERENCEITEM )
+    @View( value = VIEW_CONFIRM_REMOVE_REFERENCEITEM, securityTokenAction = ACTION_REMOVE_REFERENCEITEM )
     public String getConfirmRemoveReferenceItem( HttpServletRequest request )
     {
         int nId = Integer.parseInt( request.getParameter( PARAMETER_ID_REFERENCEITEM ) );

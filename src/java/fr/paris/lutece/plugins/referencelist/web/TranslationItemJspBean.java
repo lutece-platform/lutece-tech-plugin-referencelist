@@ -51,6 +51,7 @@ import fr.paris.lutece.portal.util.mvc.commons.annotations.Action;
 import fr.paris.lutece.portal.util.mvc.commons.annotations.View;
 import fr.paris.lutece.portal.web.cdi.mvc.Models;
 import fr.paris.lutece.util.ReferenceList;
+import fr.paris.lutece.util.url.UrlItem;
 import jakarta.inject.Named;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -96,6 +97,9 @@ public class TranslationItemJspBean extends AbstractReferenceListManageJspBean
 
     /* Removal */
     public static final String ACTION_REMOVE = "remove";
+    private static final String VIEW_CONFIRM_REMOVE = "confirmRemove";
+    private static final String MESSAGE_CONFIRM_REMOVE = "referencelist.message.confirmRemoveTranslationItem";
+    private static final String PARAMETER_ID = "id";
     private static final String PROPERTY_TRANSLATIONITEM_REMOVED = "referencelist.info.translationitem.removed";
 
     public static final String PARAMETER_ID_REFERENCE = "idReference";
@@ -104,6 +108,25 @@ public class TranslationItemJspBean extends AbstractReferenceListManageJspBean
     private static final String MARK_SELECTLANGUAGES = "languages";
 
     private static final String PROPERTY_LANGUAGES = "referencelist.languages";
+
+    /**
+     * Asks the confirmation of the removal of a translationitem whose identifier is in the http request; the confirmation posts the removal
+     *
+     * @param request
+     *            The Http request
+     * @return the url of the confirmation message
+     */
+    @View( value = VIEW_CONFIRM_REMOVE, securityTokenAction = ACTION_REMOVE )
+    public String getConfirmRemoveTranslationItem( HttpServletRequest request )
+    {
+        int nId = Integer.parseInt( request.getParameter( PARAMETER_ID ) );
+        UrlItem url = new UrlItem( getActionUrl( ACTION_REMOVE ) );
+        url.addParameter( PARAMETER_ID, nId );
+
+        String strMessageUrl = AdminMessageService.getMessageUrl( request, MESSAGE_CONFIRM_REMOVE, url.getUrl( ), AdminMessage.TYPE_CONFIRMATION );
+
+        return redirect( request, strMessageUrl );
+    }
 
     /**
      * Handles the removal form of a translationitem
@@ -115,7 +138,7 @@ public class TranslationItemJspBean extends AbstractReferenceListManageJspBean
     @Action( ACTION_REMOVE )
     public String doRemoveTranslationItem( HttpServletRequest request )
     {
-        int nId = Integer.parseInt( request.getParameter( "id" ) );
+        int nId = Integer.parseInt( request.getParameter( PARAMETER_ID ) );
 
         TranslationItemHome.remove( nId );
 

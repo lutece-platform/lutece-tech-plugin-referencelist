@@ -15,7 +15,7 @@
 		            <@manageFeatureItemColumn auto=true>${referenceitem.idreference}</@manageFeatureItemColumn>
 			        <@manageFeatureItemColumn align='end'>
 						<@aButton href='jsp/admin/plugins/referencelist/ManageReferenceItems.jsp?view=modifyReferenceItem&id=${referenceitem.id}' title='#i18n{portal.util.labelModify}' buttonIcon='pencil' hideTitle=['xs','sm'] />
-						<@aButton href='jsp/admin/plugins/referencelist/ManageReferenceItems.jsp?action=confirmRemoveReferenceItem&id=${referenceitem.id}' title='#i18n{portal.util.labelDelete}' buttonIcon='trash' color='danger' hideTitle=['xs','sm'] />
+						<@aButton href='jsp/admin/plugins/referencelist/ManageReferenceItems.jsp?view=confirmRemoveReferenceItem&id=${referenceitem.id}' title='#i18n{portal.util.labelDelete}' buttonIcon='trash' color='danger' hideTitle=['xs','sm'] />
 			        </@manageFeatureItemColumn>
 		        </@manageFeatureItem>
 	        </#list>

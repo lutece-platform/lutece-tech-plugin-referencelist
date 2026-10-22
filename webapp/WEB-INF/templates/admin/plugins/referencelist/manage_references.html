@@ -11,7 +11,7 @@
 				<@manageFeatureItemColumn auto=true>${reference.name} - ${reference.description}</@manageFeatureItemColumn>
 				<@manageFeatureItemColumn align='end'>
 					<@aButton href='jsp/admin/plugins/referencelist/ManageReferences.jsp?view=modifyReference&id=${reference.id}' title='#i18n{portal.util.labelModify}' buttonIcon='pencil' hideTitle=['xs'] />
-					<@aButton href='jsp/admin/plugins/referencelist/ManageReferences.jsp?action=confirmRemoveReference&id=${reference.id}' title='#i18n{portal.util.labelDelete}' buttonIcon='trash' color='danger' hideTitle=['xs'] /> 
+					<@aButton href='jsp/admin/plugins/referencelist/ManageReferences.jsp?view=confirmRemoveReference&id=${reference.id}' title='#i18n{portal.util.labelDelete}' buttonIcon='trash' color='danger' hideTitle=['xs'] /> 
 					<@aButton href='jsp/admin/plugins/referencelist/ManageReferenceItems.jsp?view=modifyReference&id=${reference.id}' buttonIcon='list' color='info' title='#i18n{referencelist.manage_reference.referenceitem.title}' class='ms-1' hideTitle=['xs'] />
 					<@aButton href='jsp/admin/plugins/referencelist/ManageTranslations.jsp?idReference=${reference.id}' buttonIcon='language' color='info' title='#i18n{referencelist.manage_reference.translationitem.title}' hideTitle=['xs'] />
 				</@manageFeatureItemColumn>

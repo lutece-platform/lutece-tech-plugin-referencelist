@@ -13,7 +13,7 @@
 						<@manageFeatureItemColumn auto=true>${translationitem.name} - ${translationitem.translation} - ${translationitem.lang}</@manageFeatureItemColumn>
 						<@manageFeatureItemColumn align='end'>
 							<@aButton href='jsp/admin/plugins/referencelist/ManageTranslations.jsp?view=modify&id=${translationitem.id}' title='#i18n{portal.util.labelModify}' buttonIcon='pencil' hideTitle=['xs','sm'] />
-							<@aButton href='jsp/admin/plugins/referencelist/ManageTranslations.jsp?action=remove&id=${translationitem.id}' title='#i18n{portal.util.labelDelete}' buttonIcon='trash' color='danger' hideTitle=['xs','sm'] /> 
+							<@aButton href='jsp/admin/plugins/referencelist/ManageTranslations.jsp?view=confirmRemove&id=${translationitem.id}' title='#i18n{portal.util.labelDelete}' buttonIcon='trash' color='danger' hideTitle=['xs','sm'] /> 
 						</@manageFeatureItemColumn>
 					</@manageFeatureItem>
 				</#list>

@@ -85,7 +85,7 @@ public class ReferenceJspBean extends AbstractReferenceListManageJspBean
     private static final String ACTION_CREATE_REFERENCE = "createReference";
     private static final String ACTION_MODIFY_REFERENCE = "modifyReference";
     private static final String ACTION_REMOVE_REFERENCE = "removeReference";
-    private static final String ACTION_CONFIRM_REMOVE_REFERENCE = "confirmRemoveReference";
+    private static final String VIEW_CONFIRM_REMOVE_REFERENCE = "confirmRemoveReference";
     // Infos
     private static final String INFO_REFERENCE_CREATED = "referencelist.info.reference.created";
     private static final String INFO_REFERENCE_UPDATED = "referencelist.info.reference.updated";
@@ -158,7 +158,7 @@ public class ReferenceJspBean extends AbstractReferenceListManageJspBean
      *            The Http request
      * @return the html code to confirm
      */
-    @Action( value = ACTION_CONFIRM_REMOVE_REFERENCE, securityTokenAction = ACTION_REMOVE_REFERENCE )
+    @View( value = VIEW_CONFIRM_REMOVE_REFERENCE, securityTokenAction = ACTION_REMOVE_REFERENCE )
     public String getConfirmRemoveReference( HttpServletRequest request )
     {
         int nId = Integer.parseInt( request.getParameter( PARAMETER_ID_REFERENCE ) );
