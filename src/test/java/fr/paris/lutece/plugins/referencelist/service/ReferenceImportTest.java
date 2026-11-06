@@ -86,7 +86,7 @@ public class ReferenceImportTest extends LuteceTestCase
         return user;
     }
 
-    AdminUser adminUser = CreateAdminUser( );
+    //AdminUser adminUser = CreateAdminUser( );
 
     /**
      * test isImportable
@@ -96,6 +96,8 @@ public class ReferenceImportTest extends LuteceTestCase
     void testBusiness( )
     {
 
+    	AdminUser adminUser = CreateAdminUser( );
+    	
         // Initialize a reference
         Reference reference = new Reference( );
         reference.setName( NAME1 );
