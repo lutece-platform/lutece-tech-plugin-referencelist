@@ -34,6 +34,7 @@
 package fr.paris.lutece.plugins.referencelist.business;
 
 import fr.paris.lutece.test.LuteceTestCase;
+import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -45,6 +46,9 @@ public class ReferenceBusinessTest extends LuteceTestCase
     private static final String NAME2 = "Name2";
     private static final String DESCRIPTION1 = "Description1";
     private static final String DESCRIPTION2 = "Description2";
+
+    @Inject
+    private TestReferenceItemRemovalObserver _observer;
 
     /**
      * test Reference
@@ -79,6 +83,41 @@ public class ReferenceBusinessTest extends LuteceTestCase
         referenceStored = ReferenceHome.findByPrimaryKey( reference.getId( ) );
         assertNull( referenceStored );
 
+    }
+
+    /**
+     * Removing a whole list notifies the removal of each of its items, as removing the items one by one
+     */
+    @Test
+    void testRemoveNotifiesTheRemovalOfTheItems( ) throws InterruptedException
+    {
+        Reference reference = new Reference( );
+        reference.setName( "RemoveNotifies" );
+        reference.setDescription( DESCRIPTION1 );
+        ReferenceHome.create( reference );
+        ReferenceItem item1 = createItem( reference, "x" );
+        ReferenceItem item2 = createItem( reference, "y" );
+
+        ReferenceHome.remove( reference.getId( ) );
+
+        assertTrue( ReferenceItemHome.getReferenceItemsList( reference.getId( ) ).isEmpty( ) );
+        // the events are asynchronous
+        for ( int i = 0; i < 50 && !_observer.getRemovedIds( ).containsAll( java.util.List.of( item1.getId( ), item2.getId( ) ) ); i++ )
+        {
+            Thread.sleep( 100 );
+        }
+        assertTrue( _observer.getRemovedIds( ).contains( item1.getId( ) ) );
+        assertTrue( _observer.getRemovedIds( ).contains( item2.getId( ) ) );
+    }
+
+    private static ReferenceItem createItem( Reference reference, String strCode )
+    {
+        ReferenceItem item = new ReferenceItem( );
+        item.setName( strCode );
+        item.setCode( strCode );
+        item.setIdreference( reference.getId( ) );
+        ReferenceItemHome.create( item );
+        return item;
     }
 
 }

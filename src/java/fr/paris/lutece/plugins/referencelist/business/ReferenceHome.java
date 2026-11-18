@@ -35,6 +35,7 @@ package fr.paris.lutece.plugins.referencelist.business;
 
 import java.util.List;
 
+import fr.paris.lutece.plugins.referencelist.service.ReferenceItemListenerService;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.plugin.PluginService;
 import fr.paris.lutece.util.ReferenceList;
@@ -51,6 +52,8 @@ public final class ReferenceHome
     private static IReferenceItemDAO _itemdao = CDI.current( ).select( IReferenceItemDAO.class ).get( );
 
     private static ITranslationItemDAO _translationDao = CDI.current( ).select( ITranslationItemDAO.class ).get( );
+
+    private static ReferenceItemListenerService _refItemListenerService = CDI.current( ).select( ReferenceItemListenerService.class ).get( );
 
     private static Plugin _plugin = PluginService.getPlugin( "referencelist" );
 
@@ -97,11 +100,16 @@ public final class ReferenceHome
      */
     public static void remove( int nKey )
     {
+        List<ReferenceItem> listItems = _itemdao.selectReferenceItemsList( nKey, _plugin );
+
         _translationDao.deleteAllFromReferenceId( nKey, _plugin );
 
         _itemdao.deleteAll( nKey, _plugin );
 
         _dao.delete( nKey, _plugin );
+
+        // Each removed item is notified, as when it is removed alone: the choices of the questions using the list are removed with it
+        listItems.forEach( _refItemListenerService::fireDeleteEvent );
     }
 
     /**
